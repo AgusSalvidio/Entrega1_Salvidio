@@ -1,0 +1,30 @@
+{% extends 'index.html' %}
+
+{% load static %}
+
+{% block title%}
+<title>Códigos Promocionales | Qatar World Cup 2022</title>
+{% endblock %}
+
+{% block contents%}
+<div align="right">
+            <a href="" >
+                <button style="background-color:#56042C;; border-color:#56042C;; color:white " class=" btn waves-effect waves-light"><i class="icofont icofont-plus"></i>Agregar</button>
+            </a>
+</div>
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Código</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for promo_code in promo_codes %}
+            <tr>
+                <td>{{ promo_code.code }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
