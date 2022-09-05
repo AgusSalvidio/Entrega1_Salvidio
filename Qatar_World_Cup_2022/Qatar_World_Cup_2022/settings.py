@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'Qatar_World_Cup_2022.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'QatarWC2022',
+        'NAME': 'QatarWC2022.sqlite3',
     }
 }
 

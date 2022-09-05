@@ -21,4 +21,6 @@ urlpatterns = [
     path('player_cards/',player_cards,name='player_cards'),
     path('users/',users,name='users'),
     path('promo_codes/',promo_codes,name='promo_codes'),
+    path('user_registration/',user_registration,name='user_registration'),
+    path('filtered_users/',filtered_users,name='filtered_users'),
 ]
