@@ -19,6 +19,7 @@
                 <th>Código</th>
             </tr>
         </thead>
+    {% if promo_codes %}
         <tbody>
             {% for promo_code in promo_codes %}
             <tr>
@@ -27,4 +28,8 @@
             {% endfor %}
         </tbody>
     </table>
+    {% else %}
+    </table>
+        <h4>No se encontraron códigos promocionales</h4>
+    {% endif %}  
 {% endblock %}
