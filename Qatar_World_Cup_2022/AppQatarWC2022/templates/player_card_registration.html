@@ -1,0 +1,65 @@
+{% extends 'index.html' %}
+
+{% load static %}
+
+{% block title%}
+<title>Registro de Cartas | Qatar World Cup 2022</title>
+{% endblock %}
+
+{% block contents%}
+<form action="{% url 'player_card_registration' %}" method="POST"> {% csrf_token %}
+<section class="login-block">
+    <!-- Container-fluid starts -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <form class="md-float-material form-material">
+                    <div class="auth-box card">
+                        <div class="card-block">
+                            <div class="row m-b-20">
+                                <div class="col-md-12">
+                                    <h3 class="text-center txt-primary">Agregar Cartas</h3>
+                                </div>
+                            </div>
+                            <div class="form-group form-primary">
+                                <label class="float-label">Nombre</label>
+                                <input type="text" name="card_first_name" class="form-control">
+                                <span class="form-bar"></span>
+                            </div>
+                            <div class="form-group form-primary">
+                                <label class="float-label">Apellido</label>
+                                <input type="text" name="card_last_name" class="form-control">
+                                <span class="form-bar"></span>
+                            </div>
+                            <div class="form-group form-primary">
+                                <label >Fecha de Nacimiento</label>
+                                <input type="date" name="card_birthdate" class="form-control">
+                                <span class="form-bar"></span>
+                            </div>
+                            <div class="form-group form-primary">
+                                <label class="float-label">País</label>
+                                <input type="text" name="card_country" class="form-control">
+                                <span class="form-bar"></span>
+                                
+                            </div>
+                            <div class="form-group form-primary">
+                                <label class="float-label">Posición</label>
+                                <input type="text" name="card_position" class="form-control">
+                                <span class="form-bar"></span>
+                            </div>                               
+                                <div align="right">
+                                    <button type="submit" style="background-color:#56042C;; border-color:#56042C;; color:white " class=" btn waves-effect waves-light"><i class="icofont icofont-plus"></i>Agregar</button>
+                                </div>                            
+                            <hr/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- end of col-sm-12 -->
+        </div>
+        <!-- end of row -->
+    </div>
+    <!-- end of container-fluid -->
+</section>
+</form>
+{% endblock %}
