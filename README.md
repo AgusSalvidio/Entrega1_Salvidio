@@ -13,20 +13,20 @@ Disfruta de la Copa Mundial de la FIFA Catar 2022™ con el álbum de cromos dig
 
 Proyecto en desarrollo para el curso 31105 de Python en CoderHouse. Qatar World Cup 2022 es un aplicativo que permite tener de manera digital el álbum de cromos similar al provisto por la empresa Panini, de manera local y con la posibilidad de agregar nuevos cromos, funcionalidades, códigos. Por otro lado, es posible reutilizar las mismas para armar otro tipo de álbum, dando lugar a una infinidad de posiblidades.
 
-# Prerequisitos
+# Prerequisitos 📋
 
 Tener instalado Python.
 
-# Instalación
+# Instalación 🚀
 
 Para poder ejecutar el aplicativo se debe de posicionar dentro del directorio que contiene el archivo manage.py:
 ```./Entrega1_Salvidio/Qatar_World_Cup_2022 ```. Desde allí, abrir una terminal y ejecutar la línea: ```pyhton mange.py runserver```.
 
-# Configuración
+# Configuración 🔧
 
 Por defecto, para el ingreso al panel de administrador se generó el super usuario "admin" cuyas credenciales para loguearse al panel son identicas a su nombre.
 
-# Uso/Funcionalidades
+# Uso/Funcionalidades ✨
 
 Por el momento el aplicativo cuenta con 4 menúes principales:
 
