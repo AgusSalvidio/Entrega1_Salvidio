@@ -24,5 +24,5 @@ urlpatterns = [
     path('user_registration/',user_registration,name='user_registration'),
     path('filtered_users/',filtered_users,name='filtered_users'),
     path("player_card_registration/", player_card_registration, name="player_card_registration"),
-    path("promo_codes_registration", promo_codes_registration, name="promo_codes_registration"),
+    path("promo_code_registration", promo_code_registration, name="promo_code_registration"),
 ]
