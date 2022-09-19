@@ -25,4 +25,10 @@ urlpatterns = [
     path('filtered_users/',filtered_users,name='filtered_users'),
     path("player_card_registration/", player_card_registration, name="player_card_registration"),
     path("promo_code_registration", promo_code_registration, name="promo_code_registration"),
+    path("delete_code/<id>", delete_code, name="delete_code"),
+    path("promo_code_update/<id>", promo_code_update, name="promo_code_update"),
+    path("player_card_detele/<id>", player_card_delete, name="player_card_delete"),
+    path("player_card_update/<id>", player_card_update, name="player_card_update"),
+    path("user_delete/<id>", user_delete, name="user_delete"),
+    path("user_update/<id>", user_update, name="user_update" ),
 ]

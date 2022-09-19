@@ -30,6 +30,8 @@
                 <td>{{ player_card.birthdate }}</td>
                 <td>{{ player_card.country }}</td>
                 <td>{{ player_card.position }}</td>
+                <td><a class="btn btn-danger" href="{% url 'player_card_delete' player_card.id %}">BORRAR</a></td>
+                <td><a class="btn btn-success" href="{% url 'player_card_update' player_card.id %}">EDITAR</a></td>
             </tr>
             {% endfor %}
         </tbody>

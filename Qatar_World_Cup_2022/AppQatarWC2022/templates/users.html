@@ -39,6 +39,8 @@
                 <td>{{ user.age }}</td>
                 <td>{{ user.country }}</td>
                 <td>{{ user.email }}</td>
+                <td><a class="btn btn-danger" href="{% url 'user_delete' user.id %}">BORRAR</a></td>
+                <td><a class="btn btn-success" href="{% url 'user_update' user.id %}">EDITAR</a></td>
             </tr>
             {% endfor %}
         </tbody>
