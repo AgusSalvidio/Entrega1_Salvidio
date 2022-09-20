@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.urls import path
 from AppQatarWC2022.views import *
+from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
     path('',home,name='home'),
@@ -31,4 +32,7 @@ urlpatterns = [
     path("player_card_update/<id>", player_card_update, name="player_card_update"),
     path("user_delete/<id>", user_delete, name="user_delete"),
     path("user_update/<id>", user_update, name="user_update" ),
+    path('login/',login_request,name='login'),
+    path('sign_up/',sign_up,name='sign_up'), 
+    path('logout/',LogoutView.as_view(template_name='logout.html'),name='logout'),
 ]
