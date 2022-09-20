@@ -37,3 +37,10 @@ class PromoCode(models.Model):
    
    def __str__(self):
         return self.code
+
+"""class UserProfile(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    birthdate = models.DateField()
+    country = models.CharField(max_length=50)     # In the next stage of the project this should become a singleSelectionList, for now will be only a string
+    email = models.EmailField()
+    image = models.ImageField(upload_to='avatars')"""
