@@ -15,7 +15,6 @@
         <div class="row">
             <div class="col-sm-12">
                 <!-- Authentication card start -->
-
                     <form class="md-float-material form-material">
                         <div class="text-center">
                             <img src="{% static 'AppQatarWC2022/images/logo.png' %}" alt="logo-Logo" />
@@ -41,7 +40,7 @@
                                 <div class="row m-t-25 text-left">
                                     <div class="col-12">
                                         <div class="forgot-phone text-right f-right">
-                                            <a href="" class="text-right f-w-600"> ¿No estás registrado?</a>
+                                            <a href="{% url 'sign_up' %}" class="text-right f-w-600"> ¿No estás registrado?</a>
                                         </div>
                                     </div>
                                 </div>

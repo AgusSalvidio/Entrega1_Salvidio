@@ -1,0 +1,46 @@
+{% extends 'index.html' %}
+
+{% load static %}
+
+{% block title %}
+<title>Stickers | Qatar World Cup 2022</title>
+{% endblock %}
+
+{% block contents %}
+<div align="right">
+            <a href="{% url 'player_sticker_registration' %}" >
+                <button style="background-color:#56042C;; border-color:#56042C;; color:white " class=" btn waves-effect waves-light"><i class="icofont icofont-plus"></i>Agregar</button>
+            </a>
+</div>
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre Completo</th>
+                <th>Fecha de Nacimiento</th>
+                <th>País</th>
+                <th>Posición</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+    {% if player_stickers %}
+        <tbody>
+            {% for player_sticker in player_stickers %}
+            <tr>
+                <td>{{ player_sticker.full_name }}</td>
+                <td>{{ player_sticker.birthdate }}</td>
+                <td>{{ player_sticker.country }}</td>
+                <td>{{ player_sticker.position }}</td>
+                <td>
+                    <a class="icofont icofont-ui-edit" href="{% url 'player_sticker_update' player_sticker.id %}"></a>
+                    <a class="icofont icofont-close" href="{% url 'player_sticker_delete' player_sticker.id %}"></a>   
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    </table>
+        <h4>No se encontraron stickers de jugadores</h4>
+    {% endif %}  
+{% endblock %}

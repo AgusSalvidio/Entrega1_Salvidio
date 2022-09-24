@@ -3,11 +3,11 @@
 {% load static %}
 
 {% block title%}
-<title>Registro de Cartas | Qatar World Cup 2022</title>
+<title>Registro de Stickers | Qatar World Cup 2022</title>
 {% endblock %}
 
 {% block contents%}
-<form action="{% url 'player_card_registration' %}" method="POST"> {% csrf_token %}
+<form action="{% url 'player_sticker_registration' %}" method="POST"> {% csrf_token %}
 <section class="login-block">
     <!-- Container-fluid starts -->
     <div class="container-fluid">
