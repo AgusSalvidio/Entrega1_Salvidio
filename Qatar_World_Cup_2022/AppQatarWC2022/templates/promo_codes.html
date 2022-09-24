@@ -17,6 +17,7 @@
         <thead>
             <tr>
                 <th>Código</th>
+                <th>Acciones</th>
             </tr>
         </thead>
     {% if promo_codes %}
@@ -24,8 +25,10 @@
             {% for promo_code in promo_codes %}
             <tr>
                 <td>{{ promo_code.code }}</td>
-                <td><a class="btn btn-danger" href="{% url 'delete_code' promo_code.id %}">BORRAR</a></td>
-                <td><a class="btn btn-success" href="{% url 'promo_code_update' promo_code.id %}">EDITAR</a></td>
+                <td>
+                    <a class="icofont icofont-ui-edit" href="{% url 'promo_code_update' promo_code.id %}"></a>
+                    <a class="icofont icofont-close" href="{% url 'delete_code' promo_code.id %}"></a>   
+                </td>
             </tr>
             {% endfor %}
         </tbody>

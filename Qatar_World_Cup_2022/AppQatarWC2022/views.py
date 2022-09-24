@@ -1,4 +1,3 @@
-import code
 from django.shortcuts import render
 from .models import *
 from django.http import HttpResponse
@@ -71,14 +70,14 @@ def user_update(request, id):
         form=User()
         return render(request, "user_update.html", {"user": user, "form": form})
 
-def player_cards(request):
-    context = {'player_cards': PlayerCard.objects.all()}
-    return render(request,"player_cards.html",context)
+def player_stickers(request):
+    context = {'player_stickers': PlayerSticker.objects.all()}
+    return render(request,"player_stickers.html",context)
 
 @login_required
-def player_card_registration(request):
+def player_sticker_registration(request):
     if request.method =="POST":
-        form = PlayerCardRegistration(request.POST)
+        form = PlayerStickerRegistration(request.POST)
         if form.is_valid():
             information = form.cleaned_data
             first_name = information["first_name"]
@@ -86,36 +85,36 @@ def player_card_registration(request):
             country = information["country"]
             birthdate = information["birthdate"]
             position = information["position"]
-            player_card = PlayerCard(first_name = first_name,last_name = last_name,birthdate = birthdate,country = country,position=position)
+            player_card = PlayerSticker(first_name = first_name,last_name = last_name,birthdate = birthdate,country = country,position=position)
             player_card.save()
-            context={"player_cards": PlayerCard.objects.all()}
-            return render(request, "player_cards.html", context)
+            context={"player_stickers": PlayerSticker.objects.all()}
+            return render(request, "player_stickers.html", context)
     else:
-        form = PlayerCardRegistration()
-        return render(request, "player_card_registration.html",{'form':form})
+        form = PlayerStickerRegistration()
+        return render(request, "player_sticker_registration.html",{'form':form})
 
 @login_required
-def player_card_delete(request, id):
-    player_card=PlayerCard.objects.get(id=id)
-    player_card.delete()
-    context={"player_cards":PlayerCard.objects.all()}
-    return render (request, "player_cards.html", context)
+def player_sticker_delete(request, id):
+    player_sticker=PlayerSticker.objects.get(id=id)
+    player_sticker.delete()
+    context={"player_stickers":PlayerSticker.objects.all()}
+    return render (request, "player_stickers.html", context)
 
 @login_required
-def player_card_update(request, id):
-    player_card=PlayerCard.objects.get(id=id)
+def player_sticker_update(request, id):
+    player_sticker=PlayerSticker.objects.get(id=id)
     if request.method=="POST":
-        player_card.first_name = request.POST["card_first_name"]
-        player_card.last_name = request.POST["card_last_name"]
-        player_card.country = request.POST["card_country"]
-        player_card.birthdate = request.POST["card_birthdate"]
-        player_card.position = request.POST["card_position"]
-        player_card.save()
-        context={"player_cards": PlayerCard.objects.all()}
-        return render(request, "player_cards.html", context)
+        player_sticker.first_name = request.POST["first_name"]
+        player_sticker.last_name = request.POST["last_name"]
+        player_sticker.country = request.POST["country"]
+        player_sticker.birthdate = request.POST["birthdate"]
+        player_sticker.position = request.POST["position"]
+        player_sticker.save()
+        context={"player_stickers": PlayerSticker.objects.all()}
+        return render(request, "player_stickers.html", context)
     else:
-        form=PlayerCard()
-        return render(request, "player_card_update.html",{"form": form, "player_card":player_card} )
+        form=PlayerSticker()
+        return render(request, "player_sticker_update.html",{"form": form, "player_sticker":player_sticker} )
 
 @login_required
 def promo_codes(request):
@@ -176,13 +175,19 @@ def login_request(request):
 
 def sign_up(request):
     if request.method == 'POST':
-        form = UserRegistration(request.POST)
+        internal_user = UserRegistration(request.POST)
         if form.is_valid():
-            username = form.cleaned_data.get('username')
-            form.save()
-            return render(request,'AppCoder/home.html',{'auth_message':f"Usuario {username} creado correctamente"})
+            information = form.cleaned_data
+            birthdate = information['birthdate'] 
+            country = information['country']
+            username = information['username']
+            avatar = information['avatar']
+            internal_user.save()
+            user_profile = UserProfile(internal_user = internal_user, birthdate = birthdate, country = country, avatar = avatar, basura_intergalactica = 'algo')
+            user_profile.save()
+            return render(request,'login.html')
         else:
-            return render(request,'AppCoder/user_registration.html',{'auth_message':f"No se pudo crear al usuario"})
+            return render(request,'sign_up.html',{'auth_message':f"No se pudo crear al usuario"})
     else:
         form = UserRegistration()
-        return render(request,'AppCoder/user_registration.html',{'form':form})
+        return render(request,'sign_up.html',{'form':form})
