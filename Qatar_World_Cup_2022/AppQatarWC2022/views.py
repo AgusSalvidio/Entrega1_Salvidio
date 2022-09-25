@@ -18,7 +18,9 @@ from django.contrib.auth.decorators import login_required
 
 @login_required
 def home(request):
-    return render(request,"home.html")
+    context = {'user_profile':UserProfile.objects.get(internal_user=request.user)}
+    return render(request,"home.html",context)
+
 @login_required
 def users(request):
     context = {'users': User.objects.all()}
@@ -118,7 +120,7 @@ def player_sticker_update(request, id):
 
 @login_required
 def promo_codes(request):
-    context = {'promo_codes': PromoCode.objects.all()}
+    context={"promo_codes": PromoCode.objects.all(),'form':PromoCodeRegistration()}
     return render(request,"promo_codes.html",context)
 
 @login_required
@@ -130,30 +132,34 @@ def promo_code_registration(request):
             code = information["code"]
             promo_code = PromoCode(code=code)
             promo_code.save()
-            context={"promo_codes": PromoCode.objects.all()}
-            return render(request, "promo_codes.html", context)
+            response = promo_codes(request)
+            return HttpResponse(response)
+        else:
+            response = promo_codes(request)
+            return HttpResponse(response)
     else:
-        form = PromoCodeRegistration()
-        return render(request, "promo_code_registration.html",{'form':form})
-
-@login_required
-def delete_code(request, id):
-    code=PromoCode.objects.get(id=id)
-    code.delete()
-    context = {'promo_codes': PromoCode.objects.all()}
-    return render(request,"promo_codes.html",context)
-
+        context = {"form":PromoCodeRegistration()} 
+        return render(request, "promo_code_registration.html",context)
+        
 @login_required
 def promo_code_update(request, id):
     promo_code=PromoCode.objects.get(id=id)
     if request.method=="POST":
         promo_code.code=request.POST["code"]
         promo_code.save()
-        context={"promo_codes": PromoCode.objects.all()}
-        return render(request, "promo_codes.html", context)
+        response = promo_codes(request)
+        return HttpResponse(response)
     else:
-        form=PromoCode({"promo_code": promo_code.code})#acá quería que en el formulario inicial me ponga los datos del que quiero editar
-        return render(request, "promo_code_update.html",{"form": form, "promo_code": promo_code} )
+        form = PromoCodeRegistration({"code": promo_code.code})
+        context ={"form":form , "promo_code": promo_code} 
+        return render(request, "promo_code_update.html",context)
+
+@login_required
+def promo_code_unregistration(request, id):
+    code=PromoCode.objects.get(id=id)
+    code.delete()
+    response = promo_codes(request)
+    return HttpResponse(response)
 
 def login_request(request):
     if request.method == 'POST':
@@ -164,7 +170,8 @@ def login_request(request):
             user = authenticate(username = username, password = password)
             if user is not None:
                 login(request,user)
-                return render (request,'home.html',{'user':user})
+                context = {'user_profile':UserProfile.objects.get(internal_user=request.user)}
+                return render (request,'home.html',context)
             else:
                 return render(request,'login.html',{'form':form,'auth_message':'Usuario y/o contraseña incorrectos'})
         else:
@@ -176,14 +183,13 @@ def login_request(request):
 def sign_up(request):
     if request.method == 'POST':
         internal_user = UserRegistration(request.POST)
-        if form.is_valid():
+        if internal_user.is_valid():
             information = form.cleaned_data
             birthdate = information['birthdate'] 
             country = information['country']
-            username = information['username']
             avatar = information['avatar']
             internal_user.save()
-            user_profile = UserProfile(internal_user = internal_user, birthdate = birthdate, country = country, avatar = avatar, basura_intergalactica = 'algo')
+            user_profile = UserProfile(internal_user = internal_user, birthdate = birthdate, country = country, avatar_image = avatar, basura_intergalactica = 'algo')
             user_profile.save()
             return render(request,'login.html')
         else:
