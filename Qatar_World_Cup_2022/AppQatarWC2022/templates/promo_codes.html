@@ -8,9 +8,10 @@
 
 {% block contents%}
 <div align="right">
-            <a href="{% url 'promo_code_registration' %}" >
-                <button style="background-color:#56042C;; border-color:#56042C;; color:white " class=" btn waves-effect waves-light"><i class="icofont icofont-plus"></i>Agregar</button>
-            </a>
+    <!-- Button trigger modal -->
+    <button style="background-color:#56042C;; border-color:#56042C;; color:white " class=" btn waves-effect waves-light" onclick="registration_modal('{% url 'promo_code_registration' %}')"><i class="icofont icofont-plus"></i>
+        Agregar
+    </button>
 </div>
 <div class="table-responsive">
     <table class="table">
@@ -26,8 +27,8 @@
             <tr>
                 <td>{{ promo_code.code }}</td>
                 <td>
-                    <a class="icofont icofont-ui-edit" href="{% url 'promo_code_update' promo_code.id %}"></a>
-                    <a class="icofont icofont-close" href="{% url 'delete_code' promo_code.id %}"></a>   
+                    <a class="btn waves-effect waves-light icofont icofont-ui-edit" onclick="update_modal('{% url 'promo_code_update' promo_code.id %}')"></a>
+                    <a class="icofont icofont-close" href="{% url 'promo_code_unregistration' promo_code.id %}"></a>   
                 </td>
             </tr>
             {% endfor %}
@@ -36,5 +37,30 @@
     {% else %}
     </table>
         <h4>No se encontraron códigos promocionales</h4>
-    {% endif %}  
+    {% endif %}
+{% endblock %}
+
+{% block modals %}
+  
+  <div class="modal fade" id="promo_code_registration_modal" tabindex="-1" aria-labelledby="promo_code_registration_modal" aria-hidden="true">
+  
+  </div>
+
+  <div class="modal fade" id="promo_code_update_modal" tabindex="-1" aria-labelledby="promo_code_update_modal" aria-hidden="true">
+  
+  </div>
+
+ <script type="text/javascript">
+    var $ = jQuery.noConflict();
+    function registration_modal(url){
+        $('#promo_code_registration_modal').load(url,function (){
+            $(this).modal('show');
+        });
+    }
+    function update_modal(url){
+        $('#promo_code_update_modal').load(url,function (){
+            $(this).modal('show');
+        });
+    }
+ </script> 
 {% endblock %}

@@ -28,3 +28,5 @@ urlpatterns = [
     path('sign_up/',sign_up,name='sign_up'), 
     path('logout/',LogoutView.as_view(template_name='logout.html'),name='logout'),
 ]
+
+urlpatterns+=static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
