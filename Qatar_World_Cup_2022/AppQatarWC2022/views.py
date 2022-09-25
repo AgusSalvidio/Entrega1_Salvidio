@@ -22,58 +22,8 @@ def home(request):
     return render(request,"home.html",context)
 
 @login_required
-def users(request):
-    context = {'users': User.objects.all()}
-    return render(request,"users.html",context)
-
-def user_registration(request):
-    if request.method == 'POST':
-        #revisar que trae el formulario de UserRegistration
-        first_name = request.POST["user_first_name"]
-        last_name = request.POST["user_last_name"]
-        birthdate = request.POST["user_birthdate"]
-        email = request.POST["user_email"]
-        country = request.POST["user_country"]
-        user = User(first_name = first_name,last_name = last_name,birthdate = birthdate,country = country,email = email)
-        user.save()
-        context = {'users': User.objects.all()}
-        return render(request,"users.html",context)
-    else:  
-        return render(request,"user_registration.html")
-@login_required
-def filtered_users(request):
-    if request.GET["first_name"]:
-        user_name = request.GET["first_name"]
-        users = User.objects.filter(first_name=user_name)
-        return render(request,"filtered_users.html",{"users":users})
-    else:
-        return render(request,"users.html")
-
-@login_required
-def user_delete(request, id):
-    user=User.objects.get(id=id)
-    user.delete()
-    context={"user":User.objects.all()}
-    return render (request, "users.html", context)
-
-@login_required
-def user_update(request, id):
-    user=User.objects.get(id=id)
-    if request.method=="POST":
-        user.first_name = request.POST["user_first_name"]
-        user.last_name = request.POST["user_last_name"]
-        user.birthdate = request.POST["user_birthdate"]
-        user.email = request.POST["user_email"]
-        user.country = request.POST["user_country"]
-        user.save()
-        context = {'users': User.objects.all()}
-        return render(request,"users.html",context)
-    else:
-        form=User()
-        return render(request, "user_update.html", {"user": user, "form": form})
-
 def player_stickers(request):
-    context = {'player_stickers': PlayerSticker.objects.all()}
+    context = {'player_stickers': PlayerSticker.objects.all(),'form':PlayerStickerRegistration()}
     return render(request,"player_stickers.html",context)
 
 @login_required
@@ -89,18 +39,21 @@ def player_sticker_registration(request):
             position = information["position"]
             player_card = PlayerSticker(first_name = first_name,last_name = last_name,birthdate = birthdate,country = country,position=position)
             player_card.save()
-            context={"player_stickers": PlayerSticker.objects.all()}
-            return render(request, "player_stickers.html", context)
+            response = player_stickers(request)
+            return HttpResponse(response)
+        else:
+            response = player_stickers(request)
+            return HttpResponse(response)
     else:
-        form = PlayerStickerRegistration()
-        return render(request, "player_sticker_registration.html",{'form':form})
+        context = {'form':PlayerStickerRegistration()}
+        return render(request, "player_sticker_registration.html",context)
 
 @login_required
-def player_sticker_delete(request, id):
+def player_sticker_unregistration(request, id):
     player_sticker=PlayerSticker.objects.get(id=id)
     player_sticker.delete()
-    context={"player_stickers":PlayerSticker.objects.all()}
-    return render (request, "player_stickers.html", context)
+    response = player_stickers(request)
+    return HttpResponse(response)
 
 @login_required
 def player_sticker_update(request, id):
@@ -112,11 +65,12 @@ def player_sticker_update(request, id):
         player_sticker.birthdate = request.POST["birthdate"]
         player_sticker.position = request.POST["position"]
         player_sticker.save()
-        context={"player_stickers": PlayerSticker.objects.all()}
-        return render(request, "player_stickers.html", context)
+        response = player_stickers(request)
+        return HttpResponse(response)
     else:
-        form=PlayerSticker()
-        return render(request, "player_sticker_update.html",{"form": form, "player_sticker":player_sticker} )
+        form=PlayerStickerRegistration({'first_name':player_sticker.first_name,'last_name':player_sticker.last_name,'country':player_sticker.country,'birthdate':player_sticker.birthdate,'position':player_sticker.position})
+        context = {'form':form,'player_sticker':player_sticker}
+        return render(request, "player_sticker_update.html",context)
 
 @login_required
 def promo_codes(request):
@@ -182,18 +136,20 @@ def login_request(request):
 
 def sign_up(request):
     if request.method == 'POST':
-        internal_user = UserRegistration(request.POST)
-        if internal_user.is_valid():
-            information = form.cleaned_data
+        internal_user_form = UserRegistration(request.POST,request.FILES)
+        if internal_user_form.is_valid():
+            information = internal_user_form.cleaned_data
             birthdate = information['birthdate'] 
             country = information['country']
             avatar = information['avatar']
-            internal_user.save()
-            user_profile = UserProfile(internal_user = internal_user, birthdate = birthdate, country = country, avatar_image = avatar, basura_intergalactica = 'algo')
+            user = internal_user_form.save()
+            user_profile = UserProfile(internal_user = user, birthdate = birthdate, country = country, avatar_image = avatar)
             user_profile.save()
-            return render(request,'login.html')
+            context = {'form':SignIn()}
+            return render(request,'login.html',context)
         else:
-            return render(request,'sign_up.html',{'auth_message':f"No se pudo crear al usuario"})
+            context = {'form':UserRegistration(),'auth_message':f"No se pudo crear al usuario debido a {internal_user_form.errors}"}
+            return render(request,'sign_up.html',context)
     else:
-        form = UserRegistration()
-        return render(request,'sign_up.html',{'form':form})
+        context = {'form':UserRegistration()}
+        return render(request,'sign_up.html',context)

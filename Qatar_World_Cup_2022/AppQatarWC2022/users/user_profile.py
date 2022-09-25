@@ -10,8 +10,7 @@ class UserProfile(models.Model):
     internal_user = models.ForeignKey(User,on_delete=models.CASCADE)
     birthdate = models.DateField()
     country = models.CharField(max_length=50)     # In the next stage of the project this should become a singleSelectionList, for now will be only a string
-    avatar_image = models.ImageField(upload_to='avatars', default='avatars/default_avatar.jpg')
-    basura_intergalactica = models.CharField(max_length=50)
+    avatar_image = models.ImageField(upload_to='avatars', default='avatars/default_avatar.jpg',null=False)
     
     def age(self):
         return current_date.year - self.birthdate.year

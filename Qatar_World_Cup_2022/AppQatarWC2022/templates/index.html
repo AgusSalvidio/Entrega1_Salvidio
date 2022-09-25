@@ -107,11 +107,6 @@
                     <div class="navbar-container container-fluid">
                         <ul class="nav-left">
                             <li>
-                                <a href="{% url 'users' %}" class="waves-effect waves-light">
-                                    USUARIOS
-                                </a>
-                            </li>
-                            <li>
                                 <a href="{% url 'player_stickers' %}" class="waves-effect waves-light">
                                     STICKERS
                                 </a>
@@ -127,7 +122,7 @@
                             {% if user.is_authenticated %}
                                 <li class="user-profile header-notification">
                                     <a href="#!" class="waves-effect waves-light">
-                                        <img src= "{{ user_profile.avatar }}" onerror="this.src='/media/avatars/default_avatar.jpg'" class="img-radius" alt="User-Profile-Image">
+                                        <img src= "{{ user_profile.avatar }}" height="50px" onerror="this.src='/media/avatars/default_avatar.jpg'" class="img-radius" alt="User-Profile-Image">
                                         <span>{{ user_profile.internal_user }}</span>
                                         <i class="ti-angle-down"></i>
                                     </a>

@@ -8,9 +8,10 @@
 
 {% block contents %}
 <div align="right">
-            <a href="{% url 'player_sticker_registration' %}" >
-                <button style="background-color:#56042C;; border-color:#56042C;; color:white " class=" btn waves-effect waves-light"><i class="icofont icofont-plus"></i>Agregar</button>
-            </a>
+    <!-- Button trigger modal -->
+    <button style="background-color:#56042C;; border-color:#56042C;; color:white " class=" btn waves-effect waves-light" onclick="registration_modal('{% url 'player_sticker_registration' %}')"><i class="icofont icofont-plus"></i>
+        Agregar
+    </button>
 </div>
 <div class="table-responsive">
     <table class="table">
@@ -32,8 +33,8 @@
                 <td>{{ player_sticker.country }}</td>
                 <td>{{ player_sticker.position }}</td>
                 <td>
-                    <a class="icofont icofont-ui-edit" href="{% url 'player_sticker_update' player_sticker.id %}"></a>
-                    <a class="icofont icofont-close" href="{% url 'player_sticker_delete' player_sticker.id %}"></a>   
+                    <a class="btn waves-effect waves-light icofont icofont-ui-edit" onclick="update_modal('{% url 'player_sticker_update' player_sticker.id %}')"></a>
+                    <a class="icofont icofont-close" href="{% url 'player_sticker_unregistration' player_sticker.id %}"></a>   
                 </td>
             </tr>
             {% endfor %}
@@ -43,4 +44,29 @@
     </table>
         <h4>No se encontraron stickers de jugadores</h4>
     {% endif %}  
+{% endblock %}
+
+{% block modals %}
+  
+  <div class="modal fade" id="player_sticker_registration_modal" tabindex="-1" aria-labelledby="player_sticker_registration_modal" aria-hidden="true">
+  
+  </div>
+
+  <div class="modal fade" id="player_sticker_update_modal" tabindex="-1" aria-labelledby="player_sticker_update_modal" aria-hidden="true">
+  
+  </div>
+
+ <script type="text/javascript">
+    var $ = jQuery.noConflict();
+    function registration_modal(url){
+        $('#player_sticker_registration_modal').load(url,function (){
+            $(this).modal('show');
+        });
+    }
+    function update_modal(url){
+        $('#player_sticker_update_modal').load(url,function (){
+            $(this).modal('show');
+        });
+    }
+ </script> 
 {% endblock %}
