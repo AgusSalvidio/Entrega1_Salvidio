@@ -119,6 +119,19 @@
                         </ul>
                         <!--Aca es el sector derecho de los iconos-->
                         <ul class="nav-right">
+                            <li>
+                                    <a class="dropdown-toggle waves-effect waves-light" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                      Administrar
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="dropdown-2" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
+                                      <a class="dropdown-item" style ="color:#455a64; text-align:center" onmouseover="this.style.backgroundColor='#56042C';this.style.color='#ffff';" onmouseout="this.style.backgroundColor='transparent';this.style.color='#455a64';" href="#">
+                                        Algo
+                                    </a>
+                                      <a class="dropdown-item" style ="color:#455a64; text-align:center" onmouseover="this.style.backgroundColor='#56042C';this.style.color='#ffff';" onmouseout="this.style.backgroundColor='transparent';this.style.color='#455a64';" href="#">
+                                        Algo2
+                                    </a>
+                                    </div>
+                            </li>
                             {% if user.is_authenticated %}
                                 <li class="user-profile header-notification">
                                     <a href="#!" class="waves-effect waves-light">
