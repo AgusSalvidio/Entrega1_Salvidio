@@ -3,13 +3,14 @@ from django.db import models
 
 import datetime
 from django.contrib.auth.models import User 
+from AppQatarWC2022.countries import Country
 
 current_date = datetime.datetime.today()
 
 class UserProfile(models.Model):
     internal_user = models.ForeignKey(User,on_delete=models.CASCADE)
     birthdate = models.DateField()
-    country = models.CharField(max_length=50)     # In the next stage of the project this should become a singleSelectionList, for now will be only a string
+    country = models.ForeignKey(Country,on_delete=models.CASCADE)
     avatar_image = models.ImageField(upload_to='avatars', default='avatars/default_avatar.jpg',null=False)
     
     def age(self):

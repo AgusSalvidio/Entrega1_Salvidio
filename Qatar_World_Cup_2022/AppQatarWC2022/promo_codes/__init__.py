@@ -1,1 +1,1 @@
-from .promo_codes import PromoCode
+from .promo_code import PromoCode
