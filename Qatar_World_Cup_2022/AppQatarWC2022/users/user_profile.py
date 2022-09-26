@@ -13,6 +13,9 @@ class UserProfile(models.Model):
     country = models.ForeignKey(Country,on_delete=models.CASCADE)
     avatar_image = models.ImageField(upload_to='avatars', default='avatars/default_avatar.jpg',null=False)
     
+    def username(self):
+        return self.internal_user
+    
     def age(self):
         return current_date.year - self.birthdate.year
 
@@ -23,5 +26,5 @@ class UserProfile(models.Model):
         return self.avatar_image.url
 
     def __str__(self):
-        return self.full_name()
+        return self.username()
 
