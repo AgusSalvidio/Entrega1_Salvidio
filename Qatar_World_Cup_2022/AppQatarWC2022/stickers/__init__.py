@@ -1,2 +1,2 @@
 #from .sticker import Sticker
-from .player_sticker import PlayerSticker
+from .player_sticker import PlayerSticker,PlayerPosition

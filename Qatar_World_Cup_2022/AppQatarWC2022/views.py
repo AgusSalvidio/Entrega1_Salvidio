@@ -37,7 +37,8 @@ def player_sticker_registration(request):
             country = information["country"]
             birthdate = information["birthdate"]
             position = information["position"]
-            player_card = PlayerSticker(first_name = first_name,last_name = last_name,birthdate = birthdate,country = country,position=position)
+            sticker = information["sticker"]
+            player_card = PlayerSticker(first_name = first_name,last_name = last_name,birthdate = birthdate,country = country,position=position,sticker_image = sticker)
             player_card.save()
             response = player_stickers(request)
             return HttpResponse(response)

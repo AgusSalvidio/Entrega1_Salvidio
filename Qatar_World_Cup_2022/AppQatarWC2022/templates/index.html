@@ -107,18 +107,31 @@
                     <div class="navbar-container container-fluid">
                         <ul class="nav-left">
                             <li>
-                                <a href="{% url 'player_stickers' %}" class="waves-effect waves-light">
-                                    STICKERS
+                                <a href="" class="waves-effect waves-light">
+                                    MIS STICKERS
                                 </a>
                             </li>
                             <li>
-                                <a href="{% url 'promo_codes' %}" class="waves-effect waves-light">
-                                    CODIGOS
+                                <a href="" class="waves-effect waves-light">
+                                    MI ÁLBUM
                                 </a>
                             </li>
                         </ul>
                         <!--Aca es el sector derecho de los iconos-->
                         <ul class="nav-right">
+                            <li>
+                                    <a class="dropdown-toggle waves-effect waves-light" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                      Administrar
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="dropdown-2" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
+                                      <a class="dropdown-item" style ="color:#455a64; text-align:center" onmouseover="this.style.backgroundColor='#56042C';this.style.color='#ffff';" onmouseout="this.style.backgroundColor='transparent';this.style.color='#455a64';" href="{% url 'player_stickers' %}">
+                                        STICKERS
+                                    </a>
+                                      <a class="dropdown-item" style ="color:#455a64; text-align:center" onmouseover="this.style.backgroundColor='#56042C';this.style.color='#ffff';" onmouseout="this.style.backgroundColor='transparent';this.style.color='#455a64';" href="{% url 'promo_codes' %}">
+                                        CÓDIGOS
+                                    </a>
+                                    </div>
+                            </li>
                             {% if user.is_authenticated %}
                                 <li class="user-profile header-notification">
                                     <a href="#!" class="waves-effect waves-light">
