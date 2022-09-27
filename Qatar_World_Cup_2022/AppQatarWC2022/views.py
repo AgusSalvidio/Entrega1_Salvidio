@@ -104,17 +104,23 @@ def promo_code_update(request, id):
         promo_code.save()
         response = promo_codes(request)
         return HttpResponse(response)
-    else:
+    else: 
         form = PromoCodeRegistration({"code": promo_code.code})
         context ={"form":form , "promo_code": promo_code} 
         return render(request, "promo_code_update.html",context)
 
+
 @login_required
 def promo_code_unregistration(request, id):
-    code=PromoCode.objects.get(id=id)
-    code.delete()
-    response = promo_codes(request)
-    return HttpResponse(response)
+    promo_code=PromoCode.objects.get(id=id)
+    if request.method=="POST":
+        promo_code.delete()
+        response = promo_codes(request)
+        return HttpResponse(response)
+    else:
+        form = PromoCodeRegistration({"code": promo_code.code})
+        context ={"form":form , "promo_code": promo_code} 
+        return render(request, "promo_code_unregistration.html",context)
 
 def login_request(request):
     if request.method == 'POST':

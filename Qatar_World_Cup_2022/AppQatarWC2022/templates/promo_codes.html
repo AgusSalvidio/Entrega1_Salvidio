@@ -28,7 +28,7 @@
                 <td>{{ promo_code.code }}</td>
                 <td>
                     <a class="btn waves-effect waves-light icofont icofont-ui-edit" onclick="update_modal('{% url 'promo_code_update' promo_code.id %}')"></a>
-                    <a class="icofont icofont-close" href="{% url 'promo_code_unregistration' promo_code.id %}"></a>   
+                    <a class="btn waves-effect waves-light icofont icofont-close" onclick="unregistration_modal('{% url 'promo_code_unregistration' promo_code.id %}')"></a>   
                 </td>
             </tr>
             {% endfor %}
@@ -50,10 +50,19 @@
   
   </div>
 
+  <div class="modal fade" id="promo_code_unregistration_modal" tabindex="-1" aria-labelledby="promo_code_unregistration_modal" aria-hidden="true">
+  
+</div>
+
  <script type="text/javascript">
     var $ = jQuery.noConflict();
     function registration_modal(url){
         $('#promo_code_registration_modal').load(url,function (){
+            $(this).modal('show');
+        });
+    }
+    function unregistration_modal(url){
+        $('#promo_code_unregistration_modal').load(url,function (){
             $(this).modal('show');
         });
     }
