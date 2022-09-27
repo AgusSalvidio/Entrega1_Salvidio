@@ -1,0 +1,21 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="player_sticker_modal">Baja de Sticker</h5>
+        <a class="btn waves-effect waves-light icofont icofont-ui-close" data-bs-dismiss="modal"></a>
+      </div>
+      <form action="{% url 'player_sticker_unregistration' player_sticker.id  %}" method="POST"> {% csrf_token %}
+        <div class="modal-body">
+            <h4>¿Estás seguro que deseas eliminar {{ player_sticker }}?</h4> 
+        </div>
+        <div class="modal-footer">
+            <button type='button'style="background-color:#8b8b8b;; border-color:#8b8b8b;; color:rgb(255, 255, 255)" class="btn waves-effect waves-light" data-bs-dismiss="modal">
+                No
+            </button>
+            <button type="submit" style="background-color:#56042C;; border-color:#56042C;; color:white " class="btn waves-effect waves-light">
+                Si
+            </button>
+        </div>
+      </form>
+    </div>
+  </div>
