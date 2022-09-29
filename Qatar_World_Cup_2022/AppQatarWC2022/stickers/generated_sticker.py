@@ -8,6 +8,9 @@ class GeneratedSticker(models.Model):
     owner = models.ForeignKey(UserProfile,on_delete=models.CASCADE)
     sticker_template = models.ForeignKey(PlayerSticker,on_delete=models.CASCADE)
     stack_category = models.ForeignKey(StackCategory,on_delete=models.CASCADE)
+
+    def slot_position(self):
+        return self.sticker_template.slot_position()
     
     def sticker(self):
         return self.sticker_template

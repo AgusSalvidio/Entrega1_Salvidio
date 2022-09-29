@@ -16,7 +16,11 @@ class PlayerSticker(models.Model):
     birthdate = models.DateField()
     position =  models.ForeignKey(PlayerPosition,on_delete=models.CASCADE)  
     sticker_image = models.ImageField(upload_to='stickers', default='stickers/default_sticker.jpg',null=False)
+    slot = models.IntegerField()
 
+    def slot_position(self):
+        return self.slot
+    
     def full_name(self):
         return f'{self.first_name} {self.last_name}'
 
