@@ -27,4 +27,5 @@ urlpatterns = [
     path("player_sticker_registration/", player_sticker_registration, name="player_sticker_registration"),
     path("player_sticker_update/<id>", player_sticker_update, name="player_sticker_update"),
     path("player_sticker_unregistration/<id>", player_sticker_unregistration, name="player_sticker_unregistration"),
+    path("my_album", my_album, name="my_album"),
 ]

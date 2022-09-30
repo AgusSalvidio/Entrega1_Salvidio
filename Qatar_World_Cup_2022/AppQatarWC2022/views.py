@@ -22,6 +22,12 @@ def home(request):
     return render(request,"home.html",context)
 
 @login_required
+def my_album(request):
+    context = {'user_profile':UserProfile.objects.get(internal_user=request.user)}
+    return render(request,"my_album.html",context)
+
+
+@login_required
 def player_stickers(request):
     context = {'player_stickers': PlayerSticker.objects.all(),'form':PlayerStickerRegistration()}
     return render(request,"player_stickers.html",context)

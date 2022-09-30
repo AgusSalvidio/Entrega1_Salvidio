@@ -6,4 +6,4 @@ from AppQatarWC2022.users import UserProfile
 from AppQatarWC2022.countries import Country
 
 
-app = apps.get_app_config('ProcessKnownledge')
+app = apps.get_app_config('AppQatarWC2022')

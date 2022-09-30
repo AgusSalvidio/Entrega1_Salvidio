@@ -3,7 +3,7 @@ from django.apps import AppConfig
 
 class Appqatarwc2022Config(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'ProcessKnownledge'
+    name = 'AppQatarWC2022'
     sticker_system = None
     user_system = None
     album_system = None
