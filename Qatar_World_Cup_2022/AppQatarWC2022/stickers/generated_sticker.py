@@ -2,7 +2,7 @@ from django.db import models
 
 from .player_sticker import PlayerSticker
 from .stack import StackCategory
-from users.user_profile import UserProfile
+from AppQatarWC2022.users.user_profile import UserProfile
 
 class GeneratedSticker(models.Model):
     owner = models.ForeignKey(UserProfile,on_delete=models.CASCADE)
