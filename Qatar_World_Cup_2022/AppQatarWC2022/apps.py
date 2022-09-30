@@ -6,9 +6,12 @@ class Appqatarwc2022Config(AppConfig):
     name = 'ProcessKnownledge'
     sticker_system = None
     user_system = None
+    album_system = None
 
     def ready(self):
         from .stickers import StickerManagementSystem
         from .users import UserManagementSystem
+        from .album import AlbumManagementSystem
         self.sticker_system = StickerManagementSystem()
         self.user_system = UserManagementSystem()
+        self.album_system = AlbumManagementSystem()

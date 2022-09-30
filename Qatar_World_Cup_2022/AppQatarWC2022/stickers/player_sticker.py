@@ -9,6 +9,12 @@ class PlayerPosition(models.Model):
     def __str__(self):
         return self.name
 
+class Rarity(models.Model):
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
+
 class PlayerSticker(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
@@ -17,6 +23,7 @@ class PlayerSticker(models.Model):
     position =  models.ForeignKey(PlayerPosition,on_delete=models.CASCADE)  
     sticker_image = models.ImageField(upload_to='stickers', default='stickers/default_sticker.jpg',null=False)
     slot = models.IntegerField()
+    rarity_category = models.ForeignKey(Rarity,on_delete=models.CASCADE) 
 
     def slot_position(self):
         return self.slot
@@ -27,10 +34,15 @@ class PlayerSticker(models.Model):
     def nationality(self):
         return self.country.name
     
+    def rarity(self):
+        return self.rarity_category
+
     def sticker(self):
         return self.sticker_image.url
 
     def __str__(self):
         return self.full_name()
+
+
 
 

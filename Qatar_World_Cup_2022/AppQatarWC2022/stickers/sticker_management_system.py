@@ -13,6 +13,9 @@ class StickerManagementSystem:
     def stickers_of(self,user):
         return  self.generated_stickers().filter(owner = user)
 
+    def generate_sticker_pack(self):
+        pass
+
 
 
     
