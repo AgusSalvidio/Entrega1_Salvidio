@@ -7,8 +7,8 @@ from AppQatarWC2022.users.user_profile import UserProfile
 class GeneratedSticker(models.Model):
     owner = models.ForeignKey(UserProfile,on_delete=models.CASCADE)
     sticker_template = models.ForeignKey(PlayerSticker,on_delete=models.CASCADE)
-    stack_category = models.ForeignKey(StackCategory,on_delete=models.CASCADE)
-
+    sticker_category = models.CharField(max_length=50) 
+    
     def slot_position(self):
         return self.sticker_template.slot_position()
     
@@ -22,7 +22,10 @@ class GeneratedSticker(models.Model):
         return self.sticker().nationality()
 
     def category(self):
-        return self.stack_category.category()
+        return self.sticker_category
+    
+    def rarity(self):
+        return self.sticker.rarity()
 
     def __str__(self):
         return self.sticker()
