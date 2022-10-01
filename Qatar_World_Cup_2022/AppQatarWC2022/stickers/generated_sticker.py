@@ -1,13 +1,18 @@
 from django.db import models
 
 from .player_sticker import PlayerSticker
-from .stack import StackCategory
 from AppQatarWC2022.users.user_profile import UserProfile
 
 class GeneratedSticker(models.Model):
     owner = models.ForeignKey(UserProfile,on_delete=models.CASCADE)
     sticker_template = models.ForeignKey(PlayerSticker,on_delete=models.CASCADE)
     sticker_category = models.CharField(max_length=50) 
+    
+    def glue_sticker(self):
+        self.sticker_category = 'Glued'
+
+    def update_owner_with(self,owner):
+        self.owner = owner
     
     def slot_position(self):
         return self.sticker_template.slot_position()
