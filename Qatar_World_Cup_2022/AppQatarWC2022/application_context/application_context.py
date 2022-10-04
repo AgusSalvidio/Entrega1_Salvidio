@@ -2,6 +2,7 @@ class ApplicationContext:
     def __init__(self,system_collection):
         self.system_collection = system_collection
         self.form = None
+        self.message = None
 
     @classmethod
     def implementing(cls,system_collection):
@@ -22,8 +23,14 @@ class ApplicationContext:
     def current_form(self):
         return self.form
     
-    def store_form(self,form):
+    def current_message(self):
+        return self.message
+
+    def update_form_with(self,form):
         self.form = form
+
+    def update_information_message_with(self,message):
+        self.message = message
 
     def logged_user(self):
         return self.user_system().logged_user()

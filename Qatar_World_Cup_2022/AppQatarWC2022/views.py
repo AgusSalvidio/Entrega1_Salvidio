@@ -22,15 +22,11 @@ working_context = {'working_context':app.working_context()}
 
 @login_required
 def home(request):
-    pepe = app.working_context().logged_user_profile_avatar()
-    print(f"{pepe}")
     return render(request,"home.html",working_context)
 
 @login_required
 def my_album(request):
-    context = {'user_profile':UserProfile.objects.get(internal_user=request.user)}
-    return render(request,"my_album.html",context)
-
+    return render(request,"my_album.html",working_context)
 
 @login_required
 def player_stickers(request):
@@ -145,12 +141,16 @@ def login_request(request):
                 app.working_context().store_logged_user(request.user)
                 return render (request,'home.html',working_context)
             else:
-                return render(request,'login.html',{'form':form,'auth_message':'Usuario y/o contraseña incorrectos'})
+                app.working_context().update_form_with(form)
+                app.working_context().update_information_message_with('Usuario y/o contraseña incorrectos')
+                return render(request,'login.html',working_context)
         else:
-                return render(request,'login.html',{'form':form,'auth_message':'Usuario y/o contraseña incorrectos'})
+                app.working_context().update_form_with(form)
+                app.working_context().update_information_message_with('Usuario y/o contraseña incorrectos')
+                return render(request,'login.html',working_context)
     else:
-        form = SignIn()
-        return render(request,'login.html',{'form':form})    
+        app.working_context().update_form_with(SignIn())
+        return render(request,'login.html',working_context)    
 
 def sign_up(request):
     if request.method == 'POST':
@@ -163,11 +163,12 @@ def sign_up(request):
             user = internal_user_form.save()
             user_profile = UserProfile(internal_user = user, birthdate = birthdate, country = country, avatar_image = avatar)
             user_profile.save()
-            context = {'form':SignIn()}
-            return render(request,'login.html',context)
+            app.working_context().update_form_with(SignIn())
+            return render(request,'login.html',working_context)
         else:
-            context = {'form':UserRegistration(),'auth_message':f"No se pudo crear al usuario debido a {internal_user_form.errors}"}
-            return render(request,'sign_up.html',context)
+            app.working_context().update_form_with(UserRegistration())
+            app.working_context().update_information_message_with(f"No se pudo crear al usuario debido a {internal_user_form.errors}")
+            return render(request,'sign_up.html',working_context)
     else:
-        context = {'form':UserRegistration()}
-        return render(request,'sign_up.html',context)
+        app.working_context().update_form_with(UserRegistration())
+        return render(request,'sign_up.html',working_context)
