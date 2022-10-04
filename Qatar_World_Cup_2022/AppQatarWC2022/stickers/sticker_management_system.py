@@ -16,6 +16,8 @@ class StickerManagementSystem:
     def generate_sticker_pack(self):
         pass
 
+    def name(self):
+        return 'Sistema de Administración de Stickers'    
 
 
     

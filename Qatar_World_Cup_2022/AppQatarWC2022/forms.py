@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm,UserCreationForm
 from django.contrib.auth.models import User
 from AppQatarWC2022.countries import Country
-from AppQatarWC2022.stickers import PlayerPosition
+from AppQatarWC2022.stickers import PlayerPosition,PlayerSticker
 
 class SignIn(AuthenticationForm):
     username = forms.CharField(label='Usuario',widget=forms.TextInput(attrs={'class':'form-control'}))
@@ -18,6 +18,8 @@ class PlayerStickerRegistration(forms.Form):
     country = forms.ModelChoiceField(queryset=Country.objects.all(), empty_label=None,widget=forms.Select(attrs={'class':'form-control'}))
     position =forms.ModelChoiceField(queryset=PlayerPosition.objects.all(), empty_label=None,widget=forms.Select(attrs={'class':'form-control'}))
     sticker_image = forms.ImageField(label='Sticker',widget=forms.FileInput(attrs={'class':'form-control'}))
+    rarity_category = forms.ChoiceField(label='Rareza',choices=PlayerSticker.Rarities.choices,widget=forms.Select(attrs={'class':'form-control'}))
+    slot = forms.IntegerField(widget=forms.NumberInput(attrs={'class':'form-control'}))
 
 class UserRegistration(UserCreationForm):
     first_name = forms.CharField(max_length=50,widget=forms.TextInput(attrs={'class':'form-control'}))

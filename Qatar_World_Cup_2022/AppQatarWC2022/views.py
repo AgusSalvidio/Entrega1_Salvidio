@@ -16,10 +16,15 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 from django.contrib.auth.decorators import login_required
 
+from AppQatarWC2022.models import app
+
+working_context = {'working_context':app.working_context()}
+
 @login_required
 def home(request):
-    context = {'user_profile':UserProfile.objects.get(internal_user=request.user)}
-    return render(request,"home.html",context)
+    pepe = app.working_context().logged_user_profile_avatar()
+    print(f"{pepe}")
+    return render(request,"home.html",working_context)
 
 @login_required
 def my_album(request):
@@ -137,8 +142,8 @@ def login_request(request):
             user = authenticate(username = username, password = password)
             if user is not None:
                 login(request,user)
-                context = {'user_profile':UserProfile.objects.get(internal_user=request.user)}
-                return render (request,'home.html',context)
+                app.working_context().store_logged_user(request.user)
+                return render (request,'home.html',working_context)
             else:
                 return render(request,'login.html',{'form':form,'auth_message':'Usuario y/o contraseña incorrectos'})
         else:

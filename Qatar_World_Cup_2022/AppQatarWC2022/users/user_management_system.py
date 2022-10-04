@@ -14,3 +14,9 @@ class UserManagementSystem:
 
     def store_logged_user(self,user):
         self.logged_user_repo = (self.users_repo.get(internal_user = user))
+
+    def name(self):
+        return 'Sistema de Administración de Usuarios'
+
+    def logged_user_profile_avatar(self):
+        return self.logged_user().avatar()

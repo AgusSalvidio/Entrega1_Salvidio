@@ -17,7 +17,8 @@ class PlayerSticker(models.Model):
     position =  models.ForeignKey(PlayerPosition,on_delete=models.CASCADE)  
     sticker_image = models.ImageField(upload_to='stickers', default='stickers/default_sticker.jpg',null=False)
     slot = models.IntegerField()
-    rarity_category = models.CharField(max_length=50) 
+    Rarities = models.TextChoices('Rareza', 'Común Épica Legendaria')
+    rarity_category = models.CharField(max_length=50,choices=Rarities.choices) 
 
     def slot_position(self):
         return self.slot
