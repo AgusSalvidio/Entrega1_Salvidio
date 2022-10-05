@@ -2,7 +2,7 @@ class ApplicationContext:
     def __init__(self,system_collection):
         self.system_collection = system_collection
         self.form = None
-        self.message = None
+        self.message = ''
 
     @classmethod
     def implementing(cls,system_collection):
