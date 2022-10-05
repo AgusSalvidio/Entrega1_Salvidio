@@ -40,4 +40,11 @@ class ApplicationContext:
 
     def store_logged_user(self,user):
         self.user_system().store_logged_user(user)
-        
+
+    def stickers_of(self,user):
+        return self.sticker_system().stickers_of(user)
+
+    def refresh_album(self):
+        user = self.logged_user()
+        user_sticker_collection = self.stickers_of(user) 
+        self.album_system().refresh_album_with(user_sticker_collection)

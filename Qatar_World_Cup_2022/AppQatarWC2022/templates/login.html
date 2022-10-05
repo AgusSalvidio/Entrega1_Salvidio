@@ -17,7 +17,9 @@
                 <!-- Authentication card start -->
                     <form class="md-float-material form-material">
                         <div class="text-center">
-                            <img src="{% static 'AppQatarWC2022/images/logo.png' %}" alt="logo-Logo" />
+                            <a href="{% url 'home' %}">
+                                <img src="{% static 'AppQatarWC2022/images/logo.png' %}" href="{% url 'home' %}" alt="logo-Logo" />
+                            </a>
                         </div>
                         <div class="auth-box card">
                             <div class="card-block">

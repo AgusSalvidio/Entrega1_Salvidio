@@ -20,6 +20,18 @@ class PlayerSticker(models.Model):
     Rarities = models.TextChoices('Rareza', 'Común Épica Legendaria')
     rarity_category = models.CharField(max_length=50,choices=Rarities.choices) 
 
+    @classmethod
+    def for_empty_slot_in(cls,slot_position):
+        return cls(
+            first_name = None,
+            last_name = None,
+            country = None,
+            birthdate = None,
+            position =  None, 
+            sticker_image = None,
+            slot = slot_position,
+            rarity_category = None)
+
     def slot_position(self):
         return self.slot
     

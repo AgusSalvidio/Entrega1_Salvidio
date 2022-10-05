@@ -1,4 +1,5 @@
 from AppQatarWC2022.album.album import Album, AlbumPage
+from AppQatarWC2022.countries.country import Country
 
 
 class AlbumManagementSystem:
@@ -8,13 +9,13 @@ class AlbumManagementSystem:
        
     def refresh_album_with(self,generated_sticker_collection):
     
-        countries = ['Argentina']
+        qualified_countries = Country.objects.filter(qualified = True)
         
         album_page_collection = []
 
-        for country in countries:
+        for country in qualified_countries:
             stickers_filtered_by_country = next((generated_sticker for generated_sticker in generated_sticker_collection if generated_sticker.country() == country),[])
-            album_page = AlbumPage.composed_of(country,'background_image',stickers_filtered_by_country)
+            album_page = AlbumPage.composed_of(country,country.background(),stickers_filtered_by_country)
             album_page.initialize_slots()
             album_page_collection.append(album_page)
 

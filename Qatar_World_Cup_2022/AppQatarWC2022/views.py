@@ -26,7 +26,12 @@ def home(request):
 
 @login_required
 def my_album(request):
-    return render(request,"my_album.html",working_context)
+    if request.method =="POST":
+        pass
+    else:
+        app.working_context().refresh_album()
+        
+        return render(request,"my_album.html",working_context)
 
 @login_required
 def player_stickers(request):
