@@ -7,6 +7,9 @@ class StickerManagementSystem:
         self.player_stickers_repo = PlayerSticker.objects
         self.generated_stickers_repo = GeneratedSticker.objects
 
+    def player_stickers(self):
+        return self.player_stickers_repo.all()
+    
     def generated_stickers(self):
         return self.generated_stickers_repo
 

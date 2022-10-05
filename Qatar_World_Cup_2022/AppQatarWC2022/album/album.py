@@ -24,29 +24,46 @@ class Album:
         self.current_page().glue_sticker(sticker_id)  
 
 class AlbumPage:
-    def __init__(self,country_name,background_image,sticker_slot_collection):
+    def __init__(self,country_name,background_image,sticker_collection):
         self.background_image = background_image
-        self.sticker_slot_collection = sticker_slot_collection
+        self.sticker_collection = sticker_collection
         self.country_name = country_name
         self.album_slots = {}
 
     @classmethod
-    def composed_of(cls,country,background_image,sticker_slot_collection):
+    def composed_of(cls,country_name,background_image,sticker_collection):
 
         return cls(
-            country = country,
+            country_name = country_name,
             background_image = background_image,
-            sticker_slot_collection = sticker_slot_collection)
+            sticker_collection = sticker_collection)
 
     def stickers(self):
-        return self.sticker_slot_collection
+        return self.sticker_collection
     
     def add_sticker_slot(self,sticker_slot):
         self.album_slots.update({sticker_slot.slot_position():sticker_slot})
 
     #Revisar de pedirselo al workingContext 
     def initialize_slots(self):
-        for sticker_slot in self.stickers():
+        
+        generated_stickers = self.stickers()
+
+        glued_stickers = next((generated_sticker for generated_sticker in generated_stickers if generated_sticker.category() == 'Glued'),[])
+        #Acá hay que validar si llegara a existir repetidos con cual quedarse para eventualmente pegar....
+        new_stickers = next((generated_sticker for generated_sticker in generated_stickers if generated_sticker.category() == 'New'),[])
+
+        for slot_position in range(11):
+            
+            generated_sticker = next((generated_sticker for generated_sticker in generated_stickers if generated_sticker.slot_position() == slot_position),None)
+            
+            if generated_sticker == None:
+                sticker_slot = EmptySlot(generated_sticker)
+            elif generated_sticker.category() == 'Glued':
+                sticker_slot =  GluedSlot(generated_sticker)
+            else:
+                sticker_slot =  NewSlot(generated_sticker)
+                
             self.add_sticker_slot(sticker_slot)
 
     def country(self):

@@ -15,11 +15,11 @@ class ApplicationContext:
         return next((system for system in self.systems() if system.name() == 'Sistema de Administración de Usuarios'),None)
 
     def sticker_system(self):
-        return filter(lambda system: system.name == 'Sistema de Administración de Stickers',self.system_collection)
+        return next((system for system in self.systems() if system.name() == 'Sistema de Administración de Stickers'),None)
     
     def album_system(self):
-        return filter(lambda system: system.name == 'Sistema de Administración de Álbum',self.system_collection)
-        
+        return next((system for system in self.systems() if system.name() == 'Sistema de Administración de Álbum'),None)
+                
     def current_form(self):
         return self.form
     
