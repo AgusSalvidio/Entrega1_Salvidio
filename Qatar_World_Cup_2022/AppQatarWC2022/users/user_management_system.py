@@ -19,7 +19,7 @@ class UserManagementSystem:
         return 'Sistema de Administración de Usuarios'
 
     def logged_user_profile_avatar(self):
-        if self.logged_user == None:
+        if self.logged_user() == None:
             return '/media/avatars/default_avatar.jpg'
         else:
             return self.logged_user().avatar()
