@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block contents %}
-{{ auth_message }}
+{{ working_context.current_message }}
 <form action="{% url 'sign_up' %}" method="POST" enctype="multipart/form-data"> {% csrf_token %}
 <section class="login-block">
     <!-- Container-fluid starts -->
@@ -17,7 +17,9 @@
                 <!-- Authentication card start -->
                     <form class="md-float-material form-material">
                         <div class="text-center">
-                            <img src="{% static 'AppQatarWC2022/images/logo.png' %}" alt="logo-Logo" />
+                            <a href="{% url 'home' %}">
+                                <img src="{% static 'AppQatarWC2022/images/logo.png' %}" alt="logo-Logo" />
+                            </a>
                         </div>
                         <div class="auth-box card">
                             <div class="card-block">
@@ -26,49 +28,61 @@
                                         <h3 class="text-center">Registrarse</h3>
                                     </div>
                                 </div>
-                                <div class="form-group form-primary">
-                                    <label class="float-label" for="{{ form.first_name.id_for_label }}">Nombre</label>
-                                    {{ form.first_name }}
-                                    <span class="form-bar"></span>
-                                </div>
-                                <div class="form-group form-primary">
-                                    <label class="float-label" for="{{ form.last_name.id_for_label }}">Apellido</label>
-                                    {{ form.last_name }}
-                                    <span class="form-bar"></span>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group form-primary">
+                                            <label class="float-label" for="{{ form.first_name.id_for_label }}">Nombre</label>
+                                            {{ working_context.current_form.first_name }}
+                                            <span class="form-bar"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group form-primary">
+                                            <label class="float-label" for="{{ form.last_name.id_for_label }}">Apellido</label>
+                                            {{ working_context.current_form.last_name }}
+                                            <span class="form-bar"></span>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="form-group form-primary">
                                     <label class="float-label" for="{{ form.birthdate.id_for_label }}">Fecha de nacimiento</label>
-                                    {{ form.birthdate }}
+                                    {{ working_context.current_form.birthdate }}
                                     <span class="form-bar"></span>
                                 </div>
                                 <div class="form-group form-primary">
                                     <label class="float-label" for="{{ form.country.id_for_label }}">País</label>
-                                    {{ form.country }}
+                                    {{ working_context.current_form.country }}
                                     <span class="form-bar"></span>
                                 </div>
                                 <div class="form-group form-primary">
                                     <label class="float-label" for="{{ form.email.id_for_label }}">Email</label>
-                                    {{ form.email }}
+                                    {{ working_context.current_form.email }}
                                     <span class="form-bar"></span>
                                 </div>
                                 <div class="form-group form-primary">
                                     <label class="float-label" for="{{ form.username.id_for_label }}">Usuario</label>
-                                    {{ form.username }}
+                                    {{ working_context.current_form.username }}
                                     <span class="form-bar"></span>
                                 </div>
-                                <div class="form-group form-primary">
-                                    <label class="float-label" for="{{ form.password1.id_for_label }}">Contraseña</label>
-                                    {{ form.password1 }}
-                                    <span class="form-bar"></span>
-                                </div>
-                                <div class="form-group form-primary">
-                                    <label class="float-label" for="{{ form.password2.id_for_label }}">Repita la contraseña</label>
-                                    {{ form.password2 }}
-                                    <span class="form-bar"></span>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group form-primary">
+                                            <label class="float-label" for="{{ form.password1.id_for_label }}">Contraseña</label>
+                                            {{ working_context.current_form.password1 }}
+                                            <span class="form-bar"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group form-primary">
+                                            <label class="float-label" for="{{ form.password2.id_for_label }}">Repita la contraseña</label>
+                                            {{ working_context.current_form.password2 }}
+                                            <span class="form-bar"></span>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="form-group form-primary">
                                     <label class="float-label" for="{{ form.avatar.id_for_label }}">Subir avatar</label>
-                                    {{ form.avatar }}
+                                    {{ working_context.current_form.avatar }}
                                     <span class="form-bar"></span>
                                 </div>
                                 <div class="row m-t-25 text-left">

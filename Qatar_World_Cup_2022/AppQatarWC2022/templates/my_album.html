@@ -1,0 +1,61 @@
+{% extends 'index.html' %}
+
+{% load static %}
+
+{% block title %}
+<title>Mi Álbum | Qatar World Cup 2022</title>
+{% endblock %}
+
+{% block contents %}
+<legend>
+    <h2 class="section-heading">Mi Álbum</h2>
+</legend>
+<div class="divider-custom">
+</div>
+<div class="text-center">
+    
+    <div class="row">
+        {% for slot_position in working_context.sticker_first_row_range %}
+        <div class="col">
+            <!-- Sticker - First Row-->
+            <div class="portfolio-item">
+                <a class="portfolio-link" data-bs-toggle="modal" href="#">
+                    <img class="" src="{{ working_context.next_sticker_image }}" alt="..." height="250" width="175" />
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="divider-custom">
+    </div>
+    <div class="row">
+        {% for slot_position in working_context.sticker_second_row_range %}
+        <div class="col">
+            <!-- Sticker - Second Row -->
+            <div class="portfolio-item">
+                <a class="portfolio-link" data-bs-toggle="modal" href="#">
+                    <img class="" src="{{ working_context.next_sticker_image }}" alt="..." height="250" width="175" />
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<div class="divider-custom">
+</div>
+<div class="text-center">
+    <button style="background-color:#56042C;; border-color:#56042C;; color:white " class=" btn waves-effect waves-light"><i class="icofont icofont-arrow-left "></i>
+    </button>
+    <button style="background-color:#56042C;; border-color:#56042C;; color:white " class=" btn waves-effect waves-light">
+        {{ working_context.current_page.country }}
+    </button>
+    <button style="background-color:#56042C;; border-color:#56042C;; color:white " class=" btn waves-effect waves-light"><i class="icofont icofont-arrow-right"></i>
+    </button>
+
+</div>
+
+{% endblock %}
+
+{% block modals %}
+
+{% endblock %}

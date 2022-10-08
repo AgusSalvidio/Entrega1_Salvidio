@@ -112,7 +112,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="" class="waves-effect waves-light">
+                                <a href="{% url 'my_album' %}" class="waves-effect waves-light">
                                     MI ÁLBUM
                                 </a>
                             </li>
@@ -135,8 +135,8 @@
                             {% if user.is_authenticated %}
                                 <li class="user-profile header-notification">
                                     <a href="#!" class="waves-effect waves-light">
-                                        <img src= "{{ user_profile.avatar }}" height="50px" onerror="this.src='/media/avatars/default_avatar.jpg'" class="img-radius" alt="User-Profile-Image">
-                                        <span>{{ user_profile.internal_user }}</span>
+                                        <img src= "{{ working_context.logged_user_profile_avatar }}" height="50px" onerror="this.src='/media/avatars/default_avatar.jpg'" class="img-radius" alt="User-Profile-Image">
+                                        <span>{{ working_context.logged_user.username }}</span>
                                         <i class="ti-angle-down"></i>
                                     </a>
                                     <ul class="show-notification profile-notification">

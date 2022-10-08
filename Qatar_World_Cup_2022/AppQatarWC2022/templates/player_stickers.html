@@ -3,16 +3,21 @@
 {% load static %}
 
 {% block title %}
-<title>Stickers | Qatar World Cup 2022</title>
+<title>Stickers de Jugadores | Qatar World Cup 2022</title>
 {% endblock %}
 
 {% block contents %}
-<div align="right">
-    <!-- Button trigger modal -->
-    <button style="background-color:#56042C;; border-color:#56042C;; color:white " class=" btn waves-effect waves-light" onclick="registration_modal('{% url 'player_sticker_registration' %}')"><i class="icofont icofont-plus"></i>
-        Agregar
-    </button>
-</div>
+<legend>
+    Administrar Stickers de Jugadores
+    <div class="btn-toolbar pull-right">
+        <div class="btn-group pull-right">
+            <!-- Button trigger modal -->
+            <button style="background-color:#56042C;; border-color:#56042C;; color:white " class=" btn btn-sm waves-effect waves-light pull-right" onclick="registration_modal('{% url 'player_sticker_registration' %}')"><i class="icofont icofont-plus"></i>
+                Agregar
+            </button>
+        </div>
+    </div>
+</legend>
 <div class="table-responsive">
     <table class="table">
         <thead>
@@ -24,21 +29,19 @@
                 <th>Acciones</th>
             </tr>
         </thead>
-    {% if player_stickers %}
-        <tbody>
-            {% for player_sticker in player_stickers %}
+    {% if working_context.player_stickers %}
+            {% for player_sticker in working_context.player_stickers %}
             <tr>
                 <td>{{ player_sticker.full_name }}</td>
                 <td>{{ player_sticker.birthdate }}</td>
                 <td>{{ player_sticker.country }}</td>
                 <td>{{ player_sticker.position }}</td>
                 <td>
-                    <a class="btn waves-effect waves-light icofont icofont-ui-edit" onclick="update_modal('{% url 'player_sticker_update' player_sticker.id %}')"></a>
-                    <a class="icofont icofont-close" href="{% url 'player_sticker_unregistration' player_sticker.id %}"></a>   
+                    <a class="btn btn-sm waves-effect waves-light icofont icofont-ui-edit" onclick="update_modal('{% url 'player_sticker_update' player_sticker.id %}')"></a>
+                    <a class="btn btn-sm waves-effect waves-light icofont icofont-close" onclick="unregistration_modal('{% url 'player_sticker_unregistration' player_sticker.id %}')"></a>   
                 </td>
             </tr>
             {% endfor %}
-        </tbody>
     </table>
     {% else %}
     </table>
@@ -56,10 +59,19 @@
   
   </div>
 
+  <div class="modal fade" id="player_sticker_unregistration_modal" tabindex="-1" aria-labelledby="player_sticker_unregistration_modal" aria-hidden="true">
+  
+</div>
+
  <script type="text/javascript">
     var $ = jQuery.noConflict();
     function registration_modal(url){
         $('#player_sticker_registration_modal').load(url,function (){
+            $(this).modal('show');
+        });
+    }
+    function unregistration_modal(url){
+        $('#player_sticker_unregistration_modal').load(url,function (){
             $(this).modal('show');
         });
     }

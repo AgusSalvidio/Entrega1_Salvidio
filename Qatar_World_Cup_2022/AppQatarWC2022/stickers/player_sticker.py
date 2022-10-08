@@ -16,17 +16,40 @@ class PlayerSticker(models.Model):
     birthdate = models.DateField()
     position =  models.ForeignKey(PlayerPosition,on_delete=models.CASCADE)  
     sticker_image = models.ImageField(upload_to='stickers', default='stickers/default_sticker.jpg',null=False)
+    slot = models.IntegerField()
+    Rarities = models.TextChoices('Rareza', 'Común Épica Legendaria')
+    rarity_category = models.CharField(max_length=50,choices=Rarities.choices) 
 
+    @classmethod
+    def for_empty_slot_in(cls,slot_position):
+        return cls(
+            first_name = None,
+            last_name = None,
+            country = None,
+            birthdate = None,
+            position =  None, 
+            sticker_image = None,
+            slot = slot_position,
+            rarity_category = None)
+
+    def slot_position(self):
+        return self.slot
+    
     def full_name(self):
         return f'{self.first_name} {self.last_name}'
 
     def nationality(self):
-        return self.country.name
+        return self.country
     
+    def rarity(self):
+        return self.rarity_category
+
     def sticker(self):
         return self.sticker_image.url
 
     def __str__(self):
         return self.full_name()
+
+
 
 

@@ -1,12 +1,12 @@
 <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="promo_code_modal">Baja de Código</h5>
+        <h5 class="modal-title" id="promo_code_modal">Baja de Código Promocional</h5>
         <a class="btn waves-effect waves-light icofont icofont-ui-close" data-bs-dismiss="modal"></a>
       </div>
-      <form action="{% url 'promo_code_unregistration' promo_code.id  %}" method="POST"> {% csrf_token %}
+      <form action="{% url 'promo_code_unregistration' working_context.current_object.id  %}" method="POST"> {% csrf_token %}
         <div class="modal-body">
-            <h4>¿Estás seguro que deseas eliminar {{ promo_code }}?</h4> 
+            <h4>¿Estás seguro que deseas eliminar {{ working_context.current_object }}?</h4> 
         </div>
         <div class="modal-footer">
             <button type='button'style="background-color:#8b8b8b;; border-color:#8b8b8b;; color:rgb(255, 255, 255)" class="btn waves-effect waves-light" data-bs-dismiss="modal">
