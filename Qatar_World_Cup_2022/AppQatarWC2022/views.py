@@ -30,7 +30,6 @@ def my_album(request):
         pass
     else:
         app.working_context().refresh_album()
-        
         return render(request,"my_album.html",working_context)
 
 @login_required

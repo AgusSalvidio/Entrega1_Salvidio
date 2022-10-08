@@ -21,10 +21,7 @@ class Album:
         return self.selected_page  
    
     def page_for(self,country_name):
-        return filter(lambda album_page: album_page.country().name == country_name,self.pages)
-
-    def glue_sticker(self,sticker_id):
-        self.current_page().glue_sticker(sticker_id)  
+        return list(filter(lambda album_page : album_page.country().full_name() == country_name,self.pages()))[0]
 
 class AlbumPage:
     def __init__(self,current_country,background_image,sticker_collection):
@@ -32,6 +29,7 @@ class AlbumPage:
         self.sticker_collection = sticker_collection
         self.current_country = current_country
         self.album_slots = {}
+        self.current_index_position = 0
 
     @classmethod
     def composed_of(cls,current_country,background_image,sticker_collection):
@@ -41,31 +39,42 @@ class AlbumPage:
             background_image = background_image,
             sticker_collection = sticker_collection)
 
+    def sticker_slot_image_at(self,slot_position):
+        return self.sticker_slot_at(slot_position).sticker()
+    
+    def sticker_slot_at(self,slot_position):
+        return self.slots().get(slot_position)
+
+    def slots(self):
+        return self.album_slots
+
     def stickers(self):
         return self.sticker_collection
     
     def add_sticker_slot(self,sticker_slot):
-        print(f"ACA ES EL STICKER_SLOT {sticker_slot}")
-        self.album_slots.update({sticker_slot.sticker().slot_position():sticker_slot})
+        slot_position = sticker_slot.sticker().slot_position()
+        self.album_slots.update({slot_position:sticker_slot})
+
+    def index_position(self):
+        return self.current_index_position
+
+    def increment_index_position(self):
+        self.current_index_position += 1
 
     def initialize_slots(self):
         
         generated_stickers = self.stickers()
 
-        glued_stickers = next((generated_sticker for generated_sticker in generated_stickers if generated_sticker.category() == 'Glued'),[])
-        #Acá hay que validar si llegara a existir repetidos con cual quedarse para eventualmente pegar....
-        new_stickers = next((generated_sticker for generated_sticker in generated_stickers if generated_sticker.category() == 'New'),[])
-
-        for slot_position in range(11):
+        for slot_position in range(12):
             
-            generated_sticker = next((generated_sticker for generated_sticker in generated_stickers if generated_sticker.slot_position() == slot_position),GeneratedSticker.for_empty_slot_in(slot_position))
-            
-            if generated_sticker == None:
-                sticker_slot = EmptySlot(generated_sticker)
-            elif generated_sticker.category() == 'Glued':
-                sticker_slot = GluedSlot(generated_sticker)
+            generated_sticker_in_slot = list(filter(lambda generated_sticker: generated_sticker.slot_position() == slot_position,generated_stickers))
+                        
+            if len(generated_sticker_in_slot) == 0:
+                sticker_slot = EmptySlot(GeneratedSticker.for_empty_slot_in(slot_position))
+            elif generated_sticker_in_slot[0].category() == 'Glued':
+                sticker_slot = GluedSlot(generated_sticker_in_slot[0])
             else:
-                sticker_slot = NewSlot(generated_sticker)
+                sticker_slot = NewSlot(generated_sticker_in_slot[0])
                 
             self.add_sticker_slot(sticker_slot)
 
@@ -73,7 +82,8 @@ class AlbumPage:
         return self.current_country
 
     def glue_sticker(self,sticker_id):
-        next((generated_sticker for generated_sticker in self.stickers() if generated_sticker.id == sticker_id),None).glue_sticker()
+        sticker = list(filter(lambda generated_sticker: generated_sticker.id == sticker_id,self.stickers() ))[0]
+        sticker.glue_sticker()
         
 
 class StickerSlot:
@@ -82,6 +92,9 @@ class StickerSlot:
     
     def sticker(self):
         return self.generated_sticker
+
+    def sticker_image(self):
+        return self.sticker().sticker_image()
 
     def isGlued(self):
         return False
@@ -93,7 +106,10 @@ class StickerSlot:
         return False
     
 class NewSlot(StickerSlot):
-   
+    
+    def sticker_image(self):
+        return '/media/stickers/to-add.jpg'
+
     def isNew(self):
         return True
 
@@ -103,6 +119,9 @@ class GluedSlot(StickerSlot):
         return True
 
 class EmptySlot(StickerSlot):
+
+    def sticker_image(self):
+        return '/media/stickers/not-found.jpg'
 
     def isEmpty(self):
         return True

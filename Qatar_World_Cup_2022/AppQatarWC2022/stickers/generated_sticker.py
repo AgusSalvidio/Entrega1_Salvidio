@@ -32,6 +32,9 @@ class GeneratedSticker(models.Model):
     def slot_position(self):
         return self.sticker_template.slot_position()
     
+    def sticker_image(self):
+        return self.sticker().sticker()
+
     def sticker(self):
         return self.sticker_template
 

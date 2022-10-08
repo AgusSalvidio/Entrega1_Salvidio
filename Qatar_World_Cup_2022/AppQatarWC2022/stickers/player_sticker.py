@@ -39,7 +39,7 @@ class PlayerSticker(models.Model):
         return f'{self.first_name} {self.last_name}'
 
     def nationality(self):
-        return self.country.name
+        return self.country
     
     def rarity(self):
         return self.rarity_category

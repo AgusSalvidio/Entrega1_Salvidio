@@ -11,15 +11,16 @@ class ApplicationContext:
     def systems(self):
         return self.system_collection
 
-    def user_system(self):
-        return next((system for system in self.systems() if system.name() == 'Sistema de Administración de Usuarios'),None)
+    def filter_system_named(self,system_name):
+        return list(filter(lambda system: system.name() == system_name,self.systems() ))[0] 
 
+    def user_system(self):
+        return self.filter_system_named('Sistema de Administración de Usuarios') 
     def sticker_system(self):
-        return next((system for system in self.systems() if system.name() == 'Sistema de Administración de Stickers'),None)
-    
+        return self.filter_system_named('Sistema de Administración de Stickers')
     def album_system(self):
-        return next((system for system in self.systems() if system.name() == 'Sistema de Administración de Álbum'),None)
-                
+        return self.filter_system_named('Sistema de Administración de Álbum') 
+        
     def current_form(self):
         return self.form
     
@@ -48,3 +49,31 @@ class ApplicationContext:
         user = self.logged_user()
         user_sticker_collection = self.stickers_of(user) 
         self.album_system().refresh_album_with(user_sticker_collection)
+
+    def sticker_slot_image_at(self,slot_position):
+        return self.slots().get(slot_position).sticker_image()
+
+    def slots(self):
+        return self.album().current_page().slots()
+    
+    def album(self):
+        return self.album_system().album()
+
+    def current_page(self):
+        return self.album().current_page()
+
+    def sticker_first_row_range(self):
+        return list(range(6))
+
+    def sticker_second_row_range(self):
+        return list(range(6,12))
+
+    def increment_index_position(self):
+        self.current_page().increment_index_position()
+
+    #This function is needed when html loads the url path, its a horrible implementation but jinja does not allow functions with arguments.
+    def next_sticker_image(self):
+        current_index = self.current_page().index_position()
+        image = self.sticker_slot_image_at(current_index)
+        self.increment_index_position()
+        return image
