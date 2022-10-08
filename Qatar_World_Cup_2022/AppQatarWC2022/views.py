@@ -34,13 +34,13 @@ def my_album(request):
 
 @login_required
 def player_stickers(request):
-    context = {'player_stickers': PlayerSticker.objects.all(),'form':PlayerStickerRegistration()}
-    return render(request,"player_stickers.html",context)
+    app.working_context().update_form_with(PlayerStickerRegistration())
+    return render(request,"player_stickers.html",working_context)
 
 @login_required
 def player_sticker_registration(request):
     if request.method =="POST":
-        form = PlayerStickerRegistration(request.POST)
+        form = PlayerStickerRegistration(request.POST,request.FILES)
         if form.is_valid():
             information = form.cleaned_data
             first_name = information["first_name"]
@@ -49,23 +49,31 @@ def player_sticker_registration(request):
             birthdate = information["birthdate"]
             position = information["position"]
             sticker = information["sticker"]
-            player_card = PlayerSticker(first_name = first_name,last_name = last_name,birthdate = birthdate,country = country,position=position,sticker_image = sticker)
-            player_card.save()
+            rarity_category = information["rarity_category"]
+            slot = information["slot"]
+            player_sticker = PlayerSticker(first_name = first_name,last_name = last_name,birthdate = birthdate,country = country,position=position,sticker_image = sticker,rarity_category = rarity_category, slot = slot)
+            player_sticker.save()
             response = player_stickers(request)
             return HttpResponse(response)
         else:
             response = player_stickers(request)
             return HttpResponse(response)
     else:
-        context = {'form':PlayerStickerRegistration()}
-        return render(request, "player_sticker_registration.html",context)
+        app.working_context().update_form_with(PlayerStickerRegistration())
+        return render(request, "player_sticker_registration.html",working_context)
 
 @login_required
 def player_sticker_unregistration(request, id):
     player_sticker=PlayerSticker.objects.get(id=id)
-    player_sticker.delete()
-    response = player_stickers(request)
-    return HttpResponse(response)
+    if request.method=="POST":
+        player_sticker.delete()
+        response = player_stickers(request)
+        return HttpResponse(response)
+    else:
+        form = PlayerStickerRegistration({'first_name':player_sticker.first_name,'last_name':player_sticker.last_name,'country':player_sticker.country,'birthdate':player_sticker.birthdate,'position':player_sticker.position,'sticker_image':player_sticker.sticker_image,'rarity_category': player_sticker.rarity_category,'slot':player_sticker.slot})
+        app.working_context().update_form_with(form)
+        app.working_context().update_selected_object_with(player_sticker)
+        return render(request, "player_sticker_unregistration.html",working_context)
 
 @login_required
 def player_sticker_update(request, id):
@@ -76,18 +84,22 @@ def player_sticker_update(request, id):
         player_sticker.country = request.POST["country"]
         player_sticker.birthdate = request.POST["birthdate"]
         player_sticker.position = request.POST["position"]
+        player_sticker.sticker_image = request.FILES["sticker_image"]
+        player_sticker.rarity_category = request.POST["rarity_category"]
+        player_sticker.slot = request.POST["slot"]
         player_sticker.save()
         response = player_stickers(request)
         return HttpResponse(response)
     else:
-        form=PlayerStickerRegistration({'first_name':player_sticker.first_name,'last_name':player_sticker.last_name,'country':player_sticker.country,'birthdate':player_sticker.birthdate,'position':player_sticker.position})
-        context = {'form':form,'player_sticker':player_sticker}
-        return render(request, "player_sticker_update.html",context)
+        form = PlayerStickerRegistration({'first_name':player_sticker.first_name,'last_name':player_sticker.last_name,'country':player_sticker.country,'birthdate':player_sticker.birthdate,'position':player_sticker.position,'sticker_image':'/media/stickers/angel-dimaria.jpg','rarity_category': player_sticker.rarity_category,'slot':player_sticker.slot})
+        app.working_context().update_form_with(form)
+        app.working_context().update_selected_object_with(player_sticker)
+        return render(request, "player_sticker_update.html",working_context)
 
 @login_required
 def promo_codes(request):
-    context={"promo_codes": PromoCode.objects.all(),'form':PromoCodeRegistration()}
-    return render(request,"promo_codes.html",context)
+    app.working_context().update_form_with(PromoCodeRegistration())
+    return render(request,"promo_codes.html",working_context)
 
 @login_required
 def promo_code_registration(request):
@@ -104,8 +116,8 @@ def promo_code_registration(request):
             response = promo_codes(request)
             return HttpResponse(response)
     else:
-        context = {"form":PromoCodeRegistration()} 
-        return render(request, "promo_code_registration.html",context)
+        app.working_context().update_form_with(PromoCodeRegistration())
+        return render(request, "promo_code_registration.html",working_context)
         
 @login_required
 def promo_code_update(request, id):
@@ -115,11 +127,10 @@ def promo_code_update(request, id):
         promo_code.save()
         response = promo_codes(request)
         return HttpResponse(response)
-    else: 
-        form = PromoCodeRegistration({"code": promo_code.code})
-        context ={"form":form , "promo_code": promo_code} 
-        return render(request, "promo_code_update.html",context)
-
+    else:
+        app.working_context().update_form_with(PromoCodeRegistration({"code": promo_code.code}))
+        app.working_context().update_selected_object_with(promo_code)  
+        return render(request, "promo_code_update.html",working_context)
 
 @login_required
 def promo_code_unregistration(request, id):
@@ -129,9 +140,9 @@ def promo_code_unregistration(request, id):
         response = promo_codes(request)
         return HttpResponse(response)
     else:
-        form = PromoCodeRegistration({"code": promo_code.code})
-        context ={"form":form , "promo_code": promo_code} 
-        return render(request, "promo_code_unregistration.html",context)
+        app.working_context().update_form_with(PromoCodeRegistration({"code": promo_code.code}))
+        app.working_context().update_selected_object_with(promo_code)   
+        return render(request, "promo_code_unregistration.html",working_context)
 
 def login_request(request):
     if request.method == 'POST':

@@ -1,55 +1,71 @@
 <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="player_sticker_modal">Modificación de Sticker</h5>
+        <h5 class="modal-title" id="player_sticker_modal">Modificación de Sticker de Jugador</h5>
         <a class="btn waves-effect waves-light icofont icofont-ui-close" data-bs-dismiss="modal" onclick="location.href='{% url 'player_stickers'  %}'"></a>
       </div>
-      <form action="{% url 'player_sticker_update' player_sticker.id  %}" method="POST"> {% csrf_token %}
+      <form action="{% url 'player_sticker_update' working_context.current_object.id  %}" method="POST"> {% csrf_token %}
         <div class="modal-body">
             <section class="login-block">
                 <!-- Container-fluid starts -->
                 <div class="container-fluid">
                     <div class="form-group form-primary">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group form-primary">
+                                    <label class="float-label" for="{{ working_context.current_form.first_name.id_for_label }}">Nombre</label>
+                                    {{ working_context.current_form.first_name }}
+                                    <span class="form-bar"></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group form-primary">
+                                    <label class="float-label" for="{{ working_context.current_form.last_name.id_for_label }}">Apellido</label>
+                                    {{ working_context.current_form.last_name }}
+                                    <span class="form-bar"></span>
+                                </div>
+                            </div>
+                        </div>
                         <div class="form-group form-primary">
-                            <label class="float-label" for="{{ form.first_name.id_for_label }}">Nombre</label>
-                            {{ form.first_name }}
+                            <label class="float-label" for="{{ working_context.current_form.birthdate.id_for_label }}">Fecha de Nacimiento</label>
+                            {{ working_context.current_form.birthdate }}
                             <span class="form-bar"></span>
                         </div>
                         <div class="form-group form-primary">
-                            <label class="float-label" for="{{ form.last_name.id_for_label }}">Apellido</label>
-                            {{ form.last_name }}
+                            <label class="float-label" for="{{ working_context.current_form.country.id_for_label }}">País</label>
+                            {{ working_context.current_form.country }}
                             <span class="form-bar"></span>
                         </div>
                         <div class="form-group form-primary">
-                            <label class="float-label" for="{{ form.birthdate.id_for_label }}">Fecha de Nacimiento</label>
-                            {{ form.birthdate }}
+                            <label class="float-label" for="{{ working_context.current_form.position.id_for_label }}">Posición</label>
+                            {{ working_context.current_form.position }}
                             <span class="form-bar"></span>
                         </div>
                         <div class="form-group form-primary">
-                            <label class="float-label" for="{{ form.country.id_for_label }}">País</label>
-                            {{ form.country }}
+                            <label class="float-label" for="{{ working_context.current_form.slot.id_for_label }}"> Álbum Slot</label>
+                            {{ working_context.current_form.slot }}
                             <span class="form-bar"></span>
                         </div>
                         <div class="form-group form-primary">
-                            <label class="float-label" for="{{ form.position.id_for_label }}">Posición</label>
-                            {{ form.position }}
+                            <label class="float-label" for="{{ working_context.current_form.rarity_category.id_for_label }}">Rareza</label>
+                            {{ working_context.current_form.rarity_category }}
                             <span class="form-bar"></span>
-                        </div>
+                        </div> 
                         <div class="form-group form-primary">
-                            <label class="float-label" for="{{ form.sticker_image.id_for_label }}">Subir sticker</label>
-                            {{ form.sticker_image }}
+                            <label class="float-label" for="{{ working_context.current_form.sticker_image.id_for_label }}">Subir sticker</label>
+                            {{ working_context.current_form.sticker_image }}
                             <span class="form-bar"></span>
-                        </div>                                 
+                        </div>                                                 
                     </div> 
                 </div>
                 <!-- end of container-fluid -->
             </section>    
         </div>
         <div class="modal-footer">
-            <button type="button" style="background-color:#8b8b8b;; border-color:#8b8b8b;; color:rgb(255, 255, 255)" class="btn waves-effect waves-light" data-bs-dismiss="modal" onclick="location.href='{% url 'player_stickers'  %}'">
+            <button type="button" style="background-color:#8b8b8b;; border-color:#8b8b8b;; color:rgb(255, 255, 255)" class="btn btn-sm waves-effect waves-light" data-bs-dismiss="modal" onclick="location.href='{% url 'player_stickers'  %}'">
                 Cerrar
             </button>
-            <button type="submit" style="background-color:#56042C;; border-color:#56042C;; color:white " class="btn waves-effect waves-light">
+            <button type="submit" style="background-color:#56042C;; border-color:#56042C;; color:white " class="btn btn-sm waves-effect waves-light">
                 Modificar
             </button>
         </div>

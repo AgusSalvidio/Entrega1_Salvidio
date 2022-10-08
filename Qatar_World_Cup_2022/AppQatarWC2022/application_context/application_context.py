@@ -1,7 +1,9 @@
+
 class ApplicationContext:
     def __init__(self,system_collection):
         self.system_collection = system_collection
         self.form = None
+        self.selected_object = None
         self.message = ''
 
     @classmethod
@@ -19,16 +21,24 @@ class ApplicationContext:
     def sticker_system(self):
         return self.filter_system_named('Sistema de Administración de Stickers')
     def album_system(self):
-        return self.filter_system_named('Sistema de Administración de Álbum') 
+        return self.filter_system_named('Sistema de Administración de Álbum')
+    def promo_code_system(self):
+        return self.filter_system_named('Sistema de Administración de Códigos Promocionales')  
         
     def current_form(self):
         return self.form
+
+    def current_object(self):
+        return self.selected_object
     
     def current_message(self):
         return self.message
 
     def update_form_with(self,form):
         self.form = form
+
+    def update_selected_object_with(self,object):
+        self.selected_object = object
 
     def update_information_message_with(self,message):
         self.message = message
@@ -77,3 +87,10 @@ class ApplicationContext:
         image = self.sticker_slot_image_at(current_index)
         self.increment_index_position()
         return image
+
+    def player_stickers(self):
+        return self.sticker_system().player_stickers()
+
+    #Should implement a system for this?
+    def promo_codes(self):
+        return self.promo_code_system().promo_codes()

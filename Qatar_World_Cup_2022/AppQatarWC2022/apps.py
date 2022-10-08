@@ -15,10 +15,12 @@ class Appqatarwc2022Config(AppConfig):
         from .stickers import StickerManagementSystem
         from .users import UserManagementSystem
         from .album import AlbumManagementSystem
+        from .promo_codes import PromoCodeManagementSystem
         self.sticker_system = StickerManagementSystem()
         self.user_system = UserManagementSystem()
         self.album_system = AlbumManagementSystem()
-        self.context = ApplicationContext.implementing([self.sticker_system,self.user_system,self.album_system])
+        self.promo_code_system = PromoCodeManagementSystem()
+        self.context = ApplicationContext.implementing([self.sticker_system,self.user_system,self.album_system,self.promo_code_system])
 
     def working_context(self):
         return self.context

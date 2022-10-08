@@ -7,12 +7,17 @@
 {% endblock %}
 
 {% block contents%}
-<div align="right">
-    <!-- Button trigger modal -->
-    <button style="background-color:#56042C;; border-color:#56042C;; color:white " class=" btn waves-effect waves-light" onclick="registration_modal('{% url 'promo_code_registration' %}')"><i class="icofont icofont-plus"></i>
-        Agregar
-    </button>
-</div>
+<legend>
+    Administrar Códigos Promocionales
+    <div class="btn-toolbar pull-right">
+        <div class="btn-group pull-right">
+            <!-- Button trigger modal -->
+            <button style="background-color:#56042C;; border-color:#56042C;; color:white " class=" btn btn-sm waves-effect waves-light" onclick="registration_modal('{% url 'promo_code_registration' %}')"><i class="icofont icofont-plus"></i>
+                Agregar
+            </button>
+        </div>
+    </div>
+</legend>
 <div class="table-responsive">
     <table class="table">
         <thead>
@@ -21,18 +26,16 @@
                 <th>Acciones</th>
             </tr>
         </thead>
-    {% if promo_codes %}
-        <tbody>
-            {% for promo_code in promo_codes %}
+    {% if working_context.promo_codes %}
+            {% for promo_code in working_context.promo_codes %}
             <tr>
                 <td>{{ promo_code.code }}</td>
                 <td>
-                    <a class="btn waves-effect waves-light icofont icofont-ui-edit" onclick="update_modal('{% url 'promo_code_update' promo_code.id %}')"></a>
-                    <a class="btn waves-effect waves-light icofont icofont-close" onclick="unregistration_modal('{% url 'promo_code_unregistration' promo_code.id %}')"></a>   
+                    <a class="btn btn-sm waves-effect waves-light icofont icofont-ui-edit" onclick="update_modal('{% url 'promo_code_update' promo_code.id %}')"></a>
+                    <a class="btn btn-sm waves-effect waves-light icofont icofont-close" onclick="unregistration_modal('{% url 'promo_code_unregistration' promo_code.id %}')"></a>   
                 </td>
             </tr>
             {% endfor %}
-        </tbody>
     </table>
     {% else %}
     </table>

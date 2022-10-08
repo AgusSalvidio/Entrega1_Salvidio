@@ -1,7 +1,7 @@
 <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="promo_code_modal">Alta de Código</h5>
+        <h5 class="modal-title" id="promo_code_modal">Alta de Código Promocional</h5>
         <a class="btn waves-effect waves-light icofont icofont-ui-close" data-bs-dismiss="modal" onclick="location.href='{% url 'promo_codes'  %}'"></a>
       </div>
       <form action="{% url 'promo_code_registration' %}" method="POST"> {% csrf_token %}
@@ -10,8 +10,8 @@
                 <!-- Container-fluid starts -->
                 <div class="container-fluid">
                     <div class="form-group form-primary">
-                        <label class="float-label" for="{{ form.code.id_for_label }}">Código</label>
-                        {{ form.code }}
+                        <label class="float-label" for="{{ working_context.current_form.code.id_for_label }}">Código</label>
+                        {{ working_context.current_form.code }}
                         <span class="form-bar"></span>
                     </div> 
                 </div>
@@ -19,10 +19,10 @@
             </section>    
         </div>
         <div class="modal-footer">
-            <button type="button" style="background-color:#8b8b8b;; border-color:#8b8b8b;; color:rgb(255, 255, 255)" class="btn waves-effect waves-light" data-bs-dismiss="modal" onclick="location.href='{% url 'promo_codes'  %}'" >
+            <button type="button" style="background-color:#8b8b8b;; border-color:#8b8b8b;; color:rgb(255, 255, 255)" class="btn btn-sm waves-effect waves-light" data-bs-dismiss="modal" onclick="location.href='{% url 'promo_codes'  %}'" >
                 Cerrar
             </button>
-            <button type="submit" style="background-color:#56042C;; border-color:#56042C;; color:white " class="btn waves-effect waves-light">
+            <button type="submit" style="background-color:#56042C;; border-color:#56042C;; color:white " class="btn btn-sm waves-effect waves-light">
                 Agregar
             </button>
         </div>
