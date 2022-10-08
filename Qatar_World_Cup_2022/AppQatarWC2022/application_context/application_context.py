@@ -94,3 +94,15 @@ class ApplicationContext:
     #Should implement a system for this?
     def promo_codes(self):
         return self.promo_code_system().promo_codes()
+
+    def register_promo_code(self,promo_code):
+        self.promo_code_system().register_promo_code(promo_code)
+
+    def promo_code_identified_as(self,promo_code_id):
+        return self.promo_code_system().promo_code_identified_as(promo_code_id)
+
+    def unregister_promo_code(self,promo_code):
+        self.promo_code_system().unregister_promo_code(promo_code)
+
+    def update_promo_code_with(self,promo_code,updated_promo_code):
+        self.promo_code_system().update_promo_code_with(promo_code,updated_promo_code)

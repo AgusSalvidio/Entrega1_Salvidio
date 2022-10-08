@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from .models import *
 from django.http import HttpResponse
 from django.urls import reverse_lazy
@@ -17,6 +17,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 
 from AppQatarWC2022.models import app
+
+from django.contrib import messages
+from assertions import InstanceCreationFailed, SystemRestrictionInfringed
 
 working_context = {'working_context':app.working_context()}
 
@@ -106,27 +109,29 @@ def promo_code_registration(request):
     if request.method =="POST":
         form = PromoCodeRegistration(request.POST)
         if form.is_valid():
-            information = form.cleaned_data
-            code = information["code"]
-            promo_code = PromoCode(code=code)
+            promo_code = PromoCode.from_form(form.cleaned_data)
+            app.working_context().register_promo_code(promo_code)
             promo_code.save()
-            response = promo_codes(request)
-            return HttpResponse(response)
+            return redirect('promo_codes')
         else:
-            response = promo_codes(request)
-            return HttpResponse(response)
+            messages.error(request,form.errors)
+            return redirect('promo_codes')
     else:
         app.working_context().update_form_with(PromoCodeRegistration())
         return render(request, "promo_code_registration.html",working_context)
         
 @login_required
 def promo_code_update(request, id):
-    promo_code=PromoCode.objects.get(id=id)
+    promo_code = app.working_context().promo_code_identified_as(id)
     if request.method=="POST":
-        promo_code.code=request.POST["code"]
-        promo_code.save()
-        response = promo_codes(request)
-        return HttpResponse(response)
+        form = PromoCodeRegistration(request.POST)
+        if form.is_valid():
+            updated_promo_code = PromoCode.from_form(form.cleaned_data)
+            app.working_context().update_promo_code_with(promo_code,updated_promo_code)
+            return redirect('promo_codes')
+        else:
+            messages.error(request,form.errors)
+            return redirect('promo_codes')
     else:
         app.working_context().update_form_with(PromoCodeRegistration({"code": promo_code.code}))
         app.working_context().update_selected_object_with(promo_code)  
@@ -134,11 +139,10 @@ def promo_code_update(request, id):
 
 @login_required
 def promo_code_unregistration(request, id):
-    promo_code=PromoCode.objects.get(id=id)
+    promo_code = app.working_context().promo_code_identified_as(id)
     if request.method=="POST":
-        promo_code.delete()
-        response = promo_codes(request)
-        return HttpResponse(response)
+        app.working_context().unregister_promo_code(promo_code)
+        return redirect('promo_codes')
     else:
         app.working_context().update_form_with(PromoCodeRegistration({"code": promo_code.code}))
         app.working_context().update_selected_object_with(promo_code)   
@@ -157,12 +161,12 @@ def login_request(request):
                 return render (request,'home.html',working_context)
             else:
                 app.working_context().update_form_with(form)
-                app.working_context().update_information_message_with('Usuario y/o contraseña incorrectos')
-                return render(request,'login.html',working_context)
+                messages.error(request,'Usuario y/o contraseña incorrectos')
+                return redirect('login')
         else:
                 app.working_context().update_form_with(form)
-                app.working_context().update_information_message_with('Usuario y/o contraseña incorrectos')
-                return render(request,'login.html',working_context)
+                messages.error(request,'Usuario y/o contraseña incorrectos')
+                return redirect('login')
     else:
         app.working_context().update_form_with(SignIn())
         return render(request,'login.html',working_context)    
@@ -182,8 +186,8 @@ def sign_up(request):
             return render(request,'login.html',working_context)
         else:
             app.working_context().update_form_with(UserRegistration())
-            app.working_context().update_information_message_with(f"No se pudo crear al usuario debido a {internal_user_form.errors}")
-            return render(request,'sign_up.html',working_context)
+            messages.error(request,f'No se pudo crear al usuario debido a {internal_user_form.errors}')
+            return redirect('sign_up')
     else:
         app.working_context().update_form_with(UserRegistration())
         return render(request,'sign_up.html',working_context)
