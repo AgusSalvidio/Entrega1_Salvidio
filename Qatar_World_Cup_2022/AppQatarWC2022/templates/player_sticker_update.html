@@ -4,7 +4,7 @@
         <h5 class="modal-title" id="player_sticker_modal">Modificación de Sticker de Jugador</h5>
         <a class="btn waves-effect waves-light icofont icofont-ui-close" data-bs-dismiss="modal" onclick="location.href='{% url 'player_stickers'  %}'"></a>
       </div>
-      <form action="{% url 'player_sticker_update' working_context.current_object.id  %}" method="POST"> {% csrf_token %}
+      <form action="{% url 'player_sticker_update' working_context.current_object.id  %}" method="POST" enctype="multipart/form-data"> {% csrf_token %}
         <div class="modal-body">
             <section class="login-block">
                 <!-- Container-fluid starts -->

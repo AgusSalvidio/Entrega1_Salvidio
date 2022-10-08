@@ -4,7 +4,7 @@
         <h5 class="modal-title" id="player_sticker_modal">Baja de Sticker de Jugador</h5>
         <a class="btn waves-effect waves-light icofont icofont-ui-close" data-bs-dismiss="modal"></a>
       </div>
-      <form action="{% url 'player_sticker_unregistration' working_context.current_object.id  %}" method="POST"> {% csrf_token %}
+      <form action="{% url 'player_sticker_unregistration' working_context.current_object.id  %}" method="POST" enctype="multipart/form-data"> {% csrf_token %}
         <div class="modal-body">
             <h4>¿Estás seguro que deseas eliminar {{ working_context.current_object }}?</h4> 
         </div>

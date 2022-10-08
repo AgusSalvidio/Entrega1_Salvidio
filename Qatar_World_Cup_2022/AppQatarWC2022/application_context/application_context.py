@@ -88,10 +88,7 @@ class ApplicationContext:
         self.increment_index_position()
         return image
 
-    def player_stickers(self):
-        return self.sticker_system().player_stickers()
-
-    #Should implement a system for this?
+    """ Promo Codes """
     def promo_codes(self):
         return self.promo_code_system().promo_codes()
 
@@ -106,3 +103,19 @@ class ApplicationContext:
 
     def update_promo_code_with(self,promo_code,updated_promo_code):
         self.promo_code_system().update_promo_code_with(promo_code,updated_promo_code)
+
+    """ Player Sticker """
+    def player_stickers(self):
+        return self.sticker_system().player_stickers()
+
+    def register_player_sticker(self,player_sticker):
+        self.sticker_system().register_player_sticker(player_sticker)
+
+    def player_sticker_identified_as(self,player_sticker_id):
+        return self.sticker_system().player_sticker_identified_as(player_sticker_id)
+
+    def unregister_player_sticker(self,player_sticker):
+        self.sticker_system().unregister_player_sticker(player_sticker)
+
+    def update_player_sticker_with(self,player_sticker,updated_player_sticker):
+        self.sticker_system().update_player_sticker_with(player_sticker,updated_player_sticker)

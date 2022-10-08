@@ -45,33 +45,22 @@ def player_sticker_registration(request):
     if request.method =="POST":
         form = PlayerStickerRegistration(request.POST,request.FILES)
         if form.is_valid():
-            information = form.cleaned_data
-            first_name = information["first_name"]
-            last_name = information["last_name"]
-            country = information["country"]
-            birthdate = information["birthdate"]
-            position = information["position"]
-            sticker = information["sticker"]
-            rarity_category = information["rarity_category"]
-            slot = information["slot"]
-            player_sticker = PlayerSticker(first_name = first_name,last_name = last_name,birthdate = birthdate,country = country,position=position,sticker_image = sticker,rarity_category = rarity_category, slot = slot)
-            player_sticker.save()
-            response = player_stickers(request)
-            return HttpResponse(response)
+            player_sticker = PlayerSticker.from_form(form.cleaned_data)
+            app.working_context().register_player_sticker(player_sticker)
+            return redirect('player_stickers')
         else:
-            response = player_stickers(request)
-            return HttpResponse(response)
+            messages.error(request,form.errors)
+            return redirect('player_stickers')
     else:
         app.working_context().update_form_with(PlayerStickerRegistration())
         return render(request, "player_sticker_registration.html",working_context)
 
 @login_required
 def player_sticker_unregistration(request, id):
-    player_sticker=PlayerSticker.objects.get(id=id)
+    player_sticker= app.working_context().player_sticker_identified_as(id)
     if request.method=="POST":
-        player_sticker.delete()
-        response = player_stickers(request)
-        return HttpResponse(response)
+        app.working_context().unregister_player_sticker(player_sticker)
+        return redirect('player_stickers')
     else:
         form = PlayerStickerRegistration({'first_name':player_sticker.first_name,'last_name':player_sticker.last_name,'country':player_sticker.country,'birthdate':player_sticker.birthdate,'position':player_sticker.position,'sticker_image':player_sticker.sticker_image,'rarity_category': player_sticker.rarity_category,'slot':player_sticker.slot})
         app.working_context().update_form_with(form)
@@ -80,19 +69,16 @@ def player_sticker_unregistration(request, id):
 
 @login_required
 def player_sticker_update(request, id):
-    player_sticker=PlayerSticker.objects.get(id=id)
+    player_sticker = app.working_context().player_sticker_identified_as(id)
     if request.method=="POST":
-        player_sticker.first_name = request.POST["first_name"]
-        player_sticker.last_name = request.POST["last_name"]
-        player_sticker.country = request.POST["country"]
-        player_sticker.birthdate = request.POST["birthdate"]
-        player_sticker.position = request.POST["position"]
-        player_sticker.sticker_image = request.FILES["sticker_image"]
-        player_sticker.rarity_category = request.POST["rarity_category"]
-        player_sticker.slot = request.POST["slot"]
-        player_sticker.save()
-        response = player_stickers(request)
-        return HttpResponse(response)
+        form = PlayerStickerRegistration(request.POST,request.FILES)
+        if form.is_valid():
+            updated_player_sticker = PlayerSticker.from_form(form.cleaned_data)
+            app.working_context().update_player_sticker_with(player_sticker,updated_player_sticker)
+            return redirect('player_stickers')
+        else:
+            messages.error(request,form.errors)
+            return redirect('player_stickers')
     else:
         form = PlayerStickerRegistration({'first_name':player_sticker.first_name,'last_name':player_sticker.last_name,'country':player_sticker.country,'birthdate':player_sticker.birthdate,'position':player_sticker.position,'sticker_image':'/media/stickers/angel-dimaria.jpg','rarity_category': player_sticker.rarity_category,'slot':player_sticker.slot})
         app.working_context().update_form_with(form)
@@ -111,7 +97,6 @@ def promo_code_registration(request):
         if form.is_valid():
             promo_code = PromoCode.from_form(form.cleaned_data)
             app.working_context().register_promo_code(promo_code)
-            promo_code.save()
             return redirect('promo_codes')
         else:
             messages.error(request,form.errors)
