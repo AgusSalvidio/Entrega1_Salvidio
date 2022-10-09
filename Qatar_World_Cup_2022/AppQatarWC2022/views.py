@@ -123,6 +123,25 @@ def element_unregistration(request, id, object_class_name, form_class_name):
         app.working_context().update_selected_object_with(object)
         return render(request, "unregistration_modal.html",working_context)
 
+@login_required
+def element_update(request, id, object_class_name, form_class_name):
+    object_class = getattr(sys.modules[__name__], object_class_name)
+    form_class = getattr(sys.modules[__name__], form_class_name)
+    object = app.working_context().identified_as(id,object_class_name)
+    if request.method=="POST":
+        form = form_class(request.POST)
+        if form.is_valid():
+            updated_object = object_class.from_form(form.cleaned_data)
+            app.working_context().update_with(object,updated_object)
+            return redirect(app.working_context().current_url())
+        else:
+            messages.error(request,form.errors)
+            return redirect(app.working_context().current_url())
+    else:
+        form_attributes = app.working_context().attributes_for(object)
+        app.working_context().update_form_with(form_class(form_attributes))
+        app.working_context().update_selected_object_with(object)
+        return render(request, "update_modal.html",working_context)
 
 @login_required
 def promo_code_registration(request):

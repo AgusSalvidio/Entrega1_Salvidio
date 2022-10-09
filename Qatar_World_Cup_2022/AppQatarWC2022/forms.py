@@ -12,9 +12,6 @@ class PromoCodeRegistration(forms.Form):
     
     code = forms.CharField(label='Código',max_length=50,widget=forms.TextInput(attrs={'class':'form-control'}))
 
-    def update_with(self,promo_code):
-        self.code = promo_code.code
-
     def name(self):
         return 'Código Promocional'
 

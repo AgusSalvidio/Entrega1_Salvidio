@@ -1,3 +1,4 @@
+import inspect
 
 class ApplicationContext:
     def __init__(self,system_collection):
@@ -106,6 +107,18 @@ class ApplicationContext:
     def increment_index_position(self):
         self.current_page().increment_index_position()
 
+    def attributes_for(self,object):
+        methods_dict = {}
+        for method in inspect.getmembers(object):
+            # to remove private and protected
+            # functions
+            if not method[0].startswith('_'):
+                # To remove other methods that
+                # doesnot start with a underscore
+                if not inspect.ismethod(method[1]):
+                    methods_dict.update({method[0]:method[1]})
+        return methods_dict
+    
     #This function is needed when html loads the url path, its a horrible implementation but jinja does not allow functions with arguments.
     def next_sticker_image(self):
         current_index = self.current_page().index_position()
