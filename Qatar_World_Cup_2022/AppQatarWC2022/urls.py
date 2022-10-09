@@ -13,16 +13,10 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.urls import path
-from AppQatarWC2022.views import *
-from django.contrib.auth.views import LogoutView
+from AppQatarWC2022.album.urls import urlpatterns as album_urls
+from AppQatarWC2022.generic_modals.urls import urlpatterns as generic_modal_urls
+from AppQatarWC2022.promo_codes.urls import urlpatterns as promo_code_urls
+from AppQatarWC2022.stickers.urls import urlpatterns as sticker_urls
+from AppQatarWC2022.users.urls  import urlpatterns as user_urls
 
-urlpatterns = [
-    path('',home,name='home'),
-    path("element_registration/<str:object_class_name>/<str:form_class_name>", element_registration, name="element_registration"),
-    path("element_unregistration/<int:id>/<str:object_class_name>/<str:form_class_name>", element_unregistration, name="element_unregistration"),
-    path("element_update/<int:id>/<str:object_class_name>/<str:form_class_name>", element_update, name="element_update"),
-    path('promo_codes/',promo_codes,name='promo_codes'),
-    path('player_stickers/',player_stickers,name='player_stickers'),
-    path("my_album", my_album, name="my_album"),   
-]
+urlpatterns = album_urls + generic_modal_urls + promo_code_urls + sticker_urls + user_urls
