@@ -10,12 +10,20 @@
                 <!-- Container-fluid starts -->
                 <div class="container-fluid">
                     {% for form_field in working_context.current_form.visible_fields %}
-                    <div class="form-group form-primary">
-                        <label class="float-label" for="{{ form_field.id_for_label }}">{{ form_field.label }}</label>
-                        {{ form_field }}
-                        <span class="form-bar"></span>
-                    </div> 
+                        {% if 'Sticker' in form_field.label %}
+                            <div class="form-group form-primary">
+                                <p></p>
+                                <img class="img-fluid" height="200" width="100" src="{{ working_context.current_object.sticker }}" onerror="this.src='/media/stickers/default-sticker.jpg'" alt="Image">
+                            <span class="form-bar"></span>
+                            </div>
+                        {% endif %}
+                        <div class="form-group form-primary">
+                            <label class="float-label" for="{{ form_field.id_for_label }}">{{ form_field.label }}</label>
+                            {{ form_field }}
+                            <span class="form-bar"></span>
+                        </div>
                     {% endfor %}
+                                        
                 </div>
                 <!-- end of container-fluid -->
             </section>    

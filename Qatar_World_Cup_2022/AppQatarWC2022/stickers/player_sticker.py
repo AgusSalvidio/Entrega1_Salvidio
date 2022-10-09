@@ -15,7 +15,7 @@ class PlayerSticker(models.Model):
     country = models.ForeignKey(Country,on_delete=models.CASCADE)    
     birthdate = models.DateField()
     position =  models.ForeignKey(PlayerPosition,on_delete=models.CASCADE)  
-    sticker_image = models.ImageField(upload_to='stickers', default='stickers/default_sticker.jpg',null=False)
+    sticker_image = models.ImageField(upload_to='stickers', default='stickers/default-sticker.jpg')
     slot = models.IntegerField()
     Rarities = models.TextChoices('Rareza', 'Común Épica Legendaria')
     rarity_category = models.CharField(max_length=50,choices=Rarities.choices) 

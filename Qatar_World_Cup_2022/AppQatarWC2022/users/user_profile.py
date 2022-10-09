@@ -10,7 +10,7 @@ class UserProfile(models.Model):
     internal_user = models.ForeignKey(User,on_delete=models.CASCADE)
     birthdate = models.DateField()
     country = models.ForeignKey(Country,on_delete=models.CASCADE)
-    avatar_image = models.ImageField(upload_to='avatars', default='avatars/default_avatar.jpg',null=False)
+    avatar_image = models.ImageField(upload_to='avatars', default='avatars/default-avatar.jpg')
     
     def username(self):
         return self.internal_user
