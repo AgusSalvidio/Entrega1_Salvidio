@@ -24,5 +24,6 @@ class UserManagementSystem:
         else:
             return self.logged_user().avatar()
 
-
+    def class_knownledge(self):
+        return ['UserProfile']
        

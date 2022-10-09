@@ -5,6 +5,7 @@ class ApplicationContext:
         self.form = None
         self.selected_object = None
         self.message = ''
+        self.url = None
 
     @classmethod
     def implementing(cls,system_collection):
@@ -43,6 +44,12 @@ class ApplicationContext:
     def update_information_message_with(self,message):
         self.message = message
 
+    def update_current_url_with(self,url):
+        self.url = url
+
+    def current_url(self):
+        return self.url
+
     def logged_user(self):
         return self.user_system().logged_user()
 
@@ -54,6 +61,24 @@ class ApplicationContext:
 
     def stickers_of(self,user):
         return self.sticker_system().stickers_of(user)
+
+    def system_for(self,object_class_name):
+        return list(filter(lambda system: len(list(filter(lambda class_name: class_name == object_class_name,system.class_knownledge()))) != 0 ,self.systems()))[0]
+
+    def register(self,object):
+        object_class_name = object.class_name()
+        self.system_for(object_class_name).register(object)
+
+    def unregister(self,object):
+        object_class_name = object.class_name()
+        self.system_for(object_class_name).unregister(object)
+
+    def update_with(self,object,updated_object):
+        object_class_name = object.class_name()
+        self.system_for(object_class_name).update_with(object,updated_object)
+
+    def identified_as(self,id,object_class_name):
+        return self.system_for(object_class_name).identified_as(id)
 
     def refresh_album(self):
         user = self.logged_user()

@@ -19,13 +19,13 @@ from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
     path('',home,name='home'),
+    path("element_registration/<str:object_class_name>/<str:form_class_name>", element_registration, name="element_registration"),
+    path("element_unregistration/<int:id>/<str:object_class_name>/<str:form_class_name>", element_unregistration, name="element_unregistration"),
     path('promo_codes/',promo_codes,name='promo_codes'),
-    path("promo_code_registration", promo_code_registration, name="promo_code_registration"),
     path("promo_code_update/<id>", promo_code_update, name="promo_code_update"),
-    path("promo_code_unregistration/<id>", promo_code_unregistration, name="promo_code_unregistration"),
     path('player_stickers/',player_stickers,name='player_stickers'),
     path("player_sticker_registration/", player_sticker_registration, name="player_sticker_registration"),
     path("player_sticker_update/<id>", player_sticker_update, name="player_sticker_update"),
     path("player_sticker_unregistration/<id>", player_sticker_unregistration, name="player_sticker_unregistration"),
-    path("my_album", my_album, name="my_album"),
+    path("my_album", my_album, name="my_album"),   
 ]

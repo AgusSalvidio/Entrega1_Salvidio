@@ -21,6 +21,8 @@ from AppQatarWC2022.models import app
 from django.contrib import messages
 from assertions import InstanceCreationFailed, SystemRestrictionInfringed
 
+import sys
+
 working_context = {'working_context':app.working_context()}
 
 @login_required
@@ -88,7 +90,39 @@ def player_sticker_update(request, id):
 @login_required
 def promo_codes(request):
     app.working_context().update_form_with(PromoCodeRegistration())
+    app.working_context().update_current_url_with('promo_codes')
+    app.working_context().update_selected_object_with(PromoCode()) 
     return render(request,"promo_codes.html",working_context)
+
+@login_required
+def element_registration(request,object_class_name,form_class_name):
+    object_class = getattr(sys.modules[__name__], object_class_name)
+    form_class= getattr(sys.modules[__name__], form_class_name)
+    if request.method =="POST":
+        form = form_class(request.POST)
+        if form.is_valid():
+            object = object_class.from_form(form.cleaned_data)
+            app.working_context().register(object)
+            return redirect(app.working_context().current_url())
+        else:
+            messages.error(request,form.errors)
+            return redirect(app.working_context().current_url())
+    else:
+        app.working_context().update_form_with(form_class())
+        return render(request, "registration_modal.html",working_context)
+
+@login_required
+def element_unregistration(request, id, object_class_name, form_class_name):
+    form_class = getattr(sys.modules[__name__], form_class_name)
+    object = app.working_context().identified_as(id,object_class_name)
+    if request.method=="POST":
+        app.working_context().unregister(object)
+        return redirect(app.working_context().current_url())
+    else:
+        app.working_context().update_form_with(form_class())
+        app.working_context().update_selected_object_with(object)
+        return render(request, "unregistration_modal.html",working_context)
+
 
 @login_required
 def promo_code_registration(request):

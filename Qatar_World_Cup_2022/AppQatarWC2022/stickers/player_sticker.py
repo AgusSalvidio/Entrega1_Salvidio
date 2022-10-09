@@ -84,7 +84,8 @@ class PlayerSticker(models.Model):
         self.slot = updated_player_sticker.slot
         self.rarity_category = updated_player_sticker.rarity_category
      
-
+    def class_name(self):
+        return self.__class__.__name__
 
 
 

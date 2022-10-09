@@ -9,7 +9,18 @@ class SignIn(AuthenticationForm):
     password= forms.CharField(label='Contraseña',widget=forms.PasswordInput(attrs={'class':'form-control'}))
 
 class PromoCodeRegistration(forms.Form):
-    code = forms.CharField(max_length=50,widget=forms.TextInput(attrs={'class':'form-control'}))
+    
+    code = forms.CharField(label='Código',max_length=50,widget=forms.TextInput(attrs={'class':'form-control'}))
+
+    def update_with(self,promo_code):
+        self.code = promo_code.code
+
+    def name(self):
+        return 'Código Promocional'
+
+    def class_name(self):
+        return self.__class__.__name__
+
 
 class PlayerStickerRegistration(forms.Form):
     first_name = forms.CharField(max_length=50,widget=forms.TextInput(attrs={'class':'form-control'}))

@@ -22,22 +22,23 @@ class StickerManagementSystem:
     def name(self):
         return 'Sistema de Administración de Stickers'    
 
-    def register_player_sticker(self,player_sticker):
+    def register(self,player_sticker):
         player_sticker.save()
 
-    def player_sticker_identified_as(self,player_sticker_id):
+    def identified_as(self,player_sticker_id):
         return self.player_stickers_repo.get(id = player_sticker_id)
 
-    def unregister_player_sticker(self,player_sticker):
+    def unregister(self,player_sticker):
         player_sticker.delete()
     
     def assert_there_is_no_player_sticker_identified_as(self, full_name):
         pass
 
-    def update_player_sticker_with(self,player_sticker,updated_player_sticker):
+    def update_with(self,player_sticker,updated_player_sticker):
         if player_sticker.full_name() != updated_player_sticker.full_name():
             self.assert_there_is_no_player_sticker_identified_as(updated_player_sticker.full_name())
         player_sticker.synchronize_with(updated_player_sticker)
         player_sticker.save()
 
-    
+    def class_knownledge(self):
+        return ['PlayerSticker','GeneratedSticker']

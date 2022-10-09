@@ -18,3 +18,6 @@ class PromoCode(models.Model):
 
    def synchronize_with(self,updated_promo_code):
       self.code = updated_promo_code.code
+
+   def class_name(self):
+        return self.__class__.__name__

@@ -31,3 +31,6 @@ class AlbumManagementSystem:
 
     def name(self):
         return 'Sistema de Administración de Álbum'
+
+    def class_knownledge(self):
+        return ['Album','AlbumPage']
