@@ -40,52 +40,9 @@ def my_album(request):
 @login_required
 def player_stickers(request):
     app.working_context().update_form_with(PlayerStickerRegistration())
+    app.working_context().update_current_url_with('player_stickers')
+    app.working_context().update_selected_object_with(PlayerSticker()) 
     return render(request,"player_stickers.html",working_context)
-
-@login_required
-def player_sticker_registration(request):
-    if request.method =="POST":
-        form = PlayerStickerRegistration(request.POST,request.FILES)
-        if form.is_valid():
-            player_sticker = PlayerSticker.from_form(form.cleaned_data)
-            app.working_context().register_player_sticker(player_sticker)
-            return redirect('player_stickers')
-        else:
-            messages.error(request,form.errors)
-            return redirect('player_stickers')
-    else:
-        app.working_context().update_form_with(PlayerStickerRegistration())
-        return render(request, "player_sticker_registration.html",working_context)
-
-@login_required
-def player_sticker_unregistration(request, id):
-    player_sticker= app.working_context().player_sticker_identified_as(id)
-    if request.method=="POST":
-        app.working_context().unregister_player_sticker(player_sticker)
-        return redirect('player_stickers')
-    else:
-        form = PlayerStickerRegistration({'first_name':player_sticker.first_name,'last_name':player_sticker.last_name,'country':player_sticker.country,'birthdate':player_sticker.birthdate,'position':player_sticker.position,'sticker_image':player_sticker.sticker_image,'rarity_category': player_sticker.rarity_category,'slot':player_sticker.slot})
-        app.working_context().update_form_with(form)
-        app.working_context().update_selected_object_with(player_sticker)
-        return render(request, "player_sticker_unregistration.html",working_context)
-
-@login_required
-def player_sticker_update(request, id):
-    player_sticker = app.working_context().player_sticker_identified_as(id)
-    if request.method=="POST":
-        form = PlayerStickerRegistration(request.POST,request.FILES)
-        if form.is_valid():
-            updated_player_sticker = PlayerSticker.from_form(form.cleaned_data)
-            app.working_context().update_player_sticker_with(player_sticker,updated_player_sticker)
-            return redirect('player_stickers')
-        else:
-            messages.error(request,form.errors)
-            return redirect('player_stickers')
-    else:
-        form = PlayerStickerRegistration({'first_name':player_sticker.first_name,'last_name':player_sticker.last_name,'country':player_sticker.country,'birthdate':player_sticker.birthdate,'position':player_sticker.position,'sticker_image':'/media/stickers/angel-dimaria.jpg','rarity_category': player_sticker.rarity_category,'slot':player_sticker.slot})
-        app.working_context().update_form_with(form)
-        app.working_context().update_selected_object_with(player_sticker)
-        return render(request, "player_sticker_update.html",working_context)
 
 @login_required
 def promo_codes(request):
@@ -142,49 +99,6 @@ def element_update(request, id, object_class_name, form_class_name):
         app.working_context().update_form_with(form_class(form_attributes))
         app.working_context().update_selected_object_with(object)
         return render(request, "update_modal.html",working_context)
-
-@login_required
-def promo_code_registration(request):
-    if request.method =="POST":
-        form = PromoCodeRegistration(request.POST)
-        if form.is_valid():
-            promo_code = PromoCode.from_form(form.cleaned_data)
-            app.working_context().register_promo_code(promo_code)
-            return redirect('promo_codes')
-        else:
-            messages.error(request,form.errors)
-            return redirect('promo_codes')
-    else:
-        app.working_context().update_form_with(PromoCodeRegistration())
-        return render(request, "promo_code_registration.html",working_context)
-        
-@login_required
-def promo_code_update(request, id):
-    promo_code = app.working_context().promo_code_identified_as(id)
-    if request.method=="POST":
-        form = PromoCodeRegistration(request.POST)
-        if form.is_valid():
-            updated_promo_code = PromoCode.from_form(form.cleaned_data)
-            app.working_context().update_promo_code_with(promo_code,updated_promo_code)
-            return redirect('promo_codes')
-        else:
-            messages.error(request,form.errors)
-            return redirect('promo_codes')
-    else:
-        app.working_context().update_form_with(PromoCodeRegistration({"code": promo_code.code}))
-        app.working_context().update_selected_object_with(promo_code)  
-        return render(request, "promo_code_update.html",working_context)
-
-@login_required
-def promo_code_unregistration(request, id):
-    promo_code = app.working_context().promo_code_identified_as(id)
-    if request.method=="POST":
-        app.working_context().unregister_promo_code(promo_code)
-        return redirect('promo_codes')
-    else:
-        app.working_context().update_form_with(PromoCodeRegistration({"code": promo_code.code}))
-        app.working_context().update_selected_object_with(promo_code)   
-        return render(request, "promo_code_unregistration.html",working_context)
 
 def login_request(request):
     if request.method == 'POST':

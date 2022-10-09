@@ -12,7 +12,7 @@
     <div class="btn-toolbar pull-right">
         <div class="btn-group pull-right">
             <!-- Button trigger modal -->
-            <button style="background-color:#56042C;; border-color:#56042C;; color:white " class=" btn btn-sm waves-effect waves-light pull-right" onclick="registration_modal('{% url 'player_sticker_registration' %}')"><i class="icofont icofont-plus"></i>
+            <button style="background-color:#56042C;; border-color:#56042C;; color:white " class=" btn btn-sm waves-effect waves-light pull-right" onclick="registration_modal('{% url 'element_registration' working_context.current_object.class_name working_context.current_form.class_name %}')"><i class="icofont icofont-plus"></i>
                 Agregar
             </button>
         </div>
@@ -37,8 +37,8 @@
                 <td>{{ player_sticker.country }}</td>
                 <td>{{ player_sticker.position }}</td>
                 <td>
-                    <a class="btn btn-sm waves-effect waves-light icofont icofont-ui-edit" onclick="update_modal('{% url 'player_sticker_update' player_sticker.id %}')"></a>
-                    <a class="btn btn-sm waves-effect waves-light icofont icofont-close" onclick="unregistration_modal('{% url 'player_sticker_unregistration' player_sticker.id %}')"></a>   
+                    <a class="btn btn-sm waves-effect waves-light icofont icofont-ui-edit" onclick="update_modal('{% url 'element_update' player_sticker.id working_context.current_object.class_name working_context.current_form.class_name %}')"></a>
+                    <a class="btn btn-sm waves-effect waves-light icofont icofont-close" onclick="unregistration_modal('{% url 'element_unregistration' player_sticker.id working_context.current_object.class_name working_context.current_form.class_name %}')"></a>   
                 </td>
             </tr>
             {% endfor %}

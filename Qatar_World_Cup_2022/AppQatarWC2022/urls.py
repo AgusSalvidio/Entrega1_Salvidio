@@ -23,10 +23,6 @@ urlpatterns = [
     path("element_unregistration/<int:id>/<str:object_class_name>/<str:form_class_name>", element_unregistration, name="element_unregistration"),
     path("element_update/<int:id>/<str:object_class_name>/<str:form_class_name>", element_update, name="element_update"),
     path('promo_codes/',promo_codes,name='promo_codes'),
-    path("promo_code_update/<id>", promo_code_update, name="promo_code_update"),
     path('player_stickers/',player_stickers,name='player_stickers'),
-    path("player_sticker_registration/", player_sticker_registration, name="player_sticker_registration"),
-    path("player_sticker_update/<id>", player_sticker_update, name="player_sticker_update"),
-    path("player_sticker_unregistration/<id>", player_sticker_unregistration, name="player_sticker_unregistration"),
     path("my_album", my_album, name="my_album"),   
 ]
