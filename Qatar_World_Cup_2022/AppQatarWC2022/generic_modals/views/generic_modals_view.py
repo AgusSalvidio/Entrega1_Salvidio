@@ -4,6 +4,13 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 import sys
 
+#Because its generic, when the objects is initializated, needs to know the real class, so needs to be imported
+from AppQatarWC2022.promo_codes import PromoCode
+from AppQatarWC2022.promo_codes.forms import PromoCodeRegistration
+
+from AppQatarWC2022.stickers import PlayerSticker
+from AppQatarWC2022.stickers.forms import PlayerStickerRegistration
+
 working_context = {'working_context':app.working_context()}
 
 @login_required
