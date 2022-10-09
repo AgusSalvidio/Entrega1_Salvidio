@@ -8,7 +8,7 @@ class UserRegistration(UserCreationForm):
     last_name = forms.CharField(max_length=50,widget=forms.TextInput(attrs={'class':'form-control'}))
     birthdate = forms.DateField(widget=forms.DateInput(attrs={'type':'date','class':'form-control'}))
     email = forms.EmailField(label='Email',widget=forms.EmailInput(attrs={'class':'form-control'}))
-    country = forms.ModelChoiceField(queryset=Country.objects.all(), empty_label=None,widget=forms.Select(attrs={'class':'form-control'}))
+    country = forms.ModelChoiceField(queryset=Country.objects.all(), empty_label='Seleccione País',widget=forms.Select(attrs={'class':'form-control'}))
     username = forms.CharField(label='Usuario',widget=forms.TextInput(attrs={'class':'form-control'}))
     password1= forms.CharField(label='Contraseña',widget=forms.PasswordInput(attrs={'class':'form-control'}))
     password2= forms.CharField(label='Repita la contraseña',widget=forms.PasswordInput(attrs={'class':'form-control'}))

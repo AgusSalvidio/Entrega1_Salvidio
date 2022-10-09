@@ -3,6 +3,9 @@
 
 <head>
     {% load static %}
+    {% if user.is_anonymous %}
+        <META HTTP-EQUIV="REFRESH" CONTENT="0;URL={% url 'login' %}">
+    {% endif %}
     {% block title %}
     {% endblock %}
 

@@ -18,7 +18,7 @@ def element_registration(request,object_class_name,form_class_name):
     object_class = getattr(sys.modules[__name__], object_class_name)
     form_class= getattr(sys.modules[__name__], form_class_name)
     if request.method =="POST":
-        form = form_class(request.POST)
+        form = form_class(request.POST,request.FILES)
         if form.is_valid():
             object = object_class.from_form(form.cleaned_data)
             app.working_context().register(object)
@@ -48,7 +48,7 @@ def element_update(request, id, object_class_name, form_class_name):
     form_class = getattr(sys.modules[__name__], form_class_name)
     object = app.working_context().identified_as(id,object_class_name)
     if request.method=="POST":
-        form = form_class(request.POST)
+        form = form_class(request.POST,request.FILES)
         if form.is_valid():
             updated_object = object_class.from_form(form.cleaned_data)
             app.working_context().update_with(object,updated_object)
