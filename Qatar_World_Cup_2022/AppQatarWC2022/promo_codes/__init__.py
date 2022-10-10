@@ -1,2 +1,2 @@
 from .promo_code import PromoCode
-from .promo_code_system import PromoCodeManagementSystem
+from .promo_code_management_system import PromoCodeManagementSystem

@@ -17,7 +17,7 @@ def login_request(request):
             if user is not None:
                 login(request,user)
                 app.working_context().store_logged_user(request.user)
-                return render (request,'home.html',working_context)
+                return redirect ('home')
             else:
                 app.working_context().update_form_with(form)
                 messages.error(request,'Usuario y/o contraseña incorrectos')

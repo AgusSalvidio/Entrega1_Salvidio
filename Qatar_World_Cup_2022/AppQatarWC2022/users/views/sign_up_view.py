@@ -9,20 +9,15 @@ working_context = {'working_context':app.working_context()}
 
 def sign_up(request):
     if request.method == 'POST':
-        internal_user_form = UserRegistration(request.POST,request.FILES)
-        if internal_user_form.is_valid():
-            information = internal_user_form.cleaned_data
-            birthdate = information['birthdate'] 
-            country = information['country']
-            avatar = information['avatar']
-            user = internal_user_form.save()
-            user_profile = UserProfile(internal_user = user, birthdate = birthdate, country = country, avatar_image = avatar)
-            user_profile.save()
-            app.working_context().update_form_with(SignIn())
-            return render(request,'login.html',working_context)
+        form = UserRegistration(request.POST,request.FILES)
+        if form.is_valid():
+            user = form.save()          
+            user_profile = UserProfile.from_form_using(form.cleaned_data,user)
+            app.working_context().register(user_profile)
+            return redirect( 'login' )
         else:
+            messages.error(request,f'No se pudo crear al usuario debido a {form.errors}')
             app.working_context().update_form_with(UserRegistration())
-            messages.error(request,f'No se pudo crear al usuario debido a {internal_user_form.errors}')
             return redirect('sign_up')
     else:
         app.working_context().update_form_with(UserRegistration())

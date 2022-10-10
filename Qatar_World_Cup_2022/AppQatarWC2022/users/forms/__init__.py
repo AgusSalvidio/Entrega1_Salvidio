@@ -1,2 +1,2 @@
 from .sign_in_form import SignIn
-from .user_form import UserRegistration
+from .user_form import UserRegistration,UserProfileUpdate
