@@ -44,14 +44,23 @@
 <div class="divider-custom">
 </div>
 <div class="text-center">
-    <button style="background-color:#56042C;; border-color:#56042C;; color:white " class=" btn waves-effect waves-light"><i class="icofont icofont-arrow-left "></i>
-    </button>
+    {% if working_context.previous_page_is_allowed %}
+        <button style="background-color:#56042C;; border-color:#56042C;; color:white " class=" btn waves-effect waves-light" onclick="location.href='{% url 'previous_page' %}'"><i class="icofont icofont-arrow-left "></i>
+        </button>
+    {% else %}
+        <button disabled style="background-color:#56042C;; border-color:#56042C;; color:white " class=" btn waves-effect waves-light" onclick="location.href='{% url 'my_album' %}'"><i class="icofont icofont-arrow-left "></i>
+        </button>
+    {% endif %}
     <button style="background-color:#56042C;; border-color:#56042C;; color:white " class=" btn waves-effect waves-light" onclick="countries_modal('{% url 'qualified_countries' %}')">
         {{ working_context.current_page.country }}
     </button>
-    <button style="background-color:#56042C;; border-color:#56042C;; color:white " class=" btn waves-effect waves-light"><i class="icofont icofont-arrow-right"></i>
+    {% if working_context.next_page_is_allowed %}
+        <button style="background-color:#56042C;; border-color:#56042C;; color:white " class=" btn waves-effect waves-light" onclick="location.href='{% url 'next_page' %}'"><i class="icofont icofont-arrow-right"></i>
+        </button>
+    {% else %}
+    <button disabled style="background-color:#56042C;; border-color:#56042C;; color:white " class=" btn waves-effect waves-light" onclick="location.href='{% url 'my_album' %}'"><i class="icofont icofont-arrow-right"></i>
     </button>
-
+    {% endif %}
 </div>
 
 {% endblock %}

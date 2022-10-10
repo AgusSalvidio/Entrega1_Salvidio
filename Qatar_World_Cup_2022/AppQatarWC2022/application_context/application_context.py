@@ -180,3 +180,16 @@ class ApplicationContext:
 
     def qualified_countries(self):
         return self.album_system().qualified_countries()
+    
+    def next_page_is_allowed(self):
+        return self.album_system().next_page_is_allowed()
+    
+    def previous_page_is_allowed(self):
+        return self.album_system().previous_page_is_allowed()
+
+    def next_page(self):
+        return self.album_system().next_page()
+    
+    def previous_page(self):
+        return self.album_system().previous_page()
+    

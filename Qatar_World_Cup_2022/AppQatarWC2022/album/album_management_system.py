@@ -39,7 +39,50 @@ class AlbumManagementSystem:
         return ['Album','AlbumPage']
 
     def qualified_countries(self):
+        print(f"{Country.objects.filter(qualified = True)}")
         return Country.objects.filter(qualified = True)
 
+    def next_page_is_allowed(self):
+        page_collection = self.album().pages()
+        current_page = self.album().current_page()
+        
+        current_page_index = page_collection.index(current_page)
+
+        if current_page_index >= 0 and current_page_index <  len(page_collection):
+            return True
+        else:
+            return False
+    
+    def previous_page_is_allowed(self):
+        page_collection = self.album().pages()
+        current_page = self.album().current_page()
+        
+        current_page_index = page_collection.index(current_page)
+
+        if current_page_index > 0 and current_page_index <  len(page_collection):
+            return True
+        else:
+            return False
+
+    def next_page(self):
+        current_page = self.album().current_page()
+        if self.next_page_is_allowed():
+            page_collection = self.album().pages()
+            next_page_index = page_collection.index(current_page) + 1
+            next_page = page_collection[next_page_index]
+            return next_page
+        else:
+            return current_page
+        
+    def previous_page(self):
+        current_page = self.album().current_page()
+        if self.previous_page_is_allowed():
+            page_collection = self.album().pages()
+            previous_page_index = page_collection.index(current_page) - 1
+            previous_page = page_collection[previous_page_index]
+            return previous_page
+        else:
+            return current_page
+
     def page_for(self,country_name):
-        return self.album().page_for(country_name)
+        return self.album().page_for(country_name) 

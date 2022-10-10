@@ -28,3 +28,21 @@ def update_current_album_page(request,country_name):
         selected_page = app.working_context().page_for(country_name)
         app.working_context().update_current_album_page_with(selected_page)
         return render(request,"my_album.html",working_context)
+
+@login_required
+def next_page(request):
+    if request.method =="POST":
+        pass
+    else:
+        next_page = app.working_context().next_page()
+        app.working_context().update_current_album_page_with(next_page)
+        return render(request,"my_album.html",working_context)
+
+@login_required
+def previous_page(request):
+    if request.method =="POST":
+        pass
+    else:
+        previous_page = app.working_context().previous_page()
+        app.working_context().update_current_album_page_with(previous_page)
+        return render(request,"my_album.html",working_context)
