@@ -3,6 +3,9 @@
 
 <head>
     {% load static %}
+    {% if user.is_anonymous %}
+        <META HTTP-EQUIV="REFRESH" CONTENT="0;URL={% url 'login' %}">
+    {% endif %}
     {% block title %}
     {% endblock %}
 
@@ -16,8 +19,6 @@
     <link href="http://fonts.cdnfonts.com/css/qatar2022" rel="stylesheet">
     <!-- Favicon icon -->
     <link rel="icon" href="{% static 'AppQatarWC2022/images/icon.ico' %}" type="image/x-icon">
-    <!-- Google font-->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet">
     <!-- waves.css -->
     <link rel="stylesheet" href="{% static 'AppQatarWC2022/pages/waves/css/waves.min.css' %}" type="text/css" media="all">
     <!-- Required Fremwork -->
@@ -119,6 +120,7 @@
                         </ul>
                         <!--Aca es el sector derecho de los iconos-->
                         <ul class="nav-right">
+                            {% if user.is_superuser %}
                             <li>
                                     <a class="dropdown-toggle waves-effect waves-light" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                       Administrar
@@ -132,10 +134,11 @@
                                     </a>
                                     </div>
                             </li>
+                            {% endif %}
                             {% if user.is_authenticated %}
                                 <li class="user-profile header-notification">
                                     <a href="#!" class="waves-effect waves-light">
-                                        <img src= "{{ working_context.logged_user_profile_avatar }}" height="50px" onerror="this.src='/media/avatars/default_avatar.jpg'" class="img-radius" alt="User-Profile-Image">
+                                        <img src= "{{ working_context.logged_user_profile_avatar }}" height="50px" onerror="this.src='/media/avatars/default-avatar.jpg'" class="img-radius" alt="User-Profile-Image">
                                         <span>{{ working_context.logged_user.username }}</span>
                                         <i class="ti-angle-down"></i>
                                     </a>
@@ -146,7 +149,7 @@
                                             </a>
                                         </li>
                                         <li class="waves-effect waves-light">
-                                            <a href="">
+                                            <a href="{% url 'update_user_profile' %}">
                                                 <i class="ti-user"></i> Perfil
                                             </a>
                                         </li>

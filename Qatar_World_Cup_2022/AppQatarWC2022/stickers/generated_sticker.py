@@ -53,4 +53,6 @@ class GeneratedSticker(models.Model):
     def __str__(self):
         return self.sticker().full_name()
 
+    def class_name(self):
+        return self.__class__.__name__
 

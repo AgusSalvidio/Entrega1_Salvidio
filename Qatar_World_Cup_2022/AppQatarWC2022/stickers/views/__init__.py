@@ -1,0 +1,1 @@
+from .player_stickers_view import player_stickers

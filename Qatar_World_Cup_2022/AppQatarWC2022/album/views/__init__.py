@@ -1,0 +1,1 @@
+from .my_album_view import my_album

@@ -12,7 +12,7 @@
     <div class="btn-toolbar pull-right">
         <div class="btn-group pull-right">
             <!-- Button trigger modal -->
-            <button style="background-color:#56042C;; border-color:#56042C;; color:white " class=" btn btn-sm waves-effect waves-light" onclick="registration_modal('{% url 'promo_code_registration' %}')"><i class="icofont icofont-plus"></i>
+            <button style="background-color:#56042C;; border-color:#56042C;; color:white " class=" btn btn-sm waves-effect waves-light" onclick="registration_modal('{% url 'element_registration' working_context.current_object.class_name working_context.current_form.class_name %}')"><i class="icofont icofont-plus"></i>
                 Agregar
             </button>
         </div>
@@ -31,8 +31,8 @@
             <tr>
                 <td>{{ promo_code.code }}</td>
                 <td>
-                    <a class="btn btn-sm waves-effect waves-light icofont icofont-ui-edit" onclick="update_modal('{% url 'promo_code_update' promo_code.id %}')"></a>
-                    <a class="btn btn-sm waves-effect waves-light icofont icofont-close" onclick="unregistration_modal('{% url 'promo_code_unregistration' promo_code.id %}')"></a>   
+                    <a class="btn btn-sm waves-effect waves-light icofont icofont-ui-edit" onclick="update_modal('{% url 'element_update' promo_code.id working_context.current_object.class_name working_context.current_form.class_name %}')"></a>
+                    <a class="btn btn-sm waves-effect waves-light icofont icofont-close" onclick="unregistration_modal('{% url 'element_unregistration' promo_code.id working_context.current_object.class_name working_context.current_form.class_name %}')"></a>   
                 </td>
             </tr>
             {% endfor %}

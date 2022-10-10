@@ -1,3 +1,4 @@
+import inspect
 
 class ApplicationContext:
     def __init__(self,system_collection):
@@ -5,6 +6,7 @@ class ApplicationContext:
         self.form = None
         self.selected_object = None
         self.message = ''
+        self.url = None
 
     @classmethod
     def implementing(cls,system_collection):
@@ -43,6 +45,12 @@ class ApplicationContext:
     def update_information_message_with(self,message):
         self.message = message
 
+    def update_current_url_with(self,url):
+        self.url = url
+
+    def current_url(self):
+        return self.url
+
     def logged_user(self):
         return self.user_system().logged_user()
 
@@ -54,6 +62,24 @@ class ApplicationContext:
 
     def stickers_of(self,user):
         return self.sticker_system().stickers_of(user)
+
+    def system_for(self,object_class_name):
+        return list(filter(lambda system: len(list(filter(lambda class_name: class_name == object_class_name,system.class_knownledge()))) != 0 ,self.systems()))[0]
+
+    def register(self,object):
+        object_class_name = object.class_name()
+        self.system_for(object_class_name).register(object)
+
+    def unregister(self,object):
+        object_class_name = object.class_name()
+        self.system_for(object_class_name).unregister(object)
+
+    def update_with(self,object,updated_object):
+        object_class_name = object.class_name()
+        self.system_for(object_class_name).update_with(object,updated_object)
+
+    def identified_as(self,id,object_class_name):
+        return self.system_for(object_class_name).identified_as(id)
 
     def refresh_album(self):
         user = self.logged_user()
@@ -81,6 +107,18 @@ class ApplicationContext:
     def increment_index_position(self):
         self.current_page().increment_index_position()
 
+    def attributes_for(self,object):
+        methods_dict = {}
+        for method in inspect.getmembers(object):
+            # to remove private and protected
+            # functions
+            if not method[0].startswith('_'):
+                # To remove other methods that
+                # doesnot start with a underscore
+                if not inspect.ismethod(method[1]):
+                    methods_dict.update({method[0]:method[1]})
+        return methods_dict
+    
     #This function is needed when html loads the url path, its a horrible implementation but jinja does not allow functions with arguments.
     def next_sticker_image(self):
         current_index = self.current_page().index_position()
@@ -88,9 +126,34 @@ class ApplicationContext:
         self.increment_index_position()
         return image
 
+    """ Promo Codes """
+    def promo_codes(self):
+        return self.promo_code_system().promo_codes()
+
+    def register_promo_code(self,promo_code):
+        self.promo_code_system().register_promo_code(promo_code)
+
+    def promo_code_identified_as(self,promo_code_id):
+        return self.promo_code_system().promo_code_identified_as(promo_code_id)
+
+    def unregister_promo_code(self,promo_code):
+        self.promo_code_system().unregister_promo_code(promo_code)
+
+    def update_promo_code_with(self,promo_code,updated_promo_code):
+        self.promo_code_system().update_promo_code_with(promo_code,updated_promo_code)
+
+    """ Player Sticker """
     def player_stickers(self):
         return self.sticker_system().player_stickers()
 
-    #Should implement a system for this?
-    def promo_codes(self):
-        return self.promo_code_system().promo_codes()
+    def register_player_sticker(self,player_sticker):
+        self.sticker_system().register_player_sticker(player_sticker)
+
+    def player_sticker_identified_as(self,player_sticker_id):
+        return self.sticker_system().player_sticker_identified_as(player_sticker_id)
+
+    def unregister_player_sticker(self,player_sticker):
+        self.sticker_system().unregister_player_sticker(player_sticker)
+
+    def update_player_sticker_with(self,player_sticker,updated_player_sticker):
+        self.sticker_system().update_player_sticker_with(player_sticker,updated_player_sticker)

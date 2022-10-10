@@ -15,18 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
-from AppQatarWC2022.views import home,login_request,sign_up
-from django.contrib.auth.views import LogoutView
+from django.shortcuts import redirect
 from django.conf import settings
 from django.conf.urls.static import static 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('AppQatarWC2022/',include('AppQatarWC2022.urls')),
-    path('',home, name='home'),
-    path('login/',login_request,name='login'),
-    path('sign_up/',sign_up,name='sign_up'), 
-    path('logout/',LogoutView.as_view(template_name='logout.html'),name='logout'),
+    path('', include('Qatar_World_Cup_2022.website.urls')),
+    path('AppQatarWC2022/', lambda _: redirect('home'))
 ]
 
 urlpatterns+=static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

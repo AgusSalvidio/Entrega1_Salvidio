@@ -5,6 +5,7 @@ from AppQatarWC2022.promo_codes import PromoCode
 from AppQatarWC2022.users import UserProfile
 from AppQatarWC2022.countries import Country
 from AppQatarWC2022.album import Album,AlbumPage
+from assertions import InstanceCreationFailed, SystemRestrictionInfringed, DataInconsistencyFound
 
 
 app = apps.get_app_config('AppQatarWC2022')

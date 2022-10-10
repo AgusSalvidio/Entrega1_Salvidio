@@ -1,0 +1,41 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="update_modal">Modificación de {{ working_context.current_form.name }}</h5>
+        <a class="btn waves-effect waves-light icofont icofont-ui-close" data-bs-dismiss="modal" onclick="location.href='{% url working_context.current_url  %}'"></a>
+      </div>
+      <form action="{% url 'element_update' working_context.current_object.id working_context.current_object.class_name working_context.current_form.class_name  %}" method="POST" enctype="multipart/form-data"> {% csrf_token %}
+        <div class="modal-body">
+            <section class="login-block">
+                <!-- Container-fluid starts -->
+                <div class="container-fluid">
+                    {% for form_field in working_context.current_form.visible_fields %}
+                        {% if 'Sticker' in form_field.label %}
+                            <div class="form-group form-primary">
+                                <p></p>
+                                <img class="img-fluid" height="200" width="100" src="{{ working_context.current_object.sticker }}" onerror="this.src='/media/stickers/default-sticker.jpg'" alt="Image">
+                            <span class="form-bar"></span>
+                            </div>
+                        {% endif %}
+                        <div class="form-group form-primary">
+                            <label class="float-label" for="{{ form_field.id_for_label }}">{{ form_field.label }}</label>
+                            {{ form_field }}
+                            <span class="form-bar"></span>
+                        </div>
+                    {% endfor %}
+                                        
+                </div>
+                <!-- end of container-fluid -->
+            </section>    
+        </div>
+        <div class="modal-footer">
+            <button type="button" style="background-color:#8b8b8b;; border-color:#8b8b8b;; color:rgb(255, 255, 255)" class="btn btn-sm waves-effect waves-light" data-bs-dismiss="modal" onclick="location.href='{% url working_context.current_url %}'">
+                Cerrar
+            </button>
+            <button type="submit" style="background-color:#56042C;; border-color:#56042C;; color:white " class="btn btn-sm waves-effect waves-light">
+                Modificar
+            </button>
+        </div>
+      </form>
+    </div>
+  </div>

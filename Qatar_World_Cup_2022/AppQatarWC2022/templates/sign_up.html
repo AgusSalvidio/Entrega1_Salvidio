@@ -85,6 +85,13 @@
                                     {{ working_context.current_form.avatar }}
                                     <span class="form-bar"></span>
                                 </div>
+                                {% if messages %}
+                                {% for message in messages %}
+                                    <div class="alert alert-danger" role="alert">
+                                        {{ message }}
+                                    </div>
+                                {% endfor %}
+                                {% endif %}
                                 <div class="row m-t-25 text-left">
                                     <div class="col-12">
                                         <div class="forgot-phone text-right f-right">

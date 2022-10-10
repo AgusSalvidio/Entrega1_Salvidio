@@ -13,19 +13,10 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.urls import path
-from AppQatarWC2022.views import *
-from django.contrib.auth.views import LogoutView
+from AppQatarWC2022.album.urls import urlpatterns as album_urls
+from AppQatarWC2022.generic_modals.urls import urlpatterns as generic_modal_urls
+from AppQatarWC2022.promo_codes.urls import urlpatterns as promo_code_urls
+from AppQatarWC2022.stickers.urls import urlpatterns as sticker_urls
+from AppQatarWC2022.users.urls  import urlpatterns as user_urls
 
-urlpatterns = [
-    path('',home,name='home'),
-    path('promo_codes/',promo_codes,name='promo_codes'),
-    path("promo_code_registration", promo_code_registration, name="promo_code_registration"),
-    path("promo_code_update/<id>", promo_code_update, name="promo_code_update"),
-    path("promo_code_unregistration/<id>", promo_code_unregistration, name="promo_code_unregistration"),
-    path('player_stickers/',player_stickers,name='player_stickers'),
-    path("player_sticker_registration/", player_sticker_registration, name="player_sticker_registration"),
-    path("player_sticker_update/<id>", player_sticker_update, name="player_sticker_update"),
-    path("player_sticker_unregistration/<id>", player_sticker_unregistration, name="player_sticker_unregistration"),
-    path("my_album", my_album, name="my_album"),
-]
+urlpatterns = album_urls + generic_modal_urls + promo_code_urls + sticker_urls + user_urls
