@@ -4,8 +4,7 @@ from AppQatarWC2022.countries import Country
 
 class PlayerPosition(models.Model):
     name = models.CharField(max_length=50)
-    short_name = models.CharField(max_length=4)
-
+    
     def __str__(self):
         return self.name
 
