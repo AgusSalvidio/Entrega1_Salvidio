@@ -16,7 +16,11 @@ class ApplicationContext:
         return self.system_collection
 
     def filter_system_named(self,system_name):
-        return list(filter(lambda system: system.name() == system_name,self.systems() ))[0] 
+        return list(filter(lambda system: system.name() == system_name,self.systems() ))[0]
+
+
+
+    """ Working Context"""     
 
     def user_system(self):
         return self.filter_system_named('Sistema de Administración de Usuarios') 
@@ -51,17 +55,8 @@ class ApplicationContext:
     def current_url(self):
         return self.url
 
-    def logged_user(self):
-        return self.user_system().logged_user()
 
-    def logged_user_profile_avatar(self):
-        return self.user_system().logged_user_profile_avatar()
-
-    def store_logged_user(self,user):
-        self.user_system().store_logged_user(user)
-
-    def stickers_of(self,user):
-        return self.sticker_system().stickers_of(user)
+    """ Modals """
 
     def system_for(self,object_class_name):
         return list(filter(lambda system: len(list(filter(lambda class_name: class_name == object_class_name,system.class_knownledge()))) != 0 ,self.systems()))[0]
@@ -81,32 +76,6 @@ class ApplicationContext:
     def identified_as(self,id,object_class_name):
         return self.system_for(object_class_name).identified_as(id)
 
-    def refresh_album(self):
-        user = self.logged_user()
-        user_sticker_collection = self.stickers_of(user) 
-        self.album_system().refresh_album_with(user_sticker_collection)
-
-    def sticker_slot_image_at(self,slot_position):
-        return self.slots().get(slot_position).sticker_image()
-
-    def slots(self):
-        return self.album().current_page().slots()
-    
-    def album(self):
-        return self.album_system().album()
-
-    def current_page(self):
-        return self.album().current_page()
-
-    def sticker_first_row_range(self):
-        return list(range(6))
-
-    def sticker_second_row_range(self):
-        return list(range(6,12))
-
-    def increment_index_position(self):
-        self.current_page().increment_index_position()
-
     def attributes_for(self,object):
         methods_dict = {}
         for method in inspect.getmembers(object):
@@ -118,6 +87,31 @@ class ApplicationContext:
                 if not inspect.ismethod(method[1]):
                     methods_dict.update({method[0]:method[1]})
         return methods_dict
+
+    """ UserProfile """
+
+    def logged_user(self):
+        return self.user_system().logged_user()
+
+    def logged_user_profile_avatar(self):
+        return self.user_system().logged_user_profile_avatar()
+
+    def store_logged_user(self,user):
+        self.user_system().store_logged_user(user)
+
+    """ Stickers """
+
+    def stickers_of(self,user):
+        return self.sticker_system().stickers_of(user)   
+
+    def sticker_slot_image_at(self,slot_position):
+        return self.slots().get(slot_position).sticker_image()
+
+    def sticker_first_row_range(self):
+        return list(range(6))
+
+    def sticker_second_row_range(self):
+        return list(range(6,12))    
     
     #This function is needed when html loads the url path, its a horrible implementation but jinja does not allow functions with arguments.
     def next_sticker_image(self):
@@ -125,6 +119,30 @@ class ApplicationContext:
         image = self.sticker_slot_image_at(current_index)
         self.increment_index_position()
         return image
+
+    """ Album """
+    def refresh_album(self):
+        user = self.logged_user()
+        user_sticker_collection = self.stickers_of(user) 
+        self.album_system().refresh_album_with(user_sticker_collection)
+
+    def slots(self):
+        return self.album().current_page().slots()
+    
+    def album(self):
+        return self.album_system().album()
+
+    def current_page(self):
+        return self.album().current_page()
+
+    def increment_index_position(self):
+        self.current_page().increment_index_position()
+
+    def page_for(self,country_name):
+        return self.album().page_for(country_name)
+
+    def update_current_album_page_with(self,album_page):
+        self.album().update_current_album_page_with(album_page)
 
     """ Promo Codes """
     def promo_codes(self):
@@ -157,3 +175,8 @@ class ApplicationContext:
 
     def update_player_sticker_with(self,player_sticker,updated_player_sticker):
         self.sticker_system().update_player_sticker_with(player_sticker,updated_player_sticker)
+
+    """ Countries """
+
+    def qualified_countries(self):
+        return self.album_system().qualified_countries()

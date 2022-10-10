@@ -11,5 +11,8 @@ class Country(models.Model):
     def background(self):
         return self.background_image.url
 
-    def __str__(self):
+    def full_name(self):
         return self.name
+
+    def __str__(self):
+        return self.name 

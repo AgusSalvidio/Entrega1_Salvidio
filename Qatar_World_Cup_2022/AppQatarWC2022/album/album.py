@@ -23,6 +23,9 @@ class Album:
     def page_for(self,country_name):
         return list(filter(lambda album_page : album_page.country().full_name() == country_name,self.pages()))[0]
 
+    def update_current_album_page_with(self, album_page):
+        self.selected_page = album_page
+
 class AlbumPage:
     def __init__(self,current_country,background_image,sticker_collection):
         self.background_image = background_image

@@ -23,6 +23,9 @@ class AlbumManagementSystem:
     def update_album_with(self,album):
         self.current_album = album
 
+    def update_current_album_page_with(self,album_page):
+        self.album().update_current_album_page_with(album_page)
+
     def album(self):
         return self.current_album
 
@@ -34,3 +37,9 @@ class AlbumManagementSystem:
 
     def class_knownledge(self):
         return ['Album','AlbumPage']
+
+    def qualified_countries(self):
+        return Country.objects.filter(qualified = True)
+
+    def page_for(self,country_name):
+        return self.album().page_for(country_name)

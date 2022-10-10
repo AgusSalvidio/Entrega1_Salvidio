@@ -46,7 +46,7 @@
 <div class="text-center">
     <button style="background-color:#56042C;; border-color:#56042C;; color:white " class=" btn waves-effect waves-light"><i class="icofont icofont-arrow-left "></i>
     </button>
-    <button style="background-color:#56042C;; border-color:#56042C;; color:white " class=" btn waves-effect waves-light">
+    <button style="background-color:#56042C;; border-color:#56042C;; color:white " class=" btn waves-effect waves-light" onclick="countries_modal('{% url 'qualified_countries' %}')">
         {{ working_context.current_page.country }}
     </button>
     <button style="background-color:#56042C;; border-color:#56042C;; color:white " class=" btn waves-effect waves-light"><i class="icofont icofont-arrow-right"></i>
@@ -57,5 +57,17 @@
 {% endblock %}
 
 {% block modals %}
+<div class="modal fade" id="countries" tabindex="-1" aria-labelledby="countries" aria-hidden="true">
+  
+</div>
+
+<script type="text/javascript">
+  var $ = jQuery.noConflict();
+  function countries_modal(url){
+      $('#countries').load(url,function (){
+          $(this).modal('show');
+      });
+  }
+</script> 
 
 {% endblock %}
