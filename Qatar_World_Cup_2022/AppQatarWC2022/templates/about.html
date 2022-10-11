@@ -1,0 +1,33 @@
+{% extends 'index.html' %}
+
+{% load static %}
+
+{% block title %}
+<title>Sobre nosotros | Qatar World Cup 2022</title>
+{% endblock %}
+
+{% block contents %}
+<main class="text-center">
+    <section>
+        <article>
+            <p>El objetivo de este proyecto es claro....</p>
+            <blockquote>Divertirse coleccionando los stickers de todas las selecciones clasificadas al mundial y compartir con amigos los resultados</blockquote>
+        </article>
+    </section>
+    <section class="about-images">
+        <article>
+            <h2>Sobre nosotros</h2>
+            <img
+                    class="image-about"
+                    src="/static/assets/agustin-sticker.jpg"
+                    alt="Imagen de Agustin Salvidio, representando en el sticker que es un desarrollador full stack Jr a pasos de llegar a semi-senior, fánatico de Boca."
+            />
+            <img
+                    class="image-about"
+                    src="/static/assets/alan-schanzenbach-sticker.jpg"
+                    alt="Imagen de Alan Schanzenbach, representando en el sticker que es un desarrollador trainee, con deseos de ascender de categoría. "
+            />
+        </article>
+    </section>
+</main>
+{% endblock%}
