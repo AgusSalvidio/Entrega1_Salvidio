@@ -58,7 +58,7 @@
 <div class="divider-custom">
 </div>
 <div class="text-center">
-    {% if working_context.previous_page_is_allowed %}
+    {% if working_context.is_previous_page_allowed %}
         <button style="background-color:#56042C;; border-color:#56042C;; color:white " class=" btn waves-effect waves-light" onclick="location.href='{% url 'previous_page' %}'"><i class="icofont icofont-arrow-left "></i>
         </button>
     {% else %}
@@ -68,7 +68,7 @@
     <button style="background-color:#56042C;; border-color:#56042C;; color:white " class=" btn waves-effect waves-light" onclick="countries_modal('{% url 'qualified_countries' %}')">
         {{ working_context.current_page.country }}
     </button>
-    {% if working_context.next_page_is_allowed %}
+    {% if working_context.is_next_page_allowed %}
         <button style="background-color:#56042C;; border-color:#56042C;; color:white " class=" btn waves-effect waves-light" onclick="location.href='{% url 'next_page' %}'"><i class="icofont icofont-arrow-right"></i>
         </button>
     {% else %}

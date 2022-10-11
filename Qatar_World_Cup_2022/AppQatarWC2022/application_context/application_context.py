@@ -139,7 +139,6 @@ class ApplicationContext:
     def next_sticker_slot(self):
         current_index = self.current_page().index_position()
         sticker_slot = self.sticker_slot_at(current_index)
-        print(f"Slot: {current_index} con imagen {sticker_slot.sticker_image()}")
         self.increment_index_position()
         return sticker_slot
 
@@ -192,11 +191,11 @@ class ApplicationContext:
     def qualified_countries(self):
         return self.album_system().qualified_countries()
     
-    def next_page_is_allowed(self):
-        return self.album_system().next_page_is_allowed()
+    def is_next_page_allowed(self):
+        return self.album_system().is_next_page_allowed()
     
-    def previous_page_is_allowed(self):
-        return self.album_system().previous_page_is_allowed()
+    def is_previous_page_allowed(self):
+        return self.album_system().is_previous_page_allowed()
 
     def next_page(self):
         return self.album_system().next_page()

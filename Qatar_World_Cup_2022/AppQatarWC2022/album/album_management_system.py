@@ -1,6 +1,7 @@
 from AppQatarWC2022.album.album import Album, AlbumPage
 from AppQatarWC2022.countries.country import Country
 
+from operator import attrgetter
 
 class AlbumManagementSystem:
       
@@ -41,47 +42,62 @@ class AlbumManagementSystem:
     def qualified_countries(self):
         return Country.objects.filter(qualified = True).order_by('name')
 
-    def next_page_is_allowed(self):
-        page_collection = self.album().pages()
+    def is_next_page_allowed(self):
         current_page = self.current_page()
-        
-        current_page_index = page_collection.index(current_page)
+        current_country = current_page.country()
+                
+        country_collection = country_collection = list(self.qualified_countries())
+        current_country_index = country_collection.index(current_country)
 
-        if current_page_index >= 0 and current_page_index <  len(page_collection):
+        print(f"BBBBBB EL PAIS ES {current_country} SU INDICE ES {current_country_index}")
+        if current_country_index >= 0 and current_country_index < (len(country_collection) - 1):
             return True
         else:
             return False
-    
-    def previous_page_is_allowed(self):
-        page_collection = self.album().pages()
-        current_page = self.current_page()
-        
-        current_page_index = page_collection.index(current_page)
 
-        if current_page_index > 0 and current_page_index <  len(page_collection):
+    def is_previous_page_allowed(self):
+        current_page = self.current_page()
+        current_country = current_page.country()
+        
+        country_collection = list(self.qualified_countries())
+        current_country_index = country_collection.index(current_country)
+        print(f"AAAAAAAA EL PAIS ES {current_country} SU INDICE ES {current_country_index}")
+        
+        if current_country_index > 0 and current_country_index < len(country_collection):
             return True
         else:
             return False
 
     def next_page(self):
         current_page = self.current_page()
-        if self.next_page_is_allowed():
-            page_collection = self.album().pages()
-            next_page_index = page_collection.index(current_page) + 1
-            next_page = page_collection[next_page_index]
+        current_country = current_page.country()
+
+        country_collection = list(self.qualified_countries())
+        current_country_index = country_collection.index(current_country)
+        
+        if current_country_index >= 0 and current_country_index <  len(country_collection):
+            next_country = country_collection[current_country_index + 1]
+            next_page = self.page_for(next_country.full_name())
+
             return next_page
         else:
             return current_page
-        
+    
     def previous_page(self):
-        current_page = self.album().current_page()
-        if self.previous_page_is_allowed():
-            page_collection = self.album().pages()
-            previous_page_index = page_collection.index(current_page) - 1
-            previous_page = page_collection[previous_page_index]
+        current_page = self.current_page()
+        current_country = current_page.country()
+
+        country_collection = list(self.qualified_countries())
+        current_country_index = country_collection.index(current_country)
+        
+        if current_country_index > 0 and current_country_index <  len(country_collection):
+            previous_country = country_collection[current_country_index - 1]
+            previous_page = self.page_for(previous_country.full_name())
+
             return previous_page
         else:
             return current_page
+
 
     def page_for(self,country_name):
         return self.album().page_for(country_name)
