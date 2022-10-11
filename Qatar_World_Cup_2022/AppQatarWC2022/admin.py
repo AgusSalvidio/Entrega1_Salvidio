@@ -8,5 +8,6 @@ admin.site.register(PromoCode)
 admin.site.register(UserProfile)
 admin.site.register(Country)
 #Only for testing, then this should be removed
-admin.site.register(GeneratedSticker)
+admin.site.register(GeneratedPlayerSticker)
+admin.site.register(GeneratedLogoSticker)
 admin.site.register(Article)

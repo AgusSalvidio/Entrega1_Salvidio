@@ -1,6 +1,6 @@
 from django.apps import apps
 
-from AppQatarWC2022.stickers import PlayerSticker,PlayerPosition,GeneratedSticker,Sticker,LogoSticker
+from AppQatarWC2022.stickers import Sticker,LogoSticker,PlayerSticker,PlayerPosition,GeneratedSticker,GeneratedPlayerSticker,GeneratedLogoSticker
 from AppQatarWC2022.promo_codes import PromoCode
 from AppQatarWC2022.users import UserProfile
 from AppQatarWC2022.countries import Country

@@ -1,1 +1,2 @@
 from .player_sticker_form import PlayerStickerRegistration
+from .logo_sticker_form import LogoStickerRegistration
