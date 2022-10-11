@@ -25,6 +25,9 @@ class StickerManagementSystem:
     def register(self,player_sticker):
         player_sticker.save()
 
+    def generated_sticker_of(self,generated_sticker_id):
+        return self.generated_stickers_repo.get(id = generated_sticker_id)
+
     def identified_as(self,player_sticker_id):
         return self.player_stickers_repo.get(id = player_sticker_id)
 

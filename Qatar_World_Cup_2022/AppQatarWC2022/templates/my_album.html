@@ -19,9 +19,16 @@
         <div class="col">
             <!-- Sticker - First Row-->
             <div class="portfolio-item">
-                <a class="portfolio-link" data-bs-toggle="modal" href="#">
-                    <img class="" src="{{ working_context.next_sticker_image }}" alt="..." height="250" width="175" />
-                </a>
+                <!-- This is because django for arguments its real bad-->
+                {% if working_context.current_sticker_slot.is_glued or working_context.current_sticker_slot.is_empty %}
+                    <a class="portfolio-link" data-bs-toggle="modal">
+                        <img class="" src="{{ working_context.next_sticker_slot.sticker_image }}" alt="..." height="250" width="175" />
+                    </a>
+                {% else %}
+                    <a class="portfolio-link" data-bs-toggle="modal" href="{% url 'glue_sticker' working_context.current_sticker_slot.sticker.id %}" onclick="location.href='{% url 'glue_sticker' working_context.current_sticker_slot.sticker.id %}'">
+                        <img class="" src="{{ working_context.next_sticker_slot.sticker_image }}" alt="..." height="250" width="175" />
+                    </a>
+                {% endif %}
             </div>
         </div>
         {% endfor %}
@@ -33,9 +40,16 @@
         <div class="col">
             <!-- Sticker - Second Row -->
             <div class="portfolio-item">
-                <a class="portfolio-link" data-bs-toggle="modal" href="#">
-                    <img class="" src="{{ working_context.next_sticker_image }}" alt="..." height="250" width="175" />
+             <!-- This is because django for arguments its real bad-->
+             {% if working_context.current_sticker_slot.is_glued or working_context.current_sticker_slot.is_empty %}
+                <a class="portfolio-link" data-bs-toggle="modal">
+                    <img class="" src="{{ working_context.next_sticker_slot.sticker_image }}" alt="..." height="250" width="175" />
                 </a>
+            {% else %}
+                <a class="portfolio-link" data-bs-toggle="modal" href="{% url 'glue_sticker' working_context.current_sticker_slot.sticker.id %}" onclick="location.href='{% url 'glue_sticker' working_context.current_sticker_slot.sticker.id %}'">
+                    <img class="" src="{{ working_context.next_sticker_slot.sticker_image }}" alt="..." height="250" width="175" />
+                </a>
+            {% endif %}
             </div>
         </div>
         {% endfor %}

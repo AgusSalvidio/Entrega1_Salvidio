@@ -64,6 +64,9 @@ class AlbumPage:
     def increment_index_position(self):
         self.current_index_position += 1
 
+    def current_sticker_slot(self):
+        return self.sticker_slot_at(self.current_index_position)
+
     def initialize_slots(self):
         
         generated_stickers = self.stickers()
@@ -99,13 +102,13 @@ class StickerSlot:
     def sticker_image(self):
         return self.sticker().sticker_image()
 
-    def isGlued(self):
+    def is_glued(self):
         return False
 
-    def isNew(self):
+    def is_new(self):
         return False
 
-    def isEmpty(self):
+    def is_empty(self):
         return False
     
 class NewSlot(StickerSlot):
@@ -113,12 +116,12 @@ class NewSlot(StickerSlot):
     def sticker_image(self):
         return '/media/stickers/to-add.jpg'
 
-    def isNew(self):
+    def is_new(self):
         return True
 
 class GluedSlot(StickerSlot):
     
-    def isGlued(self):
+    def is_glued(self):
         return True
 
 class EmptySlot(StickerSlot):
@@ -126,5 +129,5 @@ class EmptySlot(StickerSlot):
     def sticker_image(self):
         return '/media/stickers/not-found.jpg'
 
-    def isEmpty(self):
+    def is_empty(self):
         return True

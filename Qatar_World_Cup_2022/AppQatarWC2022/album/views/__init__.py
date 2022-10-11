@@ -1,1 +1,1 @@
-from .my_album_view import my_album,qualified_countries,update_current_album_page,next_page,previous_page
+from .my_album_view import my_album,qualified_countries,update_current_album_page,next_page,previous_page,glue_sticker

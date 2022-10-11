@@ -7,9 +7,9 @@ class AlbumManagementSystem:
     def __init__(self):
         self.current_album = None
        
-    def refresh_album_with(self,generated_sticker_collection):
+    def updated_album_using(self,generated_sticker_collection):
     
-        qualified_countries = Country.objects.filter(qualified = True)
+        qualified_countries = self.qualified_countries()
         
         album_page_collection = []
         for country in qualified_countries:
@@ -18,7 +18,7 @@ class AlbumManagementSystem:
             album_page.initialize_slots()
             album_page_collection.append(album_page)
 
-        self.update_album_with(Album.composed_of(album_page_collection,album_page))
+        return Album.composed_of(album_page_collection,album_page_collection[0])
 
     def update_album_with(self,album):
         self.current_album = album
@@ -39,12 +39,11 @@ class AlbumManagementSystem:
         return ['Album','AlbumPage']
 
     def qualified_countries(self):
-        print(f"{Country.objects.filter(qualified = True)}")
-        return Country.objects.filter(qualified = True)
+        return Country.objects.filter(qualified = True).order_by('name')
 
     def next_page_is_allowed(self):
         page_collection = self.album().pages()
-        current_page = self.album().current_page()
+        current_page = self.current_page()
         
         current_page_index = page_collection.index(current_page)
 
@@ -55,7 +54,7 @@ class AlbumManagementSystem:
     
     def previous_page_is_allowed(self):
         page_collection = self.album().pages()
-        current_page = self.album().current_page()
+        current_page = self.current_page()
         
         current_page_index = page_collection.index(current_page)
 
@@ -65,7 +64,7 @@ class AlbumManagementSystem:
             return False
 
     def next_page(self):
-        current_page = self.album().current_page()
+        current_page = self.current_page()
         if self.next_page_is_allowed():
             page_collection = self.album().pages()
             next_page_index = page_collection.index(current_page) + 1
@@ -85,4 +84,10 @@ class AlbumManagementSystem:
             return current_page
 
     def page_for(self,country_name):
-        return self.album().page_for(country_name) 
+        return self.album().page_for(country_name)
+
+    def current_page(self):
+        return self.album().current_page()
+
+    def current_sticker_slot(self):
+        return self.current_page().current_sticker_slot()

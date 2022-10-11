@@ -102,10 +102,13 @@ class ApplicationContext:
     """ Stickers """
 
     def stickers_of(self,user):
-        return self.sticker_system().stickers_of(user)   
+        return self.sticker_system().stickers_of(user)
+
+    def sticker_slot_at(self,slot_position):
+        return self.slots().get(slot_position)  
 
     def sticker_slot_image_at(self,slot_position):
-        return self.slots().get(slot_position).sticker_image()
+        return self.sticker_slot_at(slot_position).sticker_image()
 
     def sticker_first_row_range(self):
         return list(range(6))
@@ -113,19 +116,40 @@ class ApplicationContext:
     def sticker_second_row_range(self):
         return list(range(6,12))    
     
+    def generated_sticker_of(self,id):
+        return self.sticker_system().generated_sticker_of(id)
+    
+    """ Player Sticker """
+    def player_stickers(self):
+        return self.sticker_system().player_stickers()
+
+    def register_player_sticker(self,player_sticker):
+        self.sticker_system().register_player_sticker(player_sticker)
+
+    def player_sticker_identified_as(self,player_sticker_id):
+        return self.sticker_system().player_sticker_identified_as(player_sticker_id)
+
+    def unregister_player_sticker(self,player_sticker):
+        self.sticker_system().unregister_player_sticker(player_sticker)
+
+    def update_player_sticker_with(self,player_sticker,updated_player_sticker):
+        self.sticker_system().update_player_sticker_with(player_sticker,updated_player_sticker)
+
     #This function is needed when html loads the url path, its a horrible implementation but jinja does not allow functions with arguments.
-    def next_sticker_image(self):
+    def next_sticker_slot(self):
         current_index = self.current_page().index_position()
-        image = self.sticker_slot_image_at(current_index)
+        sticker_slot = self.sticker_slot_at(current_index)
+        print(f"Slot: {current_index} con imagen {sticker_slot.sticker_image()}")
         self.increment_index_position()
-        return image
+        return sticker_slot
 
     """ Album """
     def refresh_album(self):
         user = self.logged_user()
         user_sticker_collection = self.stickers_of(user) 
-        self.album_system().refresh_album_with(user_sticker_collection)
-
+        updated_album = self.album_system().updated_album_using(user_sticker_collection)
+        self.album_system().update_album_with(updated_album)
+                
     def slots(self):
         return self.album().current_page().slots()
     
@@ -144,6 +168,9 @@ class ApplicationContext:
     def update_current_album_page_with(self,album_page):
         self.album().update_current_album_page_with(album_page)
 
+    def current_sticker_slot(self):
+        return self.current_page().current_sticker_slot()
+
     """ Promo Codes """
     def promo_codes(self):
         return self.promo_code_system().promo_codes()
@@ -159,22 +186,6 @@ class ApplicationContext:
 
     def update_promo_code_with(self,promo_code,updated_promo_code):
         self.promo_code_system().update_promo_code_with(promo_code,updated_promo_code)
-
-    """ Player Sticker """
-    def player_stickers(self):
-        return self.sticker_system().player_stickers()
-
-    def register_player_sticker(self,player_sticker):
-        self.sticker_system().register_player_sticker(player_sticker)
-
-    def player_sticker_identified_as(self,player_sticker_id):
-        return self.sticker_system().player_sticker_identified_as(player_sticker_id)
-
-    def unregister_player_sticker(self,player_sticker):
-        self.sticker_system().unregister_player_sticker(player_sticker)
-
-    def update_player_sticker_with(self,player_sticker,updated_player_sticker):
-        self.sticker_system().update_player_sticker_with(player_sticker,updated_player_sticker)
 
     """ Countries """
 
