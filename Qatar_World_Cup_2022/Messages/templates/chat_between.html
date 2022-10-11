@@ -11,73 +11,77 @@
 <div class="container bootstrap snippets bootdey">
     <div class="row">
         <div class="col">
-            <div class="portlet portlet-default">
-                <div class="portlet-heading">
-                    <div class="portlet-title">
-                        <h4>{{ receiver_user.full_name }}</h4>
-                    </div>
-                    <div class="portlet-widgets">
-                        <span class="divider"></span>
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
-                <div id="chat" class="panel-collapse">
-                    <div>
-                    <div class="portlet-body chat-widget" style="overflow-y: auto; width: auto; height: 300px;">
-                        <div class="row">
+                <form action="{% url 'send_message' working_context.logged_user.id receiver_user.id %}" method="POST"> {% csrf_token %}
+                    <div class="portlet portlet-default">
+                        <div class="portlet-heading">
+                            <div class="portlet-title">
+                                <h4>{{ receiver_user.full_name }}</h4>
+                            </div>
+                            <div class="portlet-widgets">
+                                <span class="divider"></span>
+                            </div>
+                            <div class="clearfix"></div>
                         </div>
-                        {% for message in messages %}
-                            {% if message.sender == receiver_user %}
+                        <div id="chat" class="panel-collapse">
+                            <div>
+                            <div class="portlet-body chat-widget" style="overflow-y: auto; width: auto; height: 300px;">
                                 <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="media">
-                                            <a class="pull-left" href="#">
-                                                <img class="media-object img-circle img-chat" src="{{ receiver_user.avatar }}" alt="">
-                                            </a>
-                                            <div class="media-body">
-                                                <h4 class="media-heading">{{ receiver_user.full_name }}
-                                                </h4>
-                                                <p>{{ message.content }}</p>
+                                </div>
+                                {% for message in messages %}
+                                    {% if message.sender == receiver_user %}
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="media">
+                                                    <a class="pull-left" href="#">
+                                                        <img class="media-object img-circle img-chat" src="{{ receiver_user.avatar }}" alt="">
+                                                    </a>
+                                                    <div class="media-body">
+                                                        <h4 class="media-heading">{{ receiver_user.full_name }}
+                                                        </h4>
+                                                        <p>{{ message.content }}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                    {% else %}
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="media">
+                                                <a class="pull-left" href="#">
+                                                    <img class="media-object img-circle img-chat" src="{{ working_context.logged_user_profile_avatar }}" alt="">
+                                                </a>
+                                                <div class="media-body">
+                                                    <h4 class="media-heading">{{ working_context.logged_user.full_name }}
+                                                    </h4>
+                                                    <p>{{ message.content }}</p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <hr>
-                            {% else %}
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="media">
-                                        <a class="pull-left" href="#">
-                                            <img class="media-object img-circle img-chat" src="{{ working_context.logged_user_profile_avatar }}" alt="">
-                                        </a>
-                                        <div class="media-body">
-                                            <h4 class="media-heading">{{ working_context.logged_user.full_name }}
-                                            </h4>
-                                            <p>{{ message.content }}</p>
-                                        </div>
+                                    <hr>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                            </div>
+                            <div class="portlet-footer">
+                                <form role="form">
+                                    <div class="form-group">
+                                        <label class="float-label" for="{{ form.content.id_for_label }}">Enviar Mensaje</label>
+                                            {{ form.content }}
+                                        <span class="form-bar"></span>
                                     </div>
-                                </div>
+                                    <div class="form-group">
+                                        <button type="submit" style="background-color:#56042C;; border-color:#56042C;; color:white " class=" btn btn-sm waves-effect waves-light pull-right"><i class="icofont icofont-location-arrow"></i>
+                                            Enviar
+                                        </button>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </form>
                             </div>
-                            <hr>
-                            {% endif %}
-                        {% endfor %}
+                        </div>
                     </div>
-                    </div>
-                    <div class="portlet-footer">
-                        <form role="form">
-                            <div class="form-group">
-                                <textarea class="form-control" placeholder="Ingrese mensaje"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <button style="background-color:#56042C;; border-color:#56042C;; color:white " class=" btn btn-sm waves-effect waves-light pull-right"><i class="icofont icofont-location-arrow"></i>
-                                    Enviar
-                                </button>
-                                <div class="clearfix"></div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+            </form>
         </div>
         <!-- /.col-md-4 -->
     </div>

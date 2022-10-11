@@ -1,5 +1,4 @@
 from django import forms
-from django.contrib.auth.models import User
 
 class MessageRegistration(forms.Form):
-    pass
+    content = forms.CharField(label_suffix='', label='Message', widget=forms.Textarea(attrs={'class':'form-control'}))

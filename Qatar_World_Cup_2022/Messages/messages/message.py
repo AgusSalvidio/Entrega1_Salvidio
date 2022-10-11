@@ -5,17 +5,16 @@ from AppQatarWC2022.users.user_profile import UserProfile
 
 
 class Message(models.Model):
-    sender = models.OneToOneField(UserProfile,related_name='sender',on_delete=models.CASCADE)
-    receiver = models.OneToOneField(UserProfile,related_name='receiver',on_delete=models.CASCADE)
+    sender = models.ForeignKey(UserProfile,related_name='sender',on_delete=models.CASCADE)
+    receiver = models.ForeignKey(UserProfile,related_name='receiver',on_delete=models.CASCADE)
     was_read = models.BooleanField()
     date_time = models.DateTimeField()
     content = models.TextField()
 
     @classmethod
-    def from_form(cls, sender, date_time, form_data):
-        receiver = form_data.get('receiver')
+    def from_form(cls, sender,receiver, date_time, form_data):
         content = form_data.get('content')
-        return cls(sender=sender, receiver=receiver, date_time=date_time, content=content)
+        return cls(sender=sender, receiver=receiver, date_time=date_time, content=content, was_read = False)
 
     def sender_username(self):
         return self.sender.username()
