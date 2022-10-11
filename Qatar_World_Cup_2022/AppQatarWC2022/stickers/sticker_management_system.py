@@ -37,15 +37,12 @@ class StickerManagementSystem:
     def register(self,sticker):
         sticker.save()
 
-    def generated_sticker_of(self,generated_sticker_id):
-        return self.generated_stickers_repo.get(id = generated_sticker_id)
-
-    def identified_player_as(self,player_sticker_id):
-        return self.player_stickers_repo.get(id = player_sticker_id)
+    def identified_as(self,sticker_id,object_class):
+        if object_class == 'PlayerSticker':
+            return self.player_stickers_repo.get(id = sticker_id)
+        else:
+            return self.logo_stickers_repo.get(id = sticker_id)
     
-    def identified_logo_as(self,logo_sticker_id):
-        return self.logo_stickers_repo.get(id = logo_sticker_id)
-
     def unregister(self,sticker):
         sticker.delete()
     

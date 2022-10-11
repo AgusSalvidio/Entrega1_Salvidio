@@ -8,8 +8,12 @@ import sys
 from AppQatarWC2022.promo_codes import PromoCode
 from AppQatarWC2022.promo_codes.forms import PromoCodeRegistration
 
-from AppQatarWC2022.stickers import PlayerSticker
-from AppQatarWC2022.stickers.forms import PlayerStickerRegistration
+from AppQatarWC2022.stickers import PlayerSticker,LogoSticker
+from AppQatarWC2022.stickers.forms import PlayerStickerRegistration,LogoStickerRegistration
+
+from AppQatarWC2022.countries import Country
+from AppQatarWC2022.countries.forms import CountryRegistration
+
 
 working_context = {'working_context':app.working_context()}
 
