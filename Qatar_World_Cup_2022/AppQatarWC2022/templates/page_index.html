@@ -7,5 +7,31 @@
 {% endblock %}
 
 {% block contents %}
-
+<main class="text-center">
+    <section>
+        <article>
+            <a href="{% url 'home' %}">
+                Inicio
+            </a>
+            <a href="{% url 'my_stickers' %}">
+                Mis Stickers
+            </a>
+            <a href="{% url 'my_album' %}">
+                Mi Álbum
+            </a>
+            <a href="{% url 'player_stickers' %}">
+                Stickers de Jugadores
+            </a>
+            <a href="{% url 'promo_codes' %}">
+                Códigos Promocionales
+            </a>
+            <a href="{% url 'sign_up' %}">
+                Registrarse
+            </a>
+            <a href="{% url 'update_user_profile' %}">
+                Perfil
+            </a>
+        </article>
+    </section>
+</main>
 {% endblock%}
