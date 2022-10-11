@@ -1,0 +1,62 @@
+{% extends 'index.html' %}
+
+{% load static %}
+
+{% block title %}
+<title>Índice de páginas | Qatar World Cup 2022</title>
+{% endblock %}
+
+{% block contents %}
+<main class="text-center">
+    <section>
+        <h3> Sección de páginas del sitio (dado que no es un blog y es requisito poder tener un listado con las páginas esto se asemeja a ello)</h3>
+    </section>
+    <ul>
+        <li>
+            <a href="{% url 'home' %}">
+                Inicio
+            </a>
+        </li>
+        <li>
+            <a href="">
+                Mis Stickers
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'my_album' %}">
+                Mi Álbum
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'player_stickers' %}">
+                Stickers de Jugadores
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'promo_codes' %}">
+                Códigos Promocionales
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'sign_up' %}">
+                Registrarse
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'update_user_profile' %}">
+                Perfil
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'about' %}">
+                Sobre Nosotros
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'pages' %}">
+                Índice de páginas
+            </a>
+        </li>
+      </ul>            
+</main>
+{% endblock%}

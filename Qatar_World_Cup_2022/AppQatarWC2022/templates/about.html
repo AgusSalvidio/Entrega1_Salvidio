@@ -1,0 +1,38 @@
+{% extends 'index.html' %}
+
+{% load static %}
+
+{% block title %}
+<title>{{ article.title }}| Qatar World Cup 2022</title>
+{% endblock %}
+
+{% block contents %}
+<main class="text-center">
+    <section>
+        <h2>{{ article.title }}</h2>
+        <article>
+            <p>{{ article.subtitle }}</p>
+        </article>
+    </section>
+    <section class="about-images">
+        <article>
+            <img
+                    class="image-about"
+                    src="{{ article.image }}"
+                    alt=""
+                    height="250"
+                    width="350"
+            />    
+        </article>
+    <section>
+        <article>
+            <p>{{ article.body }}</p>
+        </article>
+    </section>
+    <section>
+        <article>
+            <p>{{ article.author }} - {{ article.date }}</p>
+        </article>
+    </section>
+</main>
+{% endblock%}

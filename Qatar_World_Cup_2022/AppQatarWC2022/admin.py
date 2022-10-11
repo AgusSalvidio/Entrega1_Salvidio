@@ -8,3 +8,4 @@ admin.site.register(UserProfile)
 admin.site.register(Country)
 #Only for testing, then this should be removed
 admin.site.register(GeneratedSticker)
+admin.site.register(Article)
