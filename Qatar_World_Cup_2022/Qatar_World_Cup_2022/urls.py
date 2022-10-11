@@ -23,7 +23,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('AppQatarWC2022/',include('AppQatarWC2022.urls')),
     path('', include('Qatar_World_Cup_2022.website.urls')),
-    path('AppQatarWC2022/', lambda _: redirect('home'))
+    path('AppQatarWC2022/', lambda _: redirect('home')),
+    path('messages/', include('Messages.urls'))
 ]
 
 urlpatterns+=static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

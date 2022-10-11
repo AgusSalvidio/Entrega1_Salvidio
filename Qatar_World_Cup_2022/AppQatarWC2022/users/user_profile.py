@@ -27,6 +27,9 @@ class UserProfile(models.Model):
                 birthdate = form_data.get('birthdate'),
                 country = form_data.get('country'),
                 avatar_image = form_data.get('avatar_image'))
+
+    def last_login(self):
+        return self.internal_user.last_login
    
     def age(self):
         return current_date.year - self.birthdate.year

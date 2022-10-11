@@ -1,0 +1,37 @@
+{% extends 'index.html' %}
+
+{% load static %}
+
+{% block title %}
+<title>Mensajes | Qatar World Cup 2022</title>
+{% endblock %}
+
+{% block contents %}
+<legend>
+    Usuarios para chatear
+</legend>
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Última conexión</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+    {% if working_context.chat_users %}
+            {% for user in working_context.chat_users %}
+            <tr>
+                <td>{{ user.username }}</td>
+                <td>{{ user.last_login }}</td>
+                <td>
+                    <a class="btn waves-effect waves-light icofont icofont-location-arrow " onclick="location.href='{% url 'chat_between' working_context.logged_user.id user.id  %}'"></a>
+                </td>
+            </tr>
+            {% endfor %}
+    </table>
+    {% else %}
+    </table>
+        <h4>No se encontraron usuarios</h4>
+    {% endif %}  
+{% endblock %}
