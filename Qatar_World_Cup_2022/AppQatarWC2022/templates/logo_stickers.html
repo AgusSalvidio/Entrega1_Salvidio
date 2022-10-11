@@ -1,0 +1,78 @@
+{% extends 'index.html' %}
+
+{% load static %}
+
+{% block title %}
+<title>Stickers de Logos | Qatar World Cup 2022</title>
+{% endblock %}
+
+{% block contents %}
+<legend>
+    Administrar Stickers de Logos
+    <div class="btn-toolbar pull-right">
+        <div class="btn-group pull-right">
+            <!-- Button trigger modal -->
+            <button style="background-color:#56042C;; border-color:#56042C;; color:white " class=" btn btn-sm waves-effect waves-light pull-right" onclick="registration_modal('{% url 'element_registration' working_context.current_object.class_name working_context.current_form.class_name %}')"><i class="icofont icofont-plus"></i>
+                Agregar
+            </button>
+        </div>
+    </div>
+</legend>
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+    {% if working_context.logo_stickers %}
+            {% for logo_sticker in working_context.logo_stickers %}
+            <tr>
+                <td>{{ logo_sticker.full_name }}</td>
+                <td>
+                    <a class="btn btn-sm waves-effect waves-light icofont icofont-ui-edit" onclick="update_modal('{% url 'element_update' logo_sticker.id working_context.current_object.class_name working_context.current_form.class_name %}')"></a>
+                    <a class="btn btn-sm waves-effect waves-light icofont icofont-close" onclick="unregistration_modal('{% url 'element_unregistration' logo_sticker.id working_context.current_object.class_name working_context.current_form.class_name %}')"></a>   
+                </td>
+            </tr>
+            {% endfor %}
+    </table>
+    {% else %}
+    </table>
+        <h4>No se encontraron stickers de logos</h4>
+    {% endif %}  
+{% endblock %}
+
+{% block modals %}
+  
+  <div class="modal fade" id="logo_sticker_registration_modal" tabindex="-1" aria-labelledby="logo_sticker_registration_modal" aria-hidden="true">
+  
+  </div>
+
+  <div class="modal fade" id="logo_sticker_update_modal" tabindex="-1" aria-labelledby="logo_sticker_update_modal" aria-hidden="true">
+  
+  </div>
+
+  <div class="modal fade" id="logo_sticker_unregistration_modal" tabindex="-1" aria-labelledby="logo_sticker_unregistration_modal" aria-hidden="true">
+  
+</div>
+
+ <script type="text/javascript">
+    var $ = jQuery.noConflict();
+    function registration_modal(url){
+        $('#logo_sticker_registration_modal').load(url,function (){
+            $(this).modal('show');
+        });
+    }
+    function unregistration_modal(url){
+        $('#logo_sticker_unregistration_modal').load(url,function (){
+            $(this).modal('show');
+        });
+    }
+    function update_modal(url){
+        $('#logo_sticker_update_modal').load(url,function (){
+            $(this).modal('show');
+        });
+    }
+ </script> 
+{% endblock %}

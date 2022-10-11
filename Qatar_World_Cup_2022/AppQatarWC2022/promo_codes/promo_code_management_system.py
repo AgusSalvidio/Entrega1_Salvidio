@@ -14,7 +14,7 @@ class PromoCodeManagementSystem:
     def register(self, promo_code):
         promo_code.save()
 
-    def identified_as(self,promo_code_id):
+    def identified_as(self,promo_code_id,object_class):
         return self.promo_codes_repo.get(id = promo_code_id)
 
     def unregister(self,promo_code):

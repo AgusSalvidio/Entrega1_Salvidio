@@ -1,6 +1,7 @@
 from django.db import models
 
 from AppQatarWC2022.countries import Country
+from .sticker import Sticker
 
 class PlayerPosition(models.Model):
     name = models.CharField(max_length=50)
@@ -8,22 +9,14 @@ class PlayerPosition(models.Model):
     def __str__(self):
         return self.name
 
-class PlayerSticker(models.Model):
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
-    country = models.ForeignKey(Country,on_delete=models.CASCADE)    
+class PlayerSticker(Sticker):
     birthdate = models.DateField()
     position =  models.ForeignKey(PlayerPosition,on_delete=models.CASCADE)  
-    sticker_image = models.ImageField(upload_to='stickers', default='stickers/default-sticker.jpg')
-    slot = models.IntegerField()
-    Rarities = models.TextChoices('Rareza', 'Común Épica Legendaria')
-    rarity_category = models.CharField(max_length=50,choices=Rarities.choices) 
 
     @classmethod
     def for_empty_slot_in(cls,slot_position):
         return cls(
-            first_name = None,
-            last_name = None,
+            name = None,
             country = None,
             birthdate = None,
             position =  None, 
@@ -32,10 +25,9 @@ class PlayerSticker(models.Model):
             rarity_category = None)
 
     @classmethod
-    def composed_of(cls, first_name,last_name, country, birthdate, position, sticker_image, slot, rarity_category):
+    def composed_of(cls, name,country, birthdate, position, sticker_image, slot, rarity_category):
       return cls(
-        first_name = first_name,
-        last_name = last_name,
+        name = name,
         country = country,
         birthdate = birthdate,
         position = position,
@@ -46,36 +38,19 @@ class PlayerSticker(models.Model):
     @classmethod
     def from_form(cls, form_data):
       return cls.composed_of(
-        first_name = form_data.get("first_name"),
-        last_name = form_data.get("last_name"),
+        name = form_data.get("name"),
         country = form_data.get("country"),
         birthdate = form_data.get("birthdate"),
         position = form_data.get("position"),
         sticker_image = form_data.get("sticker_image"),
         rarity_category = form_data.get("rarity_category"),
         slot = form_data.get("slot"))
-
-    def slot_position(self):
-        return self.slot
     
-    def full_name(self):
-        return f'{self.first_name} {self.last_name}'
-
-    def nationality(self):
-        return self.country
-    
-    def rarity(self):
-        return self.rarity_category
-
-    def sticker(self):
-        return self.sticker_image.url
-
     def __str__(self):
         return self.full_name()
 
     def synchronize_with(self,updated_player_sticker):
-        self.first_name = updated_player_sticker.first_name
-        self.last_name = updated_player_sticker.last_name
+        self.name = updated_player_sticker.name
         self.country =   updated_player_sticker.country 
         self.birthdate = updated_player_sticker.birthdate
         self.position =   updated_player_sticker.position

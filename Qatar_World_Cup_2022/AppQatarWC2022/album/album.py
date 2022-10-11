@@ -1,5 +1,6 @@
 
-from AppQatarWC2022.stickers.generated_sticker import GeneratedSticker
+from AppQatarWC2022.stickers.generated_player_sticker import GeneratedPlayerSticker
+from AppQatarWC2022.stickers.generated_logo_sticker import GeneratedLogoSticker
 
 
 class Album:
@@ -76,7 +77,10 @@ class AlbumPage:
             generated_sticker_in_slot = list(filter(lambda generated_sticker: generated_sticker.slot_position() == slot_position,generated_stickers))
                         
             if len(generated_sticker_in_slot) == 0:
-                sticker_slot = EmptySlot(GeneratedSticker.for_empty_slot_in(slot_position))
+                if slot_position == 0:
+                    sticker_slot = EmptySlot(GeneratedLogoSticker.for_empty_slot_in(slot_position))
+                else:
+                    sticker_slot = EmptySlot(GeneratedPlayerSticker.for_empty_slot_in(slot_position))
             elif generated_sticker_in_slot[0].category() == 'Glued':
                 sticker_slot = GluedSlot(generated_sticker_in_slot[0])
             else:

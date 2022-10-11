@@ -74,7 +74,7 @@ class ApplicationContext:
         self.system_for(object_class_name).update_with(object,updated_object)
 
     def identified_as(self,id,object_class_name):
-        return self.system_for(object_class_name).identified_as(id)
+        return self.system_for(object_class_name).identified_as(id,object_class_name)
 
     def attributes_for(self,object):
         methods_dict = {}
@@ -100,6 +100,10 @@ class ApplicationContext:
         self.user_system().store_logged_user(user)
 
     """ Stickers """
+
+    def new_stickers(self):
+        stickers = self.stickers_of(self.logged_user())
+        return list(filter(lambda sticker: sticker.category() == 'New',stickers))
 
     def stickers_of(self,user):
         return self.sticker_system().stickers_of(user)
@@ -134,6 +138,10 @@ class ApplicationContext:
 
     def update_player_sticker_with(self,player_sticker,updated_player_sticker):
         self.sticker_system().update_player_sticker_with(player_sticker,updated_player_sticker)
+
+    """ Logo Stickers """
+    def logo_stickers(self):
+        return self.sticker_system().logo_stickers()
 
     #This function is needed when html loads the url path, its a horrible implementation but jinja does not allow functions with arguments.
     def next_sticker_slot(self):
