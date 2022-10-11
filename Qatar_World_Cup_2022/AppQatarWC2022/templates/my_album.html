@@ -19,9 +19,16 @@
         <div class="col">
             <!-- Sticker - First Row-->
             <div class="portfolio-item">
-                <a class="portfolio-link" data-bs-toggle="modal" href="#">
-                    <img class="" src="{{ working_context.next_sticker_image }}" alt="..." height="250" width="175" />
-                </a>
+                <!-- This is because django for arguments its real bad-->
+                {% if working_context.current_sticker_slot.is_glued or working_context.current_sticker_slot.is_empty %}
+                    <a class="portfolio-link" data-bs-toggle="modal">
+                        <img class="" src="{{ working_context.next_sticker_slot.sticker_image }}" alt="..." height="250" width="175" />
+                    </a>
+                {% else %}
+                    <a class="portfolio-link" data-bs-toggle="modal" href="{% url 'glue_sticker' working_context.current_sticker_slot.sticker.id %}" onclick="location.href='{% url 'glue_sticker' working_context.current_sticker_slot.sticker.id %}'">
+                        <img class="" src="{{ working_context.next_sticker_slot.sticker_image }}" alt="..." height="250" width="175" />
+                    </a>
+                {% endif %}
             </div>
         </div>
         {% endfor %}
@@ -33,9 +40,16 @@
         <div class="col">
             <!-- Sticker - Second Row -->
             <div class="portfolio-item">
-                <a class="portfolio-link" data-bs-toggle="modal" href="#">
-                    <img class="" src="{{ working_context.next_sticker_image }}" alt="..." height="250" width="175" />
+             <!-- This is because django for arguments its real bad-->
+             {% if working_context.current_sticker_slot.is_glued or working_context.current_sticker_slot.is_empty %}
+                <a class="portfolio-link" data-bs-toggle="modal">
+                    <img class="" src="{{ working_context.next_sticker_slot.sticker_image }}" alt="..." height="250" width="175" />
                 </a>
+            {% else %}
+                <a class="portfolio-link" data-bs-toggle="modal" href="{% url 'glue_sticker' working_context.current_sticker_slot.sticker.id %}" onclick="location.href='{% url 'glue_sticker' working_context.current_sticker_slot.sticker.id %}'">
+                    <img class="" src="{{ working_context.next_sticker_slot.sticker_image }}" alt="..." height="250" width="175" />
+                </a>
+            {% endif %}
             </div>
         </div>
         {% endfor %}
@@ -44,18 +58,39 @@
 <div class="divider-custom">
 </div>
 <div class="text-center">
-    <button style="background-color:#56042C;; border-color:#56042C;; color:white " class=" btn waves-effect waves-light"><i class="icofont icofont-arrow-left "></i>
-    </button>
-    <button style="background-color:#56042C;; border-color:#56042C;; color:white " class=" btn waves-effect waves-light">
+    {% if working_context.is_previous_page_allowed %}
+        <button style="background-color:#56042C;; border-color:#56042C;; color:white " class=" btn waves-effect waves-light" onclick="location.href='{% url 'previous_page' %}'"><i class="icofont icofont-arrow-left "></i>
+        </button>
+    {% else %}
+        <button disabled style="background-color:#56042C;; border-color:#56042C;; color:white " class=" btn waves-effect waves-light" onclick="location.href='{% url 'my_album' %}'"><i class="icofont icofont-arrow-left "></i>
+        </button>
+    {% endif %}
+    <button style="background-color:#56042C;; border-color:#56042C;; color:white " class=" btn waves-effect waves-light" onclick="countries_modal('{% url 'qualified_countries' %}')">
         {{ working_context.current_page.country }}
     </button>
-    <button style="background-color:#56042C;; border-color:#56042C;; color:white " class=" btn waves-effect waves-light"><i class="icofont icofont-arrow-right"></i>
+    {% if working_context.is_next_page_allowed %}
+        <button style="background-color:#56042C;; border-color:#56042C;; color:white " class=" btn waves-effect waves-light" onclick="location.href='{% url 'next_page' %}'"><i class="icofont icofont-arrow-right"></i>
+        </button>
+    {% else %}
+    <button disabled style="background-color:#56042C;; border-color:#56042C;; color:white " class=" btn waves-effect waves-light" onclick="location.href='{% url 'my_album' %}'"><i class="icofont icofont-arrow-right"></i>
     </button>
-
+    {% endif %}
 </div>
 
 {% endblock %}
 
 {% block modals %}
+<div class="modal fade" id="countries" tabindex="-1" aria-labelledby="countries" aria-hidden="true">
+  
+</div>
+
+<script type="text/javascript">
+  var $ = jQuery.noConflict();
+  function countries_modal(url){
+      $('#countries').load(url,function (){
+          $(this).modal('show');
+      });
+  }
+</script> 
 
 {% endblock %}

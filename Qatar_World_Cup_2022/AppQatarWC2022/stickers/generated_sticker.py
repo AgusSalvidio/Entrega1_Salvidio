@@ -25,6 +25,7 @@ class GeneratedSticker(models.Model):
 
     def glue_sticker(self):
         self.sticker_category = 'Glued'
+        self.save()
 
     def update_owner_with(self,owner):
         self.owner = owner
