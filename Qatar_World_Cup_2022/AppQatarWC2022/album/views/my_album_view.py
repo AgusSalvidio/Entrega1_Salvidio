@@ -36,7 +36,7 @@ def next_page(request):
     else:
         next_page_country = app.working_context().next_page().country()
         app.working_context().refresh_album()
-        updated_previous_page = app.working_context().page_for(next_page_country.full_name())
+        updated_previous_page = app.working_context().page_for(next_page_country.name())
         app.working_context().update_current_album_page_with(updated_previous_page)
         return render(request,"my_album.html",working_context)
 
@@ -47,7 +47,7 @@ def previous_page(request):
     else:
         previous_page_country = app.working_context().previous_page().country()
         app.working_context().refresh_album()
-        updated_previous_page = app.working_context().page_for(previous_page_country.full_name())
+        updated_previous_page = app.working_context().page_for(previous_page_country.name())
         app.working_context().update_current_album_page_with(updated_previous_page)
         return render(request,"my_album.html",working_context)
 
@@ -57,7 +57,7 @@ def glue_sticker(request,id):
         pass
     else:
         generated_sticker = app.working_context().generated_sticker_of(id)
-        country_name = generated_sticker.country().full_name()
+        country_name = generated_sticker.country().name()
         generated_sticker.glue_sticker()
         app.working_context().refresh_album()
         selected_page = app.working_context().page_for(country_name)
