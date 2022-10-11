@@ -18,5 +18,6 @@ from AppQatarWC2022.generic_modals.urls import urlpatterns as generic_modal_urls
 from AppQatarWC2022.promo_codes.urls import urlpatterns as promo_code_urls
 from AppQatarWC2022.stickers.urls import urlpatterns as sticker_urls
 from AppQatarWC2022.users.urls  import urlpatterns as user_urls
+from AppQatarWC2022.countries.urls import urlpatterns as country_urls
 
-urlpatterns = album_urls + generic_modal_urls + promo_code_urls + sticker_urls + user_urls
+urlpatterns = album_urls + generic_modal_urls + promo_code_urls + sticker_urls + user_urls + country_urls

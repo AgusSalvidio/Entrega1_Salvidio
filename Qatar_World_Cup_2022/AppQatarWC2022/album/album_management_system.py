@@ -15,7 +15,14 @@ class AlbumManagementSystem:
         album_page_collection = []
         for country in qualified_countries:
             stickers_filtered_by_country = list(filter(lambda generated_sticker: generated_sticker.country() == country,generated_sticker_collection))
-            album_page = AlbumPage.composed_of(country,country.background(),stickers_filtered_by_country)
+            
+            glued_stickers = list(filter(lambda generated_sticker: generated_sticker.category() == 'Glued',stickers_filtered_by_country))
+
+            new_stickers = list(filter(lambda generated_sticker: generated_sticker.category() == 'New' and len(list(filter(lambda glue_sticker: glue_sticker.name() != generated_sticker.name(),glued_stickers))) != 0 ,stickers_filtered_by_country))
+
+            filtered_stickers = glued_stickers + new_stickers
+
+            album_page = AlbumPage.composed_of(country,country.background(),filtered_stickers)
             album_page.initialize_slots()
             album_page_collection.append(album_page)
 
@@ -39,8 +46,11 @@ class AlbumManagementSystem:
     def class_knownledge(self):
         return ['Album','AlbumPage']
 
+    def countries(self):
+        return Country.objects.all()
+
     def qualified_countries(self):
-        return Country.objects.filter(qualified = True).order_by('name')
+        return Country.objects.filter(qualified = True).order_by('full_name')
 
     def is_next_page_allowed(self):
         current_page = self.current_page()
@@ -49,7 +59,6 @@ class AlbumManagementSystem:
         country_collection = country_collection = list(self.qualified_countries())
         current_country_index = country_collection.index(current_country)
 
-        print(f"BBBBBB EL PAIS ES {current_country} SU INDICE ES {current_country_index}")
         if current_country_index >= 0 and current_country_index < (len(country_collection) - 1):
             return True
         else:
@@ -61,8 +70,7 @@ class AlbumManagementSystem:
         
         country_collection = list(self.qualified_countries())
         current_country_index = country_collection.index(current_country)
-        print(f"AAAAAAAA EL PAIS ES {current_country} SU INDICE ES {current_country_index}")
-        
+
         if current_country_index > 0 and current_country_index < len(country_collection):
             return True
         else:
@@ -77,7 +85,7 @@ class AlbumManagementSystem:
         
         if current_country_index >= 0 and current_country_index <  len(country_collection):
             next_country = country_collection[current_country_index + 1]
-            next_page = self.page_for(next_country.full_name())
+            next_page = self.page_for(next_country.name())
 
             return next_page
         else:
@@ -92,7 +100,7 @@ class AlbumManagementSystem:
         
         if current_country_index > 0 and current_country_index <  len(country_collection):
             previous_country = country_collection[current_country_index - 1]
-            previous_page = self.page_for(previous_country.full_name())
+            previous_page = self.page_for(previous_country.name())
 
             return previous_page
         else:

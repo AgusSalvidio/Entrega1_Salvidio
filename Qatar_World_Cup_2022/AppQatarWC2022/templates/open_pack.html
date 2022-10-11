@@ -1,0 +1,39 @@
+{% extends 'index.html' %}
+
+{% load static %}
+
+{% block title %}
+<title>Abrir Paquete | Qatar World Cup 2022</title>
+{% endblock %}
+
+{% block contents %}
+
+
+{% endblock%}
+
+{% block modals %}
+<style>
+    .swal2-styled.swal2-confirm {
+      border: 0;
+      border-radius: .25em;
+      background: initial;
+        background-color: initial;
+      background-color: #56042C;
+      color: #fff;
+      font-size: 1em;
+    }
+</style>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+   
+   Swal.fire({
+        title: "Paquete abierto",
+        type: "success",
+        html: '{% for sticker in sticker_pack %}' + '<img class="" src="{{ sticker.sticker_image }}" alt="..." height="250" width="175" />' + '{% end for%}'
+    }).then(function() {
+        window.location = "{% url 'home' %}";
+    });
+
+</script>
+{% endblock%}
