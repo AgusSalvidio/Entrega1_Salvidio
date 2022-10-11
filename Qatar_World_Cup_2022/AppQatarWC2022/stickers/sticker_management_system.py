@@ -64,25 +64,31 @@ class StickerManagementSystem:
         rarity_prob = {
             range(1,81):'Común',
             range(80,96):'Épico',
-            range(96,100):'Legendario'}
+            range(96,101):'Legendario'}
         return rarity_prob
 
     def filter_stickers_using(self,stickers,rarity):
-        return list(self.stickers.filter(rarity_category = rarity))
+        print(f"Stickers {stickers}")
+        print(f"Categoria{rarity}")
+        return list(stickers.filter(rarity_category = rarity))
 
     def sticker_for(self,user,rarity_category):
         sticker_type_number = random.randint(1,100)
         filtered_stickers = []
         if sticker_type_number <= 85:
             filtered_stickers = self.filter_stickers_using(self.player_stickers_repo,rarity_category)
-            sticker_number = random.randint(0,len(filtered_stickers))
+            sticker_number = random.randint(0,(len(filtered_stickers)-1))
+            print(f"STICKERS FILTRADOS de jugador{filtered_stickers}")
+            print(f"Nro de sticker{sticker_number}")
             sticker_template = filtered_stickers[sticker_number]
             generated_sticker = GeneratedPlayerSticker.belonging_to(user,sticker_template,rarity_category)
             return generated_sticker
             
         else:
             filtered_stickers = self.filter_stickers_using(self.logo_stickers_repo,rarity_category)
-            sticker_number = random.randint(0,len(filtered_stickers))
+            sticker_number = random.randint(0,(len(filtered_stickers)-1))
+            print(f"STICKERS FILTRADOS de logo{filtered_stickers}")
+            print(f"Nro de sticker{sticker_number}")
             sticker_template = filtered_stickers[sticker_number]
             generated_sticker = GeneratedLogoSticker.belonging_to(user,sticker_template,rarity_category)
             return generated_sticker
@@ -94,8 +100,8 @@ class StickerManagementSystem:
             rarity_number = random.randint(1,100)
             for rarity_number_collection in rarity_dictionary.keys():
                     if rarity_number in rarity_number_collection:
-                        probability_category = rarity_dictionary[rarity_number]
-                        generated_sticker = self.sticker_for(user,probability_category)
+                        rarity_category = rarity_dictionary[rarity_number_collection]
+                        generated_sticker = self.sticker_for(user,rarity_category)
                         generated_stickers.append(generated_sticker)
                         break
 
