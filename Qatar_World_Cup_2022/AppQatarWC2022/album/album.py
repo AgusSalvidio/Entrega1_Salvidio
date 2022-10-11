@@ -77,10 +77,10 @@ class AlbumPage:
             generated_sticker_in_slot = list(filter(lambda generated_sticker: generated_sticker.slot_position() == slot_position,generated_stickers))
                         
             if len(generated_sticker_in_slot) == 0:
-                if generated_sticker_in_slot.class_name() == 'PlayerSticker':
-                    sticker_slot = EmptySlot(GeneratedPlayerSticker.for_empty_slot_in(slot_position))
-                else:
+                if slot_position == 0:
                     sticker_slot = EmptySlot(GeneratedLogoSticker.for_empty_slot_in(slot_position))
+                else:
+                    sticker_slot = EmptySlot(GeneratedPlayerSticker.for_empty_slot_in(slot_position))
             elif generated_sticker_in_slot[0].category() == 'Glued':
                 sticker_slot = GluedSlot(generated_sticker_in_slot[0])
             else:
