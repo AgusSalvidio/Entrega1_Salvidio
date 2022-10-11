@@ -1,8 +1,12 @@
+import pexpect
+from AppQatarWC2022.stickers import generated_sticker
 from .player_sticker import PlayerSticker
 from .logo_sticker import LogoSticker
 from .generated_player_sticker import GeneratedPlayerSticker
 from .generated_logo_sticker import GeneratedLogoSticker
 from AppQatarWC2022.countries import Country
+
+import random
 
 class StickerManagementSystem:
 
@@ -11,6 +15,7 @@ class StickerManagementSystem:
         self.logo_stickers_repo = LogoSticker.objects
         self.generated_player_stickers_repo = GeneratedPlayerSticker.objects
         self.generated_logo_stickers_repo = GeneratedLogoSticker.objects
+        self.rarities = self.rarity_probalities()
 
     def player_stickers(self):
         return self.player_stickers_repo.all()
@@ -28,9 +33,6 @@ class StickerManagementSystem:
         generated_player_sticker_collection = list(self.generated_player_stickers().filter(owner = user))
         generated_logo_sticker_collection = list(self.generated_logo_stickers().filter(owner = user))
         return generated_player_sticker_collection + generated_logo_sticker_collection
-
-    def generate_sticker_pack(self):
-        pass
 
     def name(self):
         return 'Sistema de Administración de Stickers'    
@@ -58,5 +60,46 @@ class StickerManagementSystem:
         sticker.synchronize_with(updated_sticker)
         sticker.save()
 
+    def rarity_probalities(self):
+        rarity_prob = {
+            range(1,81):'Común',
+            range(80,96):'Épico',
+            range(96,100):'Legendario'}
+        return rarity_prob
+
+    def filter_stickers_using(self,stickers,rarity):
+        return list(self.stickers.filter(rarity_category = rarity))
+
+    def sticker_for(self,user,rarity_category):
+        sticker_type_number = random.randint(1,100)
+        filtered_stickers = []
+        if sticker_type_number <= 85:
+            filtered_stickers = self.filter_stickers_using(self.player_stickers_repo,rarity_category)
+            sticker_number = random.randint(0,len(filtered_stickers))
+            sticker_template = filtered_stickers[sticker_number]
+            generated_sticker = GeneratedPlayerSticker.belonging_to(user,sticker_template,rarity_category)
+            return generated_sticker
+            
+        else:
+            filtered_stickers = self.filter_stickers_using(self.logo_stickers_repo,rarity_category)
+            sticker_number = random.randint(0,len(filtered_stickers))
+            sticker_template = filtered_stickers[sticker_number]
+            generated_sticker = GeneratedLogoSticker.belonging_to(user,sticker_template,rarity_category)
+            return generated_sticker
+        
+    def sticker_pack_for(self,user):
+        rarity_dictionary = self.rarities
+        generated_stickers = []
+        for sticker in range(5):
+            rarity_number = random.randint(1,100)
+            for rarity_number_collection in rarity_dictionary.keys():
+                    if rarity_number in rarity_number_collection:
+                        probability_category = rarity_dictionary[rarity_number]
+                        generated_sticker = self.sticker_for(user,probability_category)
+                        generated_stickers.append(generated_sticker)
+                        break
+
+        return generated_stickers
+        
     def class_knownledge(self):
         return ['PlayerSticker','GeneratedSticker','LogoSticker','GeneratedPlayerSticker','GeneratedLogoSticker','Country']

@@ -149,6 +149,9 @@ class ApplicationContext:
         sticker_slot = self.sticker_slot_at(current_index)
         self.increment_index_position()
         return sticker_slot
+    
+    def sticker_pack_for(self,user):
+        return self.sticker_system().sticker_pack_for(user)
 
     """ Album """
     def refresh_album(self):
