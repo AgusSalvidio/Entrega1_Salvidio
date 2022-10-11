@@ -1,0 +1,37 @@
+{% extends 'index.html' %}
+
+{% load static %}
+
+{% block title %}
+<title>Mis Stickers | Qatar World Cup 2022</title>
+{% endblock %}
+
+{% block contents %}
+<legend>
+    Administrar Stickers
+</legend>
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>País</th>
+            </tr>
+        </thead>
+    {% if working_context.new_stickers %}
+            {% for sticker in working_context.new_stickers %}
+            <tr>
+                <td>{{ sticker.full_name }}</td>
+                <td>{{ sticker.country }}</td>
+            </tr>
+            {% endfor %}
+    </table>
+    {% else %}
+    </table>
+        <h4>No se encontraron stickers</h4>
+    {% endif %}  
+{% endblock %}
+
+{% block modals %}
+  
+{% endblock %}

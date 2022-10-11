@@ -24,8 +24,8 @@ class StickerManagementSystem:
         return self.generated_logo_stickers_repo
 
     def stickers_of(self,user):
-        generated_player_sticker_collection = self.generated_player_stickers().filter(owner = user)
-        generated_logo_sticker_collection = self.generated_logo_stickers().filter(owner = user)
+        generated_player_sticker_collection = list(self.generated_player_stickers().filter(owner = user))
+        generated_logo_sticker_collection = list(self.generated_logo_stickers().filter(owner = user))
         return generated_player_sticker_collection + generated_logo_sticker_collection
 
     def generate_sticker_pack(self):

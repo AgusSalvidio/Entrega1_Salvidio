@@ -101,6 +101,10 @@ class ApplicationContext:
 
     """ Stickers """
 
+    def new_stickers(self):
+        stickers = self.stickers_of(self.logged_user())
+        return list(filter(lambda sticker: sticker.category() == 'New',stickers))
+
     def stickers_of(self,user):
         return self.sticker_system().stickers_of(user)
 

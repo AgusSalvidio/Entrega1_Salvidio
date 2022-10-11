@@ -108,7 +108,7 @@
                     <div class="navbar-container container-fluid">
                         <ul class="nav-left">
                             <li>
-                                <a href="" class="waves-effect waves-light">
+                                <a href="{% url 'my_stickers' %}" class="waves-effect waves-light">
                                     MIS STICKERS
                                 </a>
                             </li>
@@ -123,15 +123,18 @@
                             {% if user.is_superuser %}
                             <li>
                                     <a class="dropdown-toggle waves-effect waves-light" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                      Administrar
+                                      ADMINISTRAR
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="dropdown-2" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
                                       <a class="dropdown-item" style ="color:#455a64; text-align:center" onmouseover="this.style.backgroundColor='#56042C';this.style.color='#ffff';" onmouseout="this.style.backgroundColor='transparent';this.style.color='#455a64';" href="{% url 'player_stickers' %}">
-                                        STICKERS
-                                    </a>
+                                        STICKERS JUGADORES
+                                      </a>
+                                      <a class="dropdown-item" style ="color:#455a64; text-align:center" onmouseover="this.style.backgroundColor='#56042C';this.style.color='#ffff';" onmouseout="this.style.backgroundColor='transparent';this.style.color='#455a64';" href="{% url 'logo_stickers' %}">
+                                        STICKERS LOGOS
+                                      </a>
                                       <a class="dropdown-item" style ="color:#455a64; text-align:center" onmouseover="this.style.backgroundColor='#56042C';this.style.color='#ffff';" onmouseout="this.style.backgroundColor='transparent';this.style.color='#455a64';" href="{% url 'promo_codes' %}">
                                         CÓDIGOS
-                                    </a>
+                                      </a>
                                     </div>
                             </li>
                             {% endif %}
@@ -149,8 +152,25 @@
                                             </a>
                                         </li>
                                         <li class="waves-effect waves-light">
+                                            <a href="#!">
+                                                <i class="ti-email"></i> Mensajes
+                                            </a>
+                                        </li>
+                                        <li class="waves-effect waves-light">
                                             <a href="{% url 'update_user_profile' %}">
                                                 <i class="ti-user"></i> Perfil
+                                            </a>
+                                        </li>
+                                        {% if user.is_superuser %}
+                                        <li class="waves-effect waves-light">
+                                            <a href="{% url 'pages' %}">
+                                                <i class="ti-layers-alt"></i> Páginas del Sitio
+                                            </a>
+                                        </li>
+                                        {% endif %}
+                                        <li class="waves-effect waves-light">
+                                            <a href="{% url 'about' %}">
+                                                <i class="ti-info-alt"></i> Sobre Nosotros
                                             </a>
                                         </li>
                                         <li class="waves-effect waves-light">
