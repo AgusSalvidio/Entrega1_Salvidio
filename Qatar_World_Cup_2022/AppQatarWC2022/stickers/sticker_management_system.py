@@ -2,6 +2,7 @@ from .player_sticker import PlayerSticker
 from .logo_sticker import LogoSticker
 from .generated_player_sticker import GeneratedPlayerSticker
 from .generated_logo_sticker import GeneratedLogoSticker
+from AppQatarWC2022.countries import Country
 
 class StickerManagementSystem:
 
@@ -40,8 +41,10 @@ class StickerManagementSystem:
     def identified_as(self,sticker_id,object_class):
         if object_class == 'PlayerSticker':
             return self.player_stickers_repo.get(id = sticker_id)
-        else:
+        elif object_class == 'LogoSticker':
             return self.logo_stickers_repo.get(id = sticker_id)
+        else:
+            return Country.objects.get(id = sticker_id)
     
     def unregister(self,sticker):
         sticker.delete()
@@ -56,4 +59,4 @@ class StickerManagementSystem:
         sticker.save()
 
     def class_knownledge(self):
-        return ['PlayerSticker','GeneratedSticker','LogoSticker','GeneratedPlayerSticker','GeneratedLogoSticker']
+        return ['PlayerSticker','GeneratedSticker','LogoSticker','GeneratedPlayerSticker','GeneratedLogoSticker','Country']

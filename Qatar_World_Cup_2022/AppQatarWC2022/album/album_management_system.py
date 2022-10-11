@@ -39,6 +39,9 @@ class AlbumManagementSystem:
     def class_knownledge(self):
         return ['Album','AlbumPage']
 
+    def countries(self):
+        return Country.objects.all()
+
     def qualified_countries(self):
         return Country.objects.filter(qualified = True).order_by('name')
 

@@ -1,0 +1,84 @@
+{% extends 'index.html' %}
+
+{% load static %}
+
+{% block title%}
+<title>Países | Qatar World Cup 2022</title>
+{% endblock %}
+
+{% block contents%}
+<legend>
+    Administrar Países
+    <div class="btn-toolbar pull-right">
+        <div class="btn-group pull-right">
+            <!-- Button trigger modal -->
+            <button style="background-color:#56042C;; border-color:#56042C;; color:white " class=" btn btn-sm waves-effect waves-light" onclick="registration_modal('{% url 'element_registration' working_context.current_object.class_name working_context.current_form.class_name %}')"><i class="icofont icofont-plus"></i>
+                Agregar
+            </button>
+        </div>
+    </div>
+</legend>
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>País</th>
+                <th>Clasificado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+    {% if working_context.countries %}
+            {% for country in working_context.countries %}
+            <tr>
+                <td>{{ country.full_name }}</td>
+                {% if country.is_qualified %}
+                    <td>Sí</td>
+                {% else %}
+                    <td>No</td>
+                {% endif %}
+                <td>
+                    <a class="btn btn-sm waves-effect waves-light icofont icofont-ui-edit" onclick="update_modal('{% url 'element_update' country.id working_context.current_object.class_name working_context.current_form.class_name %}')"></a>
+                    <a class="btn btn-sm waves-effect waves-light icofont icofont-close" onclick="unregistration_modal('{% url 'element_unregistration' country.id working_context.current_object.class_name working_context.current_form.class_name %}')"></a>   
+                </td>
+            </tr>
+            {% endfor %}
+    </table>
+    {% else %}
+    </table>
+        <h4>No se encontraron países</h4>
+    {% endif %}
+{% endblock %}
+
+{% block modals %}
+  
+  <div class="modal fade" id="country_registration_modal" tabindex="-1" aria-labelledby="country_registration_modal" aria-hidden="true">
+  
+  </div>
+
+  <div class="modal fade" id="country_update_modal" tabindex="-1" aria-labelledby="country_update_modal" aria-hidden="true">
+  
+  </div>
+
+  <div class="modal fade" id="country_unregistration_modal" tabindex="-1" aria-labelledby="country_unregistration_modal" aria-hidden="true">
+  
+</div>
+
+ <script type="text/javascript">
+    var $ = jQuery.noConflict();
+    function registration_modal(url){
+        $('#country_registration_modal').load(url,function (){
+            $(this).modal('show');
+        });
+    }
+    function unregistration_modal(url){
+        $('#country_unregistration_modal').load(url,function (){
+            $(this).modal('show');
+        });
+    }
+    function update_modal(url){
+        $('#country_update_modal').load(url,function (){
+            $(this).modal('show');
+        });
+    }
+ </script> 
+{% endblock %}

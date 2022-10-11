@@ -16,7 +16,7 @@ class PlayerSticker(Sticker):
     @classmethod
     def for_empty_slot_in(cls,slot_position):
         return cls(
-            name = None,
+            full_name = None,
             country = None,
             birthdate = None,
             position =  None, 
@@ -25,9 +25,9 @@ class PlayerSticker(Sticker):
             rarity_category = None)
 
     @classmethod
-    def composed_of(cls, name,country, birthdate, position, sticker_image, slot, rarity_category):
+    def composed_of(cls, full_name,country, birthdate, position, sticker_image, slot, rarity_category):
       return cls(
-        name = name,
+        full_name = full_name,
         country = country,
         birthdate = birthdate,
         position = position,
@@ -38,7 +38,7 @@ class PlayerSticker(Sticker):
     @classmethod
     def from_form(cls, form_data):
       return cls.composed_of(
-        name = form_data.get("name"),
+        full_name = form_data.get("full_name"),
         country = form_data.get("country"),
         birthdate = form_data.get("birthdate"),
         position = form_data.get("position"),
@@ -46,11 +46,14 @@ class PlayerSticker(Sticker):
         rarity_category = form_data.get("rarity_category"),
         slot = form_data.get("slot"))
     
+    def name(self):
+        return self.full_name
+    
     def __str__(self):
-        return self.full_name()
+        return self.name()
 
     def synchronize_with(self,updated_player_sticker):
-        self.name = updated_player_sticker.name
+        self.full_name = updated_player_sticker.full_name
         self.country =   updated_player_sticker.country 
         self.birthdate = updated_player_sticker.birthdate
         self.position =   updated_player_sticker.position

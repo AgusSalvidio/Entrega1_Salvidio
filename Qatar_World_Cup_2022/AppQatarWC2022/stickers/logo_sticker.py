@@ -7,16 +7,16 @@ class LogoSticker(Sticker):
     @classmethod
     def for_empty_slot_in(cls,slot_position):
         return cls(
-            name = None,
+            full_name = None,
             country = None, 
             sticker_image = None,
             slot = slot_position,
             rarity_category = None)
 
     @classmethod
-    def composed_of(cls, name, country, sticker_image, slot, rarity_category):
+    def composed_of(cls, full_name, country, sticker_image, slot, rarity_category):
       return cls(
-        name = name,
+        full_name = full_name,
         country = country,
         sticker_image = sticker_image,
         slot = slot,
@@ -25,18 +25,20 @@ class LogoSticker(Sticker):
     @classmethod
     def from_form(cls, form_data):
       return cls.composed_of(
-        name = form_data.get("name"),
-        last_name = form_data.get("last_name"),
+        full_name = form_data.get("full_name"),
         country = form_data.get("country"),
         sticker_image = form_data.get("sticker_image"),
         rarity_category = form_data.get("rarity_category"),
         slot = form_data.get("slot"))
 
+    def name(self):
+        return self.full_name
+
     def __str__(self):
-        return self.full_name()
+        return self.name()
 
     def synchronize_with(self,updated_logo_sticker):
-        self.name = updated_logo_sticker.name
+        self.full_name = updated_logo_sticker.full_name
         self.country =  updated_logo_sticker.country 
         self.sticker_image = updated_logo_sticker.sticker_image
         self.slot = updated_logo_sticker.slot

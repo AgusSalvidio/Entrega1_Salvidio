@@ -198,6 +198,9 @@ class ApplicationContext:
 
     def qualified_countries(self):
         return self.album_system().qualified_countries()
+
+    def countries(self):
+        return self.album_system().countries()
     
     def is_next_page_allowed(self):
         return self.album_system().is_next_page_allowed()
