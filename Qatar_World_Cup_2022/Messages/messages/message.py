@@ -8,14 +8,14 @@ class Message(models.Model):
     sender = models.OneToOneField(UserProfile,related_name='sender',on_delete=models.CASCADE)
     receiver = models.OneToOneField(UserProfile,related_name='receiver',on_delete=models.CASCADE)
     was_read = models.BooleanField()
-    date = models.DateTimeField()
+    date_time = models.DateTimeField()
     content = models.TextField()
 
     @classmethod
-    def from_form(cls, sender, date, form_data):
+    def from_form(cls, sender, date_time, form_data):
         receiver = form_data.get('receiver')
         content = form_data.get('content')
-        return cls(sender=sender, receiver=receiver, date=date, content=content)
+        return cls(sender=sender, receiver=receiver, date_time=date_time, content=content)
 
     def sender_username(self):
         return self.sender.username()
@@ -24,10 +24,10 @@ class Message(models.Model):
         return self.receiver.username()
 
     def __str__(self):
-        return f'Mensaje de {self.sender_username()} para {self.receiver_username()} el {self.formatted_date_and_time_sent()}'
+        return f'Mensaje de {self.sender_username()} para {self.receiver_username()} el {self.formatted_date_time()}'
 
-    def formatted_date(self):
-        return self.date.strftime("%d/%m/%Y %H:%M:%S")
+    def formatted_date_time(self):
+        return self.date_time.strftime("%d/%m/%Y %H:%M:%S")
 
 
 

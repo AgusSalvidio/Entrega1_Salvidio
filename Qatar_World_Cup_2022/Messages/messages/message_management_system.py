@@ -12,6 +12,9 @@ class MessageManagementSystem:
         self.users_repo = UserProfile.objects
         self.logged_user_repo = None
 
+    def user_identified_as(self,user_id):
+        return self.users_repo.get(id = user_id)
+
     def chat_users(self):
         all_users = self.users_repo.all()
         return list(filter(lambda user: user.internal_user != self.logged_user().internal_user,all_users))
@@ -48,7 +51,7 @@ class MessageManagementSystem:
         return self.messages_repository.filter(sender=sender).filter(receiver=receiver)
 
     def conversation_between(self, user, another_user):
-        messages_sent_by_user = self.messages_from(user, to=another_user)
-        messages_received_by_user = self.messages_from(another_user, to=user)
+        messages_sent_by_user = self.messages_from(user, receiver=another_user)
+        messages_received_by_user = self.messages_from(another_user, receiver=user)
         messages = messages_sent_by_user | messages_received_by_user
-        return messages.order_by('date_and_time_sent')
+        return messages.order_by('date_time')
