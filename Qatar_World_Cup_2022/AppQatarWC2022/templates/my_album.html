@@ -25,7 +25,7 @@
                         <img class="" src="{{ working_context.next_sticker_slot.sticker_image }}" alt="..." height="250" width="175" />
                     </a>
                 {% else %}
-                    <a class="portfolio-link" data-bs-toggle="modal" href="{% url 'glue_sticker' working_context.current_sticker_slot.sticker.id %}" onclick="location.href='{% url 'glue_sticker' working_context.current_sticker_slot.sticker.id %}'">
+                    <a class="portfolio-link" data-bs-toggle="modal" href="{% url 'glue_sticker' working_context.current_sticker_slot.sticker.id working_context.current_sticker_slot.sticker.class_name %}" onclick="location.href='{% url 'glue_sticker' working_context.current_sticker_slot.sticker.id working_context.current_sticker_slot.sticker.class_name %}'">
                         <img class="" src="{{ working_context.next_sticker_slot.sticker_image }}" alt="..." height="250" width="175" />
                     </a>
                 {% endif %}
@@ -46,7 +46,7 @@
                     <img class="" src="{{ working_context.next_sticker_slot.sticker_image }}" alt="..." height="250" width="175" />
                 </a>
             {% else %}
-                <a class="portfolio-link" data-bs-toggle="modal" href="{% url 'glue_sticker' working_context.current_sticker_slot.sticker.id %}" onclick="location.href='{% url 'glue_sticker' working_context.current_sticker_slot.sticker.id %}'">
+                <a class="portfolio-link" data-bs-toggle="modal" href="{% url 'glue_sticker' working_context.current_sticker_slot.sticker.id working_context.current_sticker_slot.sticker.class_name %}" onclick="location.href='{% url 'glue_sticker' working_context.current_sticker_slot.sticker.id working_context.current_sticker_slot.sticker.class_name %}'">
                     <img class="" src="{{ working_context.next_sticker_slot.sticker_image }}" alt="..." height="250" width="175" />
                 </a>
             {% endif %}

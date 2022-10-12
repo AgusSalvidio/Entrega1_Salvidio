@@ -120,8 +120,8 @@ class ApplicationContext:
     def sticker_second_row_range(self):
         return list(range(6,12))    
     
-    def generated_sticker_of(self,id):
-        return self.sticker_system().generated_sticker_of(id)
+    def generated_sticker_of(self,id,object_class):
+        return self.sticker_system().generated_sticker_of(id,object_class)
     
     """ Player Sticker """
     def player_stickers(self):

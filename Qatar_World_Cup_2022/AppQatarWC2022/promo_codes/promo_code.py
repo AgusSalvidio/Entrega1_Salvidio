@@ -1,12 +1,11 @@
 from django.db import models
-from assertions import enforce_not_blank
+
 
 class PromoCode(models.Model):
    code = models.CharField(max_length=15)
 
    @classmethod
    def composed_of(cls, code):
-      enforce_not_blank(code, "Code")
       return cls(code = code)
 
    @classmethod
