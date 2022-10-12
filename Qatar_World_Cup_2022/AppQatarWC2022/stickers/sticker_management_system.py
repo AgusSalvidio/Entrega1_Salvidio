@@ -88,7 +88,7 @@ class StickerManagementSystem:
             else:
                 pass
             sticker_template = filtered_stickers[sticker_number]
-            generated_sticker = GeneratedPlayerSticker.belonging_to(user,sticker_template,rarity_category)
+            generated_sticker = GeneratedPlayerSticker.belonging_to(user,sticker_template,'New')
             return generated_sticker
             
         else:
@@ -99,7 +99,7 @@ class StickerManagementSystem:
             else:
                 pass
             sticker_template = filtered_stickers[sticker_number]
-            generated_sticker = GeneratedLogoSticker.belonging_to(user,sticker_template,rarity_category)
+            generated_sticker = GeneratedLogoSticker.belonging_to(user,sticker_template,'New')
             return generated_sticker
         
     def sticker_pack_for(self,user):
@@ -111,7 +111,7 @@ class StickerManagementSystem:
                     if rarity_number in rarity_number_collection:
                         rarity_category = rarity_dictionary[rarity_number_collection]
                         generated_sticker = self.sticker_for(user,rarity_category)
-                        #generated_sticker.save()
+                        generated_sticker.save()
                         generated_stickers.append(generated_sticker)
                         break
         return generated_stickers
