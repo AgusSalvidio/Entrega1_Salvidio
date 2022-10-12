@@ -26,7 +26,7 @@ class UserProfile(models.Model):
                 internal_user = user,
                 birthdate = form_data.get('birthdate'),
                 country = form_data.get('country'),
-                avatar_image = form_data.get('avatar_image'))
+                avatar_image = form_data.get('avatar'))
 
     def last_login(self):
         return self.internal_user.last_login
