@@ -39,7 +39,7 @@ class GeneratedLogoSticker(GeneratedSticker):
         return self.sticker_template
 
     def name(self):
-        return self.sticker().full_name()
+        return self.sticker().name()
 
     def country(self):
         return self.sticker().nationality()
@@ -51,7 +51,7 @@ class GeneratedLogoSticker(GeneratedSticker):
         return self.sticker.rarity()
 
     def __str__(self):
-        return self.sticker().full_name()
+        return self.sticker().name()
 
     def class_name(self):
         return self.__class__.__name__

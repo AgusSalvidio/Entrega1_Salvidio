@@ -1,3 +1,4 @@
+from django.shortcuts import redirect
 import pexpect
 from AppQatarWC2022.stickers import generated_sticker
 from .player_sticker import PlayerSticker
@@ -63,13 +64,11 @@ class StickerManagementSystem:
     def rarity_probalities(self):
         rarity_prob = {
             range(1,81):'Común',
-            range(80,96):'Épico',
-            range(96,101):'Legendario'}
+            range(80,96):'Épica',
+            range(96,101):'Legendaria'}
         return rarity_prob
 
     def filter_stickers_using(self,stickers,rarity):
-        print(f"Stickers {stickers}")
-        print(f"Categoria{rarity}")
         return list(stickers.filter(rarity_category = rarity))
 
     def sticker_for(self,user,rarity_category):
@@ -77,18 +76,22 @@ class StickerManagementSystem:
         filtered_stickers = []
         if sticker_type_number <= 85:
             filtered_stickers = self.filter_stickers_using(self.player_stickers_repo,rarity_category)
-            sticker_number = random.randint(0,(len(filtered_stickers)-1))
-            print(f"STICKERS FILTRADOS de jugador{filtered_stickers}")
-            print(f"Nro de sticker{sticker_number}")
+            filtered_stickers_quantity = len(filtered_stickers) - 1
+            if filtered_stickers_quantity >= 0:
+                sticker_number = random.randint(0,filtered_stickers_quantity)
+            else:
+                pass
             sticker_template = filtered_stickers[sticker_number]
             generated_sticker = GeneratedPlayerSticker.belonging_to(user,sticker_template,rarity_category)
             return generated_sticker
             
         else:
             filtered_stickers = self.filter_stickers_using(self.logo_stickers_repo,rarity_category)
-            sticker_number = random.randint(0,(len(filtered_stickers)-1))
-            print(f"STICKERS FILTRADOS de logo{filtered_stickers}")
-            print(f"Nro de sticker{sticker_number}")
+            filtered_stickers_quantity = len(filtered_stickers) - 1
+            if filtered_stickers_quantity >= 0:
+                sticker_number = random.randint(0,filtered_stickers_quantity)
+            else:
+                pass
             sticker_template = filtered_stickers[sticker_number]
             generated_sticker = GeneratedLogoSticker.belonging_to(user,sticker_template,rarity_category)
             return generated_sticker
@@ -102,9 +105,9 @@ class StickerManagementSystem:
                     if rarity_number in rarity_number_collection:
                         rarity_category = rarity_dictionary[rarity_number_collection]
                         generated_sticker = self.sticker_for(user,rarity_category)
+                        #generated_sticker.save()
                         generated_stickers.append(generated_sticker)
                         break
-
         return generated_stickers
         
     def class_knownledge(self):

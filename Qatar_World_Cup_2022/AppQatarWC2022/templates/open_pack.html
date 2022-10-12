@@ -30,9 +30,9 @@
    Swal.fire({
         title: "Paquete abierto",
         type: "success",
-        html: '{% for sticker in sticker_pack %}' + '<img class="" src="{{ sticker.sticker_image }}" alt="..." height="250" width="175" />' + '{% end for%}'
+        html: '{% for sticker in sticker_pack %}' + '<img class="" src="{{ sticker.sticker_image }}" alt="..." height="250" width="175" />' + '{% endfor %}'
     }).then(function() {
-        window.location = "{% url 'home' %}";
+        window.location = "{% url 'my_stickers' %}";
     });
 
 </script>
