@@ -26,7 +26,7 @@ Desde allí, abrir una terminal y ejecutar la línea: ```python manage.py runser
 
 # Configuración 🔧
 
-Por defecto, para el ingreso al panel de administrador se generó el super usuario "admin" cuyas credenciales para loguearse al panel son identicas a su nombre. Por otro lado, a modo de demo ya se encuentran cargados algunos stickers como también otros objetos del sistema, para evitar realizar una carga manual.
+Por defecto, para el ingreso al panel de administrador se generó el super usuario "admin" cuyas credenciales para loguearse al panel son identicas a su nombre. Por otro lado, a modo de demo ya se encuentran cargados algunos stickers como también otros objetos del sistema, para evitar realizar una carga manual. (Se recomienda fuertemente utilizar la base de prueba).
 
 # Uso/Funcionalidades ✨
 
@@ -35,7 +35,12 @@ Por el momento el aplicativo cuenta con:
 * Home o Inicio: al seleccionar el logo del Mundial Catar 2022, será dirigido a la pantalla de inicio.
 * Mis Stickers: muestra los cromos almacenados en el sistema en función del usuario logueado.
 * Mi Álbum: muestra las páginas con los cromos que tiene el usuario de cada país clasificado. En el mismo se podrán pegar los nuevos. 
-* Administrar: únicamente visible por el administrador o superusuario. Desde aquí se podrá gestionar los diferentes objetos del modelo, ya sean stickers, códigos promocionales, entre otros.
+* Administrar: únicamente visible por el administrador o superusuario. Desde aquí se podrá gestionar los diferentes objetos del modelo, ya sean stickers, países, entre otros.
 * Panel de configuración de usuario: en el mismo se podrán editar los campos relacionados al perfil del usuario, ver los mensajes recibidos por otros jugadores y también desloguearse del sistema.
 
+# Casos de Prueba 🧪 
+Desde [aquí](https://docs.google.com/spreadsheets/d/10SVy-h7xW7Al4YdE80J0TRhZkjEge0Of/edit#gid=587053520) se pueden ver los casos de prueba realizados.
+
+# Demo 💻 
+Desde [aquí](https://drive.google.com/file/d/1NwBZ7Ht9T7xca0Y2-zVkmITunIRUph-Z/view?usp=sharing) se puede ver una pequeña demo del aplicativo.
 
