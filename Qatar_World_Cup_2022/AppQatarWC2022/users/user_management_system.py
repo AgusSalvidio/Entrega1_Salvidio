@@ -31,8 +31,8 @@ class UserManagementSystem:
         user_profile.save()
 
     def update_with(self,user_profile,updated_user_profile):
-        """if user_profile.full_name() != updated_user_profile.full_name():
-            self.assert_there_is_no_player_sticker_identified_as(updated_player_sticker.full_name())"""
+        """if user_profile.name() != updated_user_profile.name():
+            self.assert_there_is_no_player_sticker_identified_as(updated_player_sticker.name())"""
         user_profile.synchronize_with(updated_user_profile)
         user_profile.save()
 

@@ -62,8 +62,8 @@ class StickerManagementSystem:
         pass
 
     def update_with(self,sticker,updated_sticker):
-        if sticker.full_name() != updated_sticker.full_name():
-            self.assert_there_is_no_sticker_identified_as(updated_sticker.full_name())
+        if sticker.name() != updated_sticker.name():
+            self.assert_there_is_no_sticker_identified_as(updated_sticker.name())
         sticker.synchronize_with(updated_sticker)
         sticker.save()
 
