@@ -23,7 +23,13 @@ class StickerManagementSystem:
     
     def logo_stickers(self):
         return self.logo_stickers_repo.all()
-    
+
+    def generated_sticker_of(self,id,object_class):
+        if object_class == 'GeneratedPlayerSticker':
+            return self.generated_player_stickers_repo.get(id = id)
+        else:
+            return self.generated_logo_stickers_repo.get(id = id)
+            
     def generated_player_stickers(self):
         return self.generated_player_stickers_repo
     

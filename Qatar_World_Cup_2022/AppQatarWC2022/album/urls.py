@@ -8,7 +8,7 @@ urlpatterns = [
     path("update_current_album_page/<country_name>/", update_current_album_page, name="update_current_album_page"),
     path("next_page/", next_page, name="next_page"),
     path("previous_page/", previous_page, name="previous_page"),
-    path("glue_sticker/<id>/", glue_sticker, name="glue_sticker"),
+    path("glue_sticker/<id>/<object_class>", glue_sticker, name="glue_sticker"),
 ]
 
   

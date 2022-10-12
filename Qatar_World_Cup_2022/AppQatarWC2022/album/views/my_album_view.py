@@ -52,11 +52,12 @@ def previous_page(request):
         return render(request,"my_album.html",working_context)
 
 @login_required
-def glue_sticker(request,id):
+def glue_sticker(request,id,object_class):
     if request.method =="POST":
         pass
     else:
-        generated_sticker = app.working_context().generated_sticker_of(id)
+        
+        generated_sticker = app.working_context().generated_sticker_of(id,object_class)
         country_name = generated_sticker.country().name()
         generated_sticker.glue_sticker()
         app.working_context().refresh_album()
