@@ -3,7 +3,7 @@
 
 <head>
     {% load static %}
-    {% if user.is_anonymous %}
+    {% if working_context.logged_user == NoneType %}
         <META HTTP-EQUIV="REFRESH" CONTENT="0;URL={% url 'login' %}">
     {% endif %}
     {% block title %}
