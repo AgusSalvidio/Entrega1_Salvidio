@@ -45,6 +45,7 @@ class MessageManagementSystem:
         return list(self.messages_repository.all())
 
     def send_new_message(self, message):
+        print(f"{message}")
         message.save()
 
     def messages_from(self, sender, receiver):

@@ -11,15 +11,14 @@ class AlbumManagementSystem:
     def updated_album_using(self,generated_sticker_collection):
     
         qualified_countries = self.qualified_countries()
-        
         album_page_collection = []
         for country in qualified_countries:
             stickers_filtered_by_country = list(filter(lambda generated_sticker: generated_sticker.country() == country,generated_sticker_collection))
             
             glued_stickers = list(filter(lambda generated_sticker: generated_sticker.category() == 'Glued',stickers_filtered_by_country))
-
-            new_stickers = list(filter(lambda generated_sticker: generated_sticker.category() == 'New' and len(list(filter(lambda glue_sticker: glue_sticker.name() != generated_sticker.name(),glued_stickers))) != 0 ,stickers_filtered_by_country))
-
+            print(f"{glued_stickers}")
+            new_stickers = list(filter(lambda generated_sticker: generated_sticker.category() == 'New',stickers_filtered_by_country))
+            print(f"{new_stickers}")
             filtered_stickers = glued_stickers + new_stickers
 
             album_page = AlbumPage.composed_of(country,country.background(),filtered_stickers)
